@@ -11,6 +11,9 @@ namespace Work.HN.Code.Test
         private void Start()
         {
             UserBuiltInData userData = DataReceiver.Instance.GetUserMapData();
+            
+            if(userData == null) return;
+            
             foreach (MapData mapData in userData.userMapList)
             {
                 TestMapUI mapUI = Instantiate(mapUIPrefab, transform);

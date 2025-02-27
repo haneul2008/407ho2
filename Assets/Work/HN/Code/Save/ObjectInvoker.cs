@@ -11,7 +11,9 @@ namespace Work.HN.Code.Save
     {
         SameName,
         EmptyName,
-        NoneStartOrEnd
+        NoneStartOrEnd,
+        FailRequest,
+        ExceededMaxCapacity,
     }
     
     public class ObjectInvoker : MonoBehaviour
@@ -92,6 +94,11 @@ namespace Work.HN.Code.Save
             if(!SaveData()) return;
             
             saveManager.RegisterMapData();
+        }
+
+        public int GetMapCapacity()
+        {
+            return saveManager.GetMapCapacity(mapMaker.GetAllObjects());
         }
     }
 }
