@@ -43,6 +43,7 @@ namespace Work.HN.Code.EventSystems
         public static readonly CameraZoomInEvent CameraZoomInEvent = new CameraZoomInEvent();
         public static readonly TriggerIDChangeEvent TriggerIDChangeEvent = new TriggerIDChangeEvent();
         public static readonly SortingOrderChangeEvent SortingOrderChangeEvent = new SortingOrderChangeEvent();
+        public static readonly MapNameChangeEvent MapNameChangeEvent = new MapNameChangeEvent();
     }
 
     public class ObjectSelectEvent : GameEvent //in object spawn mode
@@ -167,5 +168,10 @@ namespace Work.HN.Code.EventSystems
         public EditorObject targetObject;
         public int sortingOrder;
         public bool isHistory;
+    }
+
+    public class MapNameChangeEvent : GameEvent
+    {
+        public string mapName;
     }
 }

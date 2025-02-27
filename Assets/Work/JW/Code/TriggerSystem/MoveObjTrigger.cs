@@ -23,6 +23,8 @@ namespace Work.JW.Code.TriggerSystem
 
         public void MovePosition()
         {
+            if (_targets.Length <= 0) return;
+            
             foreach (var item in _targets)
             {
                 item.DOMove(toPos, _duration).SetEase(Ease.OutCubic);
