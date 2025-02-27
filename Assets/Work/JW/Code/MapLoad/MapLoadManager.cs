@@ -34,11 +34,16 @@ namespace Work.JW.Code.MapLoad
         private Dictionary<TriggerType, Trigger> _triggers;
         private Dictionary<int, ObjectFrame> _inGamePrefabs;
         private Dictionary<string, List<Transform>> _idToObjTrms;
+        
+        private List<Trigger> _initTriggers;
 
         private void Awake()
         {
             _triggers = new Dictionary<TriggerType, Trigger>();
+            _inGamePrefabs = new Dictionary<int, ObjectFrame>();
             _idToObjTrms = new Dictionary<string, List<Transform>>();
+            
+            _initTriggers = new List<Trigger>();
 
             objPrefabData.objPrefabAndIds.ForEach(item => _inGamePrefabs.Add(item.id, item.prefab));
             triggerPrefabData.triggerPrefabAndTypes.ForEach(item => _triggers.Add(item.type, item.prefab));
@@ -46,6 +51,8 @@ namespace Work.JW.Code.MapLoad
 
         public void Initialize(MapData mapData)
         {
+            Debug.Assert(mapData != null, "MapData is null!");
+            
             _currentMapData = mapData;
             SetMapObjSpawn(mapData);
         }
@@ -77,12 +84,19 @@ namespace Work.JW.Code.MapLoad
                 }
 
                 //Trigger Id에 따라 List에 각각 넣기
-                List<Transform> objTrms = _idToObjTrms[item.triggerID];
-                if(objTrms == null) objTrms = new List<Transform>();
+                List<Transform> objTrms = new List<Transform>();
 
+                if (_idToObjTrms.TryGetValue(item.triggerID, out List<Transform> trmList))
+                {
+                    trmList.Add(itemTrm);
+                    _idToObjTrms[item.triggerID] = trmList;
+                    continue;
+                }
                 objTrms.Add(itemTrm);
                 _idToObjTrms.Add(item.triggerID, objTrms);
             }
+
+            _initTriggers.ForEach(item => item.SetTargets(_idToObjTrms[item.ID].ToArray()));
         }
 
         private Transform AddTriggerToObj(ObjectData data)
@@ -90,40 +104,36 @@ namespace Work.JW.Code.MapLoad
             TriggerData triggerData = data.triggerData;
             TriggerType type = data.triggerData.triggerType;
             var trigger = Instantiate(_triggers[type], transform);
+            trigger.ID = data.triggerID;
 
             switch (type)
             {
                 case TriggerType.ObjectMove:
                     var moveTrigger = trigger as MoveObjTrigger;
                     MoveInfo moveInfo = triggerData.moveInfo;
-
-                    moveTrigger.SetTargets(_idToObjTrms[data.triggerID].ToArray());
+                    
                     moveTrigger.SetData(moveInfo.moveAmount, moveInfo.duration);
                     break;
                 case TriggerType.Alpha:
                     var alphaTrigger = trigger as AlphaTrigger;
                     AlphaInfo alphaInfo = triggerData.alphaInfo;
-
-                    alphaTrigger.SetTargets(_idToObjTrms[data.triggerID].ToArray());
+                    
                     alphaTrigger.SetData(alphaInfo.endValue, alphaInfo.duration);
                     break;
                 case TriggerType.Shake:
                     var shakeTrigger = trigger as ShakeTrigger;
                     ShakeInfo shakeInfo = triggerData.shakeInfo;
                     
-                    shakeTrigger.SetTargets(_idToObjTrms[data.triggerID].ToArray());
                     shakeTrigger.SetData(shakeInfo.strength, shakeInfo.duration);
                     break;
                 case TriggerType.Spawn:
                     var spawnTrigger = trigger as SetEnableTrigger;
                     
-                    spawnTrigger.SetTargets(_idToObjTrms[data.triggerID].ToArray());
                     spawnTrigger.SetData(true, 0.15f);
                     break;
                 case TriggerType.Destroy:
                     var destroyTrigger = trigger as SetEnableTrigger;
                     
-                    destroyTrigger.SetTargets(_idToObjTrms[data.triggerID].ToArray());
                     destroyTrigger.SetData(false, 0.15f);
 
                     break;
@@ -131,7 +141,6 @@ namespace Work.JW.Code.MapLoad
                     var camMoveTrigger = trigger as CameraMoveTrigger;
                     MoveInfo camMoveInfo = triggerData.moveInfo;
                     
-                    camMoveTrigger.SetTargets(_idToObjTrms[data.triggerID].ToArray());
                     camMoveTrigger.SetData(camMoveInfo.moveAmount, camMoveInfo.duration);
                     break;
                 case TriggerType.None:

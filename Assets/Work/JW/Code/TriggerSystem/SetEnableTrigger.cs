@@ -42,6 +42,8 @@ namespace Work.JW.Code.TriggerSystem
 
         private void EnableOrDisable(bool enable)
         {
+            if (_targets.Length <= 0) return;
+            
             if (enable)
             {
                 for (int i = 0; i < _targets.Length; i++)
