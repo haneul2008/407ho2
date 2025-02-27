@@ -77,12 +77,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a829f9cc6b43aeb1d40c6b74a7ae65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnXInput:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3667012829980571108}
+        m_TargetAssemblyTypeName: Work.JW.Code.Entities.EntityRenderer, Assembly-CSharp
+        m_MethodName: FlipController
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _limitYSpeed: 9.8
-  jumpPower: 8
+  jumpPower: 6
   maxJumpTime: 0.5
   minJumpTimeOut: 0.1
   wallCheckerTrm: {fileID: 7521953801355047151}
-  wallCheckDistance: 1.02
+  wallCheckDistance: 0.4
   groundCheckerTrm: {fileID: 3524677675820230413}
   groundCheckDistance: 0.16
   groundBoxWidth: 0.95
@@ -203,7 +218,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.02, y: -0.14}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -213,7 +228,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.65, y: 0.72}
   m_EdgeRadius: 0
 --- !u!1 &6490430343849750237
 GameObject:
@@ -324,12 +339,12 @@ SpriteRenderer:
   m_SortingLayerID: 1399446609
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Sprite: {fileID: -6367560908665664636, guid: 33bf14649c6eb654b8fbeae3bdf69216, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.78125, y: 0.78125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

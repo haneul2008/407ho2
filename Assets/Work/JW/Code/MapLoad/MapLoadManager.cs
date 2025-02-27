@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Work.HN.Code.MapMaker.Objects.Triggers;
 using Work.HN.Code.Save;
+using Work.ISC._0._Scripts.Objects.Frame;
 using Work.JW.Code.TriggerSystem;
 using Object = Work.HN.Code.MapMaker.Objects.Object;
 
@@ -18,7 +20,7 @@ namespace Work.JW.Code.MapLoad
     [Serializable]
     public class MapObjectPrefabAndId
     {
-        public InGameObject prefab;
+        public ObjectFrame prefab;
         public int id;
     }
 
@@ -26,9 +28,11 @@ namespace Work.JW.Code.MapLoad
     {
         private MapData _currentMapData;
 
-        [SerializeField] private TriggerPrefabDataSO _triggerPrefabData;
+        [SerializeField] private TriggerPrefabDataSO triggerPrefabData;
+        [SerializeField] private ObjPrefabDataSO objPrefabData;
+        
         private Dictionary<TriggerType, Trigger> _triggers;
-        // private Dictionary<int, InGameObject> _inGamePrefabs;
+        private Dictionary<int, ObjectFrame> _inGamePrefabs;
         private Dictionary<string, List<Transform>> _idToObjTrms;
 
         private void Awake()
@@ -36,36 +40,48 @@ namespace Work.JW.Code.MapLoad
             _triggers = new Dictionary<TriggerType, Trigger>();
             _idToObjTrms = new Dictionary<string, List<Transform>>();
 
-            _triggerPrefabData.triggerPrefabAndTypes.ForEach(item => _triggers.Add(item.type, item.prefab));
+            objPrefabData.objPrefabAndIds.ForEach(item => _inGamePrefabs.Add(item.id, item.prefab));
+            triggerPrefabData.triggerPrefabAndTypes.ForEach(item => _triggers.Add(item.type, item.prefab));
         }
 
         public void Initialize(MapData mapData)
         {
             _currentMapData = mapData;
+            SetMapObjSpawn(mapData);
         }
 
-        private void SetMapObj()
+        private void SetMapObjSpawn(MapData mapData)
         {
             foreach (var item in _currentMapData.objectList)
             {
+                Transform itemTrm;
+                
                 if (item.triggerData.triggerType != TriggerType.None)
                 {
-                    Transform itemTrm = AddTriggerToObj(item);
+                    itemTrm = AddTriggerToObj(item);
                     itemTrm.position = item.position;
+                    itemTrm.localScale = item.scale;
                 }
-
-                /*//Tile 생성
-                var tileItem = Instantiate(_inGamePrefabs[item.objectId], transform);
+                else
+                {
+                    //생성
+                    var obj = Instantiate(_inGamePrefabs[item.objectId], transform);
+                    itemTrm = obj.transform;
+                    
+                    obj.ID = item.objectId;
+                    obj.transform.position = item.position;
+                    obj.transform.localScale = item.scale;
+                    obj.transform.localRotation = Quaternion.Euler(0, 0, item.angle);
+                    obj.SpriteCompo.color = item.color;
+                    obj.SpriteCompo.sortingOrder = item.sortingOrder;
+                }
 
                 //Trigger Id에 따라 List에 각각 넣기
                 List<Transform> objTrms = _idToObjTrms[item.triggerID];
                 if(objTrms == null) objTrms = new List<Transform>();
 
-                objTrms.Add(tileItem.transform);
+                objTrms.Add(itemTrm);
                 _idToObjTrms.Add(item.triggerID, objTrms);
-
-                //tileItem 설정 하기
-                */
             }
         }
 

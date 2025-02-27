@@ -39,7 +39,7 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
                 _mover.AddForce(new Vector2(0, _mover.GetJumpPower()) * Time.deltaTime);
             }
             
-            if (_mover.GetVelocity().y < 0) _player.ChangeState("FALL");
+            if (_mover.GetVelocity().y < -0.05f) _player.ChangeState("FALL");
         }
 
         public override void Exit()
