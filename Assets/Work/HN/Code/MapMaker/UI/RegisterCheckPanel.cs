@@ -14,14 +14,9 @@ namespace Work.HN.Code.MapMaker.UI
             gameObject.SetActive(false);
         }
 
-        public void PopUp()
+        public void Active(bool isActive)
         {
-            gameObject.SetActive(true);
-        }
-
-        public void Disable()
-        {
-            gameObject.SetActive(false);
+            gameObject.SetActive(isActive);
         }
     }
 }

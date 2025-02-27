@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Work.HN.Code.EventSystems;
@@ -11,7 +12,29 @@ namespace Work.HN.Code.Save
         [SerializeField] private MapMakerManager mapMaker;
         [SerializeField] private GameEventChannelSO mapMakerChannel;
         [SerializeField] private SaveManager saveManager;
-        
+
+        private string _mapName;
+
+        private void Awake()
+        {
+            mapMakerChannel.AddListener<MapNameChangeEvent>(HandleMapNameChanged);
+        }
+
+        private void OnDestroy()
+        {
+            mapMakerChannel.RemoveListener<MapNameChangeEvent>(HandleMapNameChanged);
+        }
+
+        private void Start()
+        {
+            _mapName = saveManager.GetMapName();
+        }
+
+        private void HandleMapNameChanged(MapNameChangeEvent evt)
+        {
+            _mapName = evt.mapName;
+        }
+
         public bool SaveData()
         {
             List<EditorObject> objects = mapMaker.GetAllObjects();
@@ -21,6 +44,8 @@ namespace Work.HN.Code.Save
                 Debug.LogWarning("No objects found!");
                 return false;
             }
+
+            if (!saveManager.CanSaveData(_mapName)) return false;
 
             for (int i = 0; i < objects.Count; i++)
             {
