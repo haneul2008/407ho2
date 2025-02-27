@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using Work.HN.Code.Save;
 using Work.ISC._0._Scripts.Save.ExelData;
 
@@ -10,8 +12,14 @@ namespace Work.ISC._0._Scripts.UI.Data
         [SerializeField] private DataPanel dataPanel;
 
         public static int Id = 1;
-        
-        
+
+        private List<DataPanel> panels;
+
+        private void Awake()
+        {
+            panels = new List<DataPanel>();
+        }
+
         public void PanelLoad()
         {
             saveData.DataLoad("B2:B1000", SplitData);
@@ -19,6 +27,10 @@ namespace Work.ISC._0._Scripts.UI.Data
 
         private void SplitData(string obj)
         {
+            if (panels.Count > 0)
+            {
+                RemoveAllData();
+            }
             Id = 1;
             string[] datas = obj.Split("\n");
 
@@ -27,9 +39,21 @@ namespace Work.ISC._0._Scripts.UI.Data
                 Id++;
                 DataPanel panel = Instantiate(dataPanel, transform);
                 panel.DataSetup(data, ConvertName(data), Id);
+                panels.Add(panel);
                 Debug.Log(Id);
             }
         }
+
+        private void RemoveAllData()
+        {
+            panels.Clear();
+
+            foreach (Transform trm in transform)
+            {
+                Destroy(trm.gameObject);
+            }
+        }
+
 
         private string ConvertName(string data)
         {
