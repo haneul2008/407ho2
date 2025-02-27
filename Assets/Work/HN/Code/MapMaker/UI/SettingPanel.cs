@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using Work.HN.Code.EventSystems;
+using Work.HN.Code.Save;
 
 namespace Work.HN.Code.MapMaker.UI
 {
@@ -9,6 +10,7 @@ namespace Work.HN.Code.MapMaker.UI
     {
         [SerializeField] private TMP_InputField nameField;
         [SerializeField] private GameEventChannelSO mapMakerChannel;
+        [SerializeField] private SaveManager saveManager;
 
         private void Awake()
         {
@@ -31,6 +33,11 @@ namespace Work.HN.Code.MapMaker.UI
         public void Active(bool isActive)
         {
             gameObject.SetActive(isActive);
+
+            if (isActive)
+            {
+                nameField.text = saveManager.GetMapName();
+            }
         }
     }
 }

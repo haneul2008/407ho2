@@ -2008,7 +2008,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 288963875}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 507496518}
+        m_TargetAssemblyTypeName: Work.HN.Code.MapMaker.UI.SaveMapDataPanel, Assembly-CSharp
+        m_MethodName: Active
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &288963875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2449,6 +2461,7 @@ GameObject:
   - component: {fileID: 507496514}
   - component: {fileID: 507496517}
   - component: {fileID: 507496516}
+  - component: {fileID: 507496518}
   m_Layer: 5
   m_Name: SaveMapDataPanel
   m_TagString: Untagged
@@ -2514,6 +2527,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507496513}
   m_CullTransparentMesh: 1
+--- !u!114 &507496518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507496513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39ad220e6ff44eebadd17893df39d6c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  descText: {fileID: 96974242}
+  objectInvoker: {fileID: 245144891}
+  checkBtn: {fileID: 626487136}
 --- !u!1 &509962336
 GameObject:
   m_ObjectHideFlags: 0
@@ -2919,7 +2947,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 626487139}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 507496518}
+        m_TargetAssemblyTypeName: Work.HN.Code.MapMaker.UI.SaveMapDataPanel, Assembly-CSharp
+        m_MethodName: Active
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &626487139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3187,6 +3227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameField: {fileID: 1053114083}
   mapMakerChannel: {fileID: 11400000, guid: 644dbe292e74b04459eda341a1d54887, type: 2}
+  saveManager: {fileID: 334059714}
 --- !u!1 &657661679
 GameObject:
   m_ObjectHideFlags: 0

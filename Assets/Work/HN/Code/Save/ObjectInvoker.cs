@@ -46,7 +46,7 @@ namespace Work.HN.Code.Save
             }
 
             if (!saveManager.CanSaveData(_mapName)) return false;
-
+            
             for (int i = 0; i < objects.Count; i++)
             {
                 ObjectSaveEvent evt = MapMakerEvent.ObjectSaveEvent;
@@ -55,6 +55,8 @@ namespace Work.HN.Code.Save
                 evt.isFinish = i == objects.Count - 1;
                 mapMakerChannel.RaiseEvent(evt);
             }
+            
+            saveManager.SetMapName(_mapName);
             
             return true;
         }
