@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4328f560c4e84dae94073b52c404dca3, type: 3}
+  m_Name: TriggerList
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 1534417949499907600, guid: defe15aa76caea54fb77d7ebca867a27, type: 3}
+  - {fileID: -702115814510283375, guid: 95db5a1b93dc654489f17abb5cd4497e, type: 3}
+  - {fileID: 547547525615856361, guid: ef1f091799d9b514280f7133b9a7ba64, type: 3}
+  - {fileID: 7564448365827451784, guid: fed6d25ba2b4d9c47b709c3ce39e5235, type: 3}
+  - {fileID: 747176489705168068, guid: 8f3c8f2c06b217c4a9ad22c081f35428, type: 3}
+  - {fileID: 6419488936167225051, guid: d3422031f78832c418c1ba859e28f3d0, type: 3}
+  objectPath: Assets/Work/HN/04.Prefab/Triggers
