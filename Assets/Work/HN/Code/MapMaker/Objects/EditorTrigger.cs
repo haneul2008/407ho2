@@ -89,5 +89,10 @@ namespace Work.HN.Code.MapMaker.Objects
             
             triggerNameText.text = TriggerType.ToString();
         }
+
+        public int GetTargetID()
+        {
+            return _myInfo.ID;
+        }
     }
 }
