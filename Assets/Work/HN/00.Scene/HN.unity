@@ -2692,9 +2692,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 245144891}
-        m_TargetAssemblyTypeName: Work.HN.Code.Save.ObjectInvoker, Assembly-CSharp
-        m_MethodName: RegisterData
+      - m_Target: {fileID: 779870826}
+        m_TargetAssemblyTypeName: Work.HN.Code.MapMaker.UI.RegisterCheckPanel, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4163,6 +4163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f878f1336149c5af13e4d48d78971d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  failText: {fileID: 1462973375}
+  objectInvoker: {fileID: 245144891}
 --- !u!1 &801023758
 GameObject:
   m_ObjectHideFlags: 0
@@ -4617,6 +4619,8 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: e78818ae570efcf44af0a5bcb93951d9, type: 2}
   mapMakerCanvas: {fileID: 1391083622}
   mapMakerManager: {fileID: 1891889688}
+  startPointID: 4
+  endPointID: 5
 --- !u!1 &885482231
 GameObject:
   m_ObjectHideFlags: 0
@@ -10627,6 +10631,8 @@ MonoBehaviour:
   mapMakerChannel: {fileID: 11400000, guid: 644dbe292e74b04459eda341a1d54887, type: 2}
   inputReader: {fileID: 11400000, guid: e78818ae570efcf44af0a5bcb93951d9, type: 2}
   mapMakerCanvas: {fileID: 1391083622}
+  startPointID: 4
+  endPointID: 5
 --- !u!1 &1894337429
 GameObject:
   m_ObjectHideFlags: 0
