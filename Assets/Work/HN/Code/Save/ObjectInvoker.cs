@@ -7,6 +7,12 @@ using Work.HN.Code.MapMaker.Objects;
 
 namespace Work.HN.Code.Save
 {
+    public enum ErrorType
+    {
+        SameName,
+        EmptyName
+    }
+    
     public class ObjectInvoker : MonoBehaviour
     {
         [SerializeField] private MapMakerManager mapMaker;
@@ -35,7 +41,7 @@ namespace Work.HN.Code.Save
             _mapName = evt.mapName;
         }
 
-        public bool SaveData()
+        public bool SaveData(Action<ErrorType> onSaveFail = null)
         {
             List<EditorObject> objects = mapMaker.GetAllObjects();
 
@@ -45,18 +51,31 @@ namespace Work.HN.Code.Save
                 return false;
             }
 
-            if (!saveManager.CanSaveData(_mapName)) return false;
+            if (string.IsNullOrEmpty(_mapName))
+            {
+                onSaveFail?.Invoke(ErrorType.EmptyName);
+                return false;
+            }
+            
+            if (!saveManager.CanSaveData(_mapName))
+            {
+                onSaveFail?.Invoke(ErrorType.SameName);
+                return false;
+            }
             
             for (int i = 0; i < objects.Count; i++)
             {
+                if (i == 0)
+                {
+                    saveManager.SetMapName(_mapName);
+                    saveManager.ClearObjects();
+                }
+                
                 ObjectSaveEvent evt = MapMakerEvent.ObjectSaveEvent;
                 evt.targetObject = objects[i];
-                evt.isInitialize = i == 0;
                 evt.isFinish = i == objects.Count - 1;
                 mapMakerChannel.RaiseEvent(evt);
             }
-            
-            saveManager.SetMapName(_mapName);
             
             return true;
         }
