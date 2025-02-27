@@ -19,8 +19,9 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
         [SerializeField] private InputReaderSO inputReader;
         [SerializeField] private MapMakerCanvas mapMakerCanvas;
         [SerializeField] private MapMakerManager mapMakerManager;
-        
-        public EditorObject TargetObject { get; set; }
+        [SerializeField] private int startPointID = 4, endPointID = 5;
+
+        public EditorObject TargetObject { get; private set; }
         private Vector2 _moveAmount;
 
         private void HandleClickEvent()
@@ -34,8 +35,17 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             Vector2 targetPos = new Vector2(Mathf.Round(mousePos.x), Mathf.Round(mousePos.y));
 
             if (ContainsBlock(TargetObject.ID, targetPos)) return;
+            if(IsAlreadySpawnedStartOrEnd()) return;
                 
             SpawnObject(targetPos);
+        }
+
+        private bool IsAlreadySpawnedStartOrEnd()
+        {
+            bool alreadyHasStart = TargetObject.ID == startPointID && mapMakerManager.HasStart();
+            bool alreadyHasEnd = TargetObject.ID == endPointID && mapMakerManager.HasEnd();
+            
+            return alreadyHasStart || alreadyHasEnd;
         }
 
         private void SpawnObject(Vector2 targetPos)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using Work.HN.Code.EventSystems;
 using Work.HN.Code.MapMaker.Core;
 using Work.HN.Code.MapMaker.Objects;
@@ -15,7 +16,7 @@ namespace Work.HN.Code.Save
     public struct ObjectData
     {
         public int objectId;
-        public Vector2 position;
+        public Vector3 position;
         public string triggerID;
         public Vector3 scale;
         public float angle;
@@ -28,6 +29,7 @@ namespace Work.HN.Code.Save
     [Serializable]
     public class TriggerData
     {
+        public int targetID;
         public TriggerType triggerType;
         public MoveInfo moveInfo;
         public AlphaInfo alphaInfo;
@@ -54,6 +56,8 @@ namespace Work.HN.Code.Save
     
     public class SaveManager : MonoBehaviour
     {
+        public UnityEvent<MapData> OnDataLoaded;
+        
         [SerializeField] private GameEventChannelSO mapMakerChannel;
         [SerializeField] private SaveData saveData;
         
@@ -75,8 +79,7 @@ namespace Work.HN.Code.Save
 
                 if (_dataReceiver.IsCreatedNewMap)
                 {
-                    _mapData = new MapData();
-                    _mapData.mapName = "NewMap";
+                    CreateNewMap();
                 }
                 else
                 {
@@ -86,11 +89,21 @@ namespace Work.HN.Code.Save
             else
             {
                 _userData = new UserBuiltInData();
-                _mapData = new MapData();
-                _mapData.mapName = "NewMap";
+                CreateNewMap();
             }
             
             mapMakerChannel.AddListener<ObjectSaveEvent>(HandleObjectSave);
+        }
+
+        private void Start()
+        {
+            OnDataLoaded?.Invoke(_mapData);
+        }
+
+        private void CreateNewMap()
+        {
+            _mapData = new MapData();
+            _mapData.mapName = "NewMap";
         }
 
         private void OnDestroy()
@@ -100,12 +113,12 @@ namespace Work.HN.Code.Save
 
         private void HandleObjectSave(ObjectSaveEvent evt)
         {
+            SaveObject(evt.targetObject);
+            
             if (evt.isFinish)
             {
                 FinishData();
             }
-            
-            SaveObject(evt.targetObject);
         }
 
         private void FinishData()
@@ -173,6 +186,7 @@ namespace Work.HN.Code.Save
             {
                 newData.isTrigger = true;
                 newData.triggerData = new TriggerData();
+                newData.triggerData.targetID = trigger.GetTargetID();
                 newData.triggerData.triggerType = trigger.TriggerType;
                 SetInfo(newData, trigger);
             }

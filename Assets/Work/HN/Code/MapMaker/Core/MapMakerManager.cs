@@ -24,6 +24,7 @@ namespace Work.HN.Code.MapMaker.Core
         [SerializeField] private GameEventChannelSO mapMakerChannel;
         [SerializeField] private InputReaderSO inputReader;
         [SerializeField] private MapMakerCanvas mapMakerCanvas;
+        [SerializeField] private int startPointID = 4, endPointID = 5;
 
         private bool _canSelectEditObject;
         private List<EditableMono> _editorList = new();
@@ -161,6 +162,29 @@ namespace Work.HN.Code.MapMaker.Core
             CurrentObjectChangeEvent currentObjEvt = MapMakerEvent.CurrentObjectChangeEvent;
             currentObjEvt.currentObject = targetObj;
             mapMakerChannel.RaiseEvent(currentObjEvt);
+        }
+
+        public bool HasStart()
+        {
+            return CheckStartOrEnd(startPointID);
+        }
+
+        public bool HasEnd()
+        {
+            return CheckStartOrEnd(endPointID);
+        }
+
+        private bool CheckStartOrEnd(int targetID)
+        {
+            foreach (EditorObject obj in GetAllObjects())
+            {
+                if (obj.ID == targetID)
+                {
+                    return true;
+                }
+            }
+            
+            return false;
         }
 
         public List<EditorObject> GetObjects(int id)

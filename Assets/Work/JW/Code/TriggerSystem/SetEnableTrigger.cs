@@ -16,6 +16,8 @@ namespace Work.JW.Code.TriggerSystem
 
         public override void TriggerEvent(Entity entity)
         {
+            if (_targets == null) return;
+            
             EnableOrDisable(isEnable);
         }
 
@@ -42,8 +44,6 @@ namespace Work.JW.Code.TriggerSystem
 
         private void EnableOrDisable(bool enable)
         {
-            if (_targets == null) return;
-            
             if (enable)
             {
                 for (int i = 0; i < _targets.Length; i++)
