@@ -10,7 +10,8 @@ namespace Work.HN.Code.Save
     public enum ErrorType
     {
         SameName,
-        EmptyName
+        EmptyName,
+        NoneStartOrEnd
     }
     
     public class ObjectInvoker : MonoBehaviour
@@ -62,6 +63,12 @@ namespace Work.HN.Code.Save
                 onSaveFail?.Invoke(ErrorType.SameName);
                 return false;
             }
+
+            if (!mapMaker.HasStart() || !mapMaker.HasEnd())
+            {
+                onSaveFail?.Invoke(ErrorType.NoneStartOrEnd);
+                return false;
+            }
             
             for (int i = 0; i < objects.Count; i++)
             {
@@ -79,7 +86,7 @@ namespace Work.HN.Code.Save
             
             return true;
         }
-        
+
         public void RegisterData()
         {
             if(!SaveData()) return;

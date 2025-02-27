@@ -16,7 +16,7 @@ namespace Work.HN.Code.Save
     public struct ObjectData
     {
         public int objectId;
-        public Vector2 position;
+        public Vector3 position;
         public string triggerID;
         public Vector3 scale;
         public float angle;
@@ -92,9 +92,12 @@ namespace Work.HN.Code.Save
                 CreateNewMap();
             }
             
-            OnDataLoaded?.Invoke(_mapData);
-            
             mapMakerChannel.AddListener<ObjectSaveEvent>(HandleObjectSave);
+        }
+
+        private void Start()
+        {
+            OnDataLoaded?.Invoke(_mapData);
         }
 
         private void CreateNewMap()
@@ -110,12 +113,12 @@ namespace Work.HN.Code.Save
 
         private void HandleObjectSave(ObjectSaveEvent evt)
         {
+            SaveObject(evt.targetObject);
+            
             if (evt.isFinish)
             {
                 FinishData();
             }
-            
-            SaveObject(evt.targetObject);
         }
 
         private void FinishData()

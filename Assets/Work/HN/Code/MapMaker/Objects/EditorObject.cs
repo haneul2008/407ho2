@@ -9,6 +9,7 @@ namespace Work.HN.Code.MapMaker.Objects
     public class EditorObject : Object
     {
         public event Action<EditorObject, InfoType> OnInfoChange;
+        public event Action<EditorObject> OnSpawned;
         
         public Collider2D Collider { get; private set; }
         public ObjectInfoManager InfoManager { get; private set; }
@@ -18,15 +19,15 @@ namespace Work.HN.Code.MapMaker.Objects
 
         public override void Spawn()
         {
-            //gameObject.name = $"{ObjectData.name}{transform.position}";
-            
             Collider = GetComponent<Collider2D>();
             SpriteRenderer = GetComponent<SpriteRenderer>();
             
             InfoManager = new ObjectInfoManager(transform.localScale, transform.position,
                 transform.eulerAngles.z, SpriteRenderer.color, null, SpriteRenderer.sortingOrder, notChangeableInfos);
-
+            
             InfoManager.OnInfoChange += HandleInfoChange;
+            
+            OnSpawned?.Invoke(this);
         }
 
         protected virtual void HandleInfoChange(InfoType type, object info)

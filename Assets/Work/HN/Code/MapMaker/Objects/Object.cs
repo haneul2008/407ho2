@@ -9,13 +9,6 @@ namespace Work.HN.Code.MapMaker.Objects
     {
         [field: SerializeField] public int ID { get; protected set; }
 
-        private List<int> _triggerID = new List<int>();
-
-        public void AddTriggerID(int id)
-        {
-            _triggerID.Add(id);
-        }
-        
         public abstract void Spawn();
     }
 }
