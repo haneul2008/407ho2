@@ -27,7 +27,8 @@ namespace Work.JW.Code.TriggerSystem
             
             foreach (var item in _targets)
             {
-                item.DOMove(toPos, _duration).SetEase(Ease.OutCubic);
+                Vector3 movePos = item.position + (Vector3)toPos;
+                item.DOMove(movePos, _duration).SetEase(Ease.OutCubic);
             }
         }
 
