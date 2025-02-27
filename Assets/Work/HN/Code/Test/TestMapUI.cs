@@ -1,0 +1,32 @@
+using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using Work.HN.Code.Save;
+
+namespace Work.HN.Code.Test
+{
+    public class TestMapUI : MonoBehaviour
+    {
+        [SerializeField] private TextMeshProUGUI mapNameText, registeredText;
+        [SerializeField] private GameObject editBtn;
+
+        private string _mapName;
+
+        public void Initialize(MapData mapData)
+        {
+            _mapName = mapData.mapName;
+            
+            mapNameText.text = _mapName;
+            registeredText.text = $"registered : {mapData.isRegistered}";
+            
+            editBtn.SetActive(!mapData.isRegistered);
+        }
+        
+        public void OnEditBtnClick()
+        {
+            DataReceiver.Instance.SetMapEditData(_mapName);
+            SceneManager.LoadScene("HN");
+        }
+    }
+}

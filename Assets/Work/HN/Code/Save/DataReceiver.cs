@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace Work.HN.Code.Save
@@ -41,6 +42,12 @@ namespace Work.HN.Code.Save
         {
             IsCreatedNewMap = false;
             UserMapDataSequence = sequence;
+        }
+
+        public UserBuiltInData GetUserMapData()
+        {
+            string json = File.ReadAllText(Path);
+            return JsonUtility.FromJson<UserBuiltInData>(json);
         }
     }
 }

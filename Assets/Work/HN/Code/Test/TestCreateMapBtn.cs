@@ -5,7 +5,7 @@ using Work.HN.Code.Save;
 
 namespace Work.HN.Code.Test
 {
-    public class CreateMapBtn : MonoBehaviour
+    public class TestCreateMapBtn : MonoBehaviour
     {
         public void OnClick()
         {
