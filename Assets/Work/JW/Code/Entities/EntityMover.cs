@@ -1,11 +1,13 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Work.JW.Code.Entities
 {
     public class EntityMover : MonoBehaviour, IEntityComponent
     {
+        public UnityEvent<float> OnXInput;
         private Rigidbody2D _rigidCompo;
 
         public bool CanMove { get; set; } = true;
@@ -56,6 +58,7 @@ namespace Work.JW.Code.Entities
         public void SetMovementX(float xMovement)
         {
             _movementX = Mathf.Abs(xMovement) > 0 ? Mathf.Sign(xMovement) : 0;
+            OnXInput?.Invoke(_movementX);
         }
 
         public void StopImmediately(bool isYInclude)

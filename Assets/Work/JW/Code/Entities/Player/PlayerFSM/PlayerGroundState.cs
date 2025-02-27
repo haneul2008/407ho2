@@ -1,4 +1,5 @@
-﻿using Work.JW.Code.Animators;
+﻿using UnityEngine;
+using Work.JW.Code.Animators;
 using Work.JW.Code.Entities.FSM;
 
 namespace Work.JW.Code.Entities.Player.PlayerFSM
@@ -21,9 +22,19 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
             _player.InputReader.OnJumpPressEvent += HandleJumpKeyPress;
         }
 
+        public override void Update()
+        {
+            base.Update();
+            if (_mover.IsGroundDetected() == false && _mover.CanMove)
+            {
+                _player.ChangeState("FALL");
+            }
+        }
+
         private void HandleJumpKeyPress()
         {
-            _player.ChangeState("JUMP");
+            if(_mover.IsGroundDetected())
+                _player.ChangeState("JUMP");
         }
 
         public override void Exit()
