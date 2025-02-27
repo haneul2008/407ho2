@@ -65,6 +65,7 @@ namespace Work.HN.Code.Save
         private UserBuiltInData _userData;
         private DataReceiver _dataReceiver;
         private string _path;
+        private MapData _capacityData;
 
         private void Awake()
         {
@@ -153,10 +154,17 @@ namespace Work.HN.Code.Save
             _mapData.isRegistered = true;
             
             string mapDataJson = JsonUtility.ToJson(_mapData);
-            saveData.DataSave(mapDataJson);
+            saveData.DataSave(mapDataJson, HandleFailSave);
             
             string userDataJson = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, userDataJson);
+        }
+
+        private void HandleFailSave(ErrorType type)
+        {
+            SaveFailEvent evt = MapMakerEvent.SaveFailEvent;
+            evt.errorType = type;
+            mapMakerChannel.RaiseEvent(evt);
         }
 
         public bool CanSaveData(string mapName)
@@ -166,6 +174,13 @@ namespace Work.HN.Code.Save
         }
 
         private void SaveObject(EditorObject targetObject)
+        {
+            ObjectData newData = GetNewObjectData(targetObject);
+
+            _mapData.objectList.Add(newData);
+        }
+
+        private ObjectData GetNewObjectData(EditorObject targetObject)
         {
             int? triggerId = targetObject.GetTriggerID();
             
@@ -190,8 +205,8 @@ namespace Work.HN.Code.Save
                 newData.triggerData.triggerType = trigger.TriggerType;
                 SetInfo(newData, trigger);
             }
-            
-            _mapData.objectList.Add(newData);
+
+            return newData;
         }
 
         private void SetInfo(ObjectData newData, EditorTrigger trigger)
@@ -231,6 +246,22 @@ namespace Work.HN.Code.Save
         public void ClearObjects()
         {
             _mapData.objectList.Clear();
+        }
+        
+        public int GetMapCapacity(List<EditorObject> objects)
+        {
+            _capacityData ??= new MapData();
+            
+            _capacityData.objectList.Clear();
+            _capacityData.mapName = _mapData.mapName;
+            _capacityData.isRegistered = false;
+
+            foreach (EditorObject obj in objects)
+            {
+                _capacityData.objectList.Add(GetNewObjectData(obj));
+            }
+            
+            return JsonUtility.ToJson(_capacityData).Length;
         }
 
         [ContextMenu("TestLoad")]

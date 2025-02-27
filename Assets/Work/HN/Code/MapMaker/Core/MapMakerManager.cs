@@ -70,7 +70,6 @@ namespace Work.HN.Code.MapMaker.Core
         private void HandleObjectDeleted(ObjectDeleteEvent evt)
         {
             EditorObject targetObject = evt.targetObject;
-            print("deleted");
             _objectInfoPairs.Remove(targetObject);
             _objectColliderPairs.Remove(targetObject.Collider);
             _objectIDPairs.Remove(targetObject.ID);

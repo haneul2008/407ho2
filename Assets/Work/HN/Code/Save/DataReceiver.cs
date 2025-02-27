@@ -46,8 +46,15 @@ namespace Work.HN.Code.Save
 
         public UserBuiltInData GetUserMapData()
         {
-            string json = File.ReadAllText(Path);
-            return JsonUtility.FromJson<UserBuiltInData>(json);
+            if (File.Exists(Path))
+            {
+                string json = File.ReadAllText(Path);
+                return JsonUtility.FromJson<UserBuiltInData>(json);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
