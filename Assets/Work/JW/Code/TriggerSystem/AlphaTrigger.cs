@@ -13,7 +13,10 @@ namespace Work.JW.Code.TriggerSystem
         
         public override void TriggerEvent(Entity entity)
         {
-            AlphaChange();
+            if (_targets == null) return;
+            if(_isTrigger) return;
+
+            AlphaChange(entity);
         }
 
         public override void SetTargets(Transform[] targets)
@@ -33,16 +36,20 @@ namespace Work.JW.Code.TriggerSystem
             fadeTime = duration;
         }
 
-        public void AlphaChange()
+        public void AlphaChange(Entity entity)
         {
+            _isTrigger = true;
+            
             Color color = targetSpr.color;
             color.a = alphaValue;
-            
-            if (_targets == null) return;
 
             foreach (var item in _spriters)
             {
-                item.DOColor(color, fadeTime);
+                item.DOColor(color, fadeTime).OnComplete(() =>
+                {
+                    _isTrigger = false;
+                    base.TriggerEvent(entity);
+                });
             }
         }
     }

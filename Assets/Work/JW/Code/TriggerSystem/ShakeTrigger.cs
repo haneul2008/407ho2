@@ -17,6 +17,8 @@ namespace Work.JW.Code.TriggerSystem
         {
             _impulseSource.DefaultVelocity = new Vector3(-1, -1, 0);
             _impulseSource.GenerateImpulse();
+            
+            base.TriggerEvent(entity);
         }
 
         public void SetData(float power, float duration)
