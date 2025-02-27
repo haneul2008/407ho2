@@ -38,6 +38,8 @@ namespace Work.JW.Code.TriggerSystem
             Color color = targetSpr.color;
             color.a = alphaValue;
             
+            if (_targets.Length <= 0) return;
+
             foreach (var item in _spriters)
             {
                 item.DOColor(color, fadeTime);

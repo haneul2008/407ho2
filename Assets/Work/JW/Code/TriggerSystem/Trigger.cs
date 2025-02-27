@@ -9,6 +9,7 @@ namespace Work.JW.Code.TriggerSystem
     [RequireComponent(typeof(BoxCollider2D))]
     public abstract class Trigger : MonoBehaviour, ITriggerEvent
     {
+        public string ID { get; set; }
         [SerializeField] private Vector2 triggerSize;
         private BoxCollider2D _collider;
         protected Transform[] _targets;
