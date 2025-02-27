@@ -9,7 +9,8 @@ namespace Work.JW.Code.TriggerSystem
     [RequireComponent(typeof(BoxCollider2D))]
     public abstract class Trigger : MonoBehaviour, ITriggerEvent
     {
-        public string ID { get; set; }
+        public int TargetID { get; set; } //누굴 조종할지의 ID
+        public int? TriggerID { get; set; } //자신의 트리거 ID
         [SerializeField] private Vector2 triggerSize;
         private BoxCollider2D _collider;
         protected Transform[] _targets;
