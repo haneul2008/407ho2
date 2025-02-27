@@ -18,7 +18,6 @@ MonoBehaviour:
   OnCollideEndEvent:
     m_PersistentCalls:
       m_Calls: []
-  ObjectId: 1
   ObjectName: SpikeObject
-  ObjectImage: {fileID: -5177388603050735206, guid: cc35afd292fc349128b36a291fb3a165, type: 3}
+  ObjectImage: {fileID: 21300000, guid: 5c57302cd3d49814d9b75b449034472f, type: 3}
   description: "\uAC00\uC2DC\uC624\uBE0C\uC81D\uD2B8"

@@ -19,5 +19,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ObjectName: ArrivalPointObject
-  ObjectImage: {fileID: 0}
+  ObjectImage: {fileID: 21300000, guid: cef6baf7fb34e4646a386620e1b035af, type: 3}
   description: "\uAC8C\uC784\uD074\uB9AC\uC5B4\uC624\uBE0C\uC81D\uD2B8"
