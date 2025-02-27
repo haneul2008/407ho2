@@ -122,6 +122,8 @@ namespace Work.JW.Code.MapLoad
             TriggerData triggerData = data.triggerData;
             TriggerType type = data.triggerData.triggerType;
             var trigger = Instantiate(_triggers[type], transform);
+            
+            trigger.TargetID = triggerData.targetID;
             trigger.TriggerID = string.IsNullOrEmpty(data.triggerID) ? null : int.Parse(data.triggerID);
             
             switch (type)
@@ -129,43 +131,36 @@ namespace Work.JW.Code.MapLoad
                 case TriggerType.ObjectMove:
                     var moveTrigger = trigger as MoveObjTrigger;
                     MoveInfo moveInfo = triggerData.moveInfo;
-                    trigger.TargetID = moveInfo.ID;
-                    Debug.Log(moveInfo.ID);
                     
                     moveTrigger.SetData(moveInfo.moveAmount, moveInfo.duration);
                     break;
                 case TriggerType.Alpha:
                     var alphaTrigger = trigger as AlphaTrigger;
                     AlphaInfo alphaInfo = triggerData.alphaInfo;
-                    trigger.TargetID = alphaInfo.ID;
                     
                     alphaTrigger.SetData(alphaInfo.endValue, alphaInfo.duration);
                     break;
                 case TriggerType.Shake:
                     var shakeTrigger = trigger as ShakeTrigger;
                     ShakeInfo shakeInfo = triggerData.shakeInfo;
-                    trigger.TargetID = shakeInfo.ID;
                     
                     shakeTrigger.SetData(shakeInfo.strength, shakeInfo.duration);
                     break;
                 case TriggerType.Spawn:
                     var spawnTrigger = trigger as SetEnableTrigger;
                     SpawnOrDestroyInfo spawnInfo = triggerData.spawnOrDestroyInfo;
-                    trigger.TargetID = spawnInfo.ID;
                     
                     spawnTrigger.SetData(true, 0.15f);
                     break;
                 case TriggerType.Destroy:
                     var destroyTrigger = trigger as SetEnableTrigger;
                     SpawnOrDestroyInfo destroyInfo = triggerData.spawnOrDestroyInfo;
-                    trigger.TargetID = destroyInfo.ID;
                     
                     destroyTrigger.SetData(false, 0.15f);
                     break;
                 case TriggerType.CameraMove:
                     var camMoveTrigger = trigger as CameraMoveTrigger;
                     MoveInfo camMoveInfo = triggerData.moveInfo;
-                    trigger.TargetID = camMoveInfo.ID;
                     
                     camMoveTrigger.SetData(camMoveInfo.moveAmount, camMoveInfo.duration);
                     break;

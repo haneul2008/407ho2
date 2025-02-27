@@ -14,14 +14,18 @@ namespace Work.JW.Code.TriggerSystem
         [SerializeField] private Vector2 triggerSize;
         private BoxCollider2D _collider;
         protected Transform[] _targets;
+        protected bool _isTrigger;
         
         protected virtual void Awake()
         {
             _collider = GetComponent<BoxCollider2D>();
             _collider.isTrigger = true;
         }
-        
-        public abstract void TriggerEvent(Entity entity);
+
+        public virtual void TriggerEvent(Entity entity)
+        {
+            Destroy(gameObject);
+        }
 
         public virtual void SetTargets(Transform[] targets)
         {

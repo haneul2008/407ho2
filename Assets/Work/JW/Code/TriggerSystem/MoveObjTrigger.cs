@@ -12,7 +12,10 @@ namespace Work.JW.Code.TriggerSystem
         
         public override void TriggerEvent(Entity entity)
         {
-            MovePosition();
+            if (_targets == null) return;
+            if(_isTrigger) return;
+            
+            MovePosition(entity);
         }
 
         public void SetData(Vector2 pos, float duration)
@@ -21,14 +24,18 @@ namespace Work.JW.Code.TriggerSystem
             toPos = pos;
         }
 
-        public void MovePosition()
+        public void MovePosition(Entity entity)
         {
-            if (_targets == null) return;
+            _isTrigger = true;
             
             foreach (var item in _targets)
             {
                 Vector3 movePos = item.position + (Vector3)toPos;
-                item.DOMove(movePos, _duration).SetEase(Ease.OutCubic);
+                item.DOMove(movePos, _duration).SetEase(Ease.OutCubic).OnComplete(() =>
+                {
+                    _isTrigger = false;
+                    base.TriggerEvent(entity);
+                });
             }
         }
 
