@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using MaximovInk.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using Work.HN.Code.Save;
 
 namespace Work.ISC._0._Scripts.UI.Button
 {
@@ -41,6 +43,12 @@ namespace Work.ISC._0._Scripts.UI.Button
             Vector3 dir = Camera.main.WorldToScreenPoint(new Vector3(30, 0, 0));
             float xPos = dir.x;
             optionPanel.transform.DOMoveX(xPos, 0.5f);
+        }
+
+        public void MapMake()
+        {
+            DataReceiver.Instance.CreateNewMap();
+            SceneManager.LoadScene("HN");
         }
     }
 }
