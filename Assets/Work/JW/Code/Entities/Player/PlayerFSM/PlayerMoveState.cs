@@ -12,6 +12,7 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
 
         public override void Update()
         {
+            base.Update();
             float xMovement = _player.InputReader.MoveDir.x;
             float facingDir = _renderer.FacingDirection;
             
