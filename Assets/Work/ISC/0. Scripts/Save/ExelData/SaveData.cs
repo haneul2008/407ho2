@@ -13,7 +13,7 @@ namespace Work.ISC._0._Scripts.Save.ExelData
 
         private readonly string _loadPath = "https://docs.google.com/spreadsheets/d/1kz1M84oW3nPViQVUkclT1XkeLQTZhVLQOq5iO0UjI6I";
 
-        public const int maxCapacity = 50000;
+        public const int maxCapacity = 30000;
         
         public UnityWebRequest Data { get; private set; }
 
@@ -51,6 +51,7 @@ namespace Work.ISC._0._Scripts.Save.ExelData
             else
             {
                 Debug.LogError("Save Error. Check your savePath or form FieldName");
+                Debug.LogError($"Save Error: {www.error}");
                 onFailed?.Invoke(ErrorType.FailRequest);
             }
         }

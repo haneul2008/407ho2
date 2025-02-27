@@ -39,6 +39,8 @@ namespace Work.HN.Code.MapMaker.UI
         {
             _isRegistered = false;
             
+            print(evt.errorType);
+            
             if (evt.errorType == ErrorType.ExceededMaxCapacity)
             {
                 failText.text = "맵 크기가 최대 크기보다 큽니다.";
@@ -60,7 +62,7 @@ namespace Work.HN.Code.MapMaker.UI
         {
             if(_isRegistered) return;
             
-            if (!objectInvoker.SaveData())
+            if (!objectInvoker.SaveData(type => print(type)))
             {
                 failText.text = "내보내기 실패";
                 
