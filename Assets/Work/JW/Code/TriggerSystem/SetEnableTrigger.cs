@@ -42,7 +42,7 @@ namespace Work.JW.Code.TriggerSystem
 
         private void EnableOrDisable(bool enable)
         {
-            if (_targets.Length <= 0) return;
+            if (_targets == null) return;
             
             if (enable)
             {

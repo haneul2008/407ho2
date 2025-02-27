@@ -18,6 +18,6 @@ MonoBehaviour:
   OnCollideEndEvent:
     m_PersistentCalls:
       m_Calls: []
-  ObjectName: 
-  ObjectImage: {fileID: 0}
+  ObjectName: StartPointObject
+  ObjectImage: {fileID: 21300000, guid: 9562a6bc594306545871eafc82e40cce, type: 3}
   description: "\uD50C\uB808\uC774\uC5B4\uC758 \uC2DC\uC791 \uC9C0\uC810 \uC624\uBE0C\uC81D\uD2B8"

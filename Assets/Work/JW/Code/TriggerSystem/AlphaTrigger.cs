@@ -38,7 +38,7 @@ namespace Work.JW.Code.TriggerSystem
             Color color = targetSpr.color;
             color.a = alphaValue;
             
-            if (_targets.Length <= 0) return;
+            if (_targets == null) return;
 
             foreach (var item in _spriters)
             {

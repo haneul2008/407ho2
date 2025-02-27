@@ -23,7 +23,7 @@ namespace Work.JW.Code.TriggerSystem
 
         public void MovePosition()
         {
-            if (_targets.Length <= 0) return;
+            if (_targets == null) return;
             
             foreach (var item in _targets)
             {
