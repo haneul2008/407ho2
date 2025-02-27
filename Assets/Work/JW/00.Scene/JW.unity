@@ -560,6 +560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerPrefabData: {fileID: 11400000, guid: 89df48f07a2e3724fb9a7cb265640f5c, type: 2}
   objPrefabData: {fileID: 11400000, guid: a0bc3a726544b1b408fc2c60225d85ca, type: 2}
+  objFrame: {fileID: 8490947678811256070, guid: c7202133960da1e48aab8d534ca40665, type: 3}
 --- !u!4 &1126928210
 Transform:
   m_ObjectHideFlags: 0

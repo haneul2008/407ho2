@@ -30,6 +30,7 @@ namespace Work.JW.Code.MapLoad
 
         [SerializeField] private TriggerPrefabDataSO triggerPrefabData;
         [SerializeField] private ObjPrefabDataSO objPrefabData;
+        [SerializeField] private ObjectFrame objFrame;
         
         private Dictionary<TriggerType, Trigger> _triggers;
         private Dictionary<int, ObjectFrame> _inGamePrefabs;
@@ -63,7 +64,7 @@ namespace Work.JW.Code.MapLoad
             {
                 Transform itemTrm;
                 
-                if (item.triggerData.triggerType != TriggerType.None)
+                if (item.isTrigger)
                 {
                     itemTrm = AddTriggerToObj(item);
                     itemTrm.position = item.position;
@@ -72,7 +73,7 @@ namespace Work.JW.Code.MapLoad
                 else
                 {
                     //생성
-                    var obj = Instantiate(_inGamePrefabs[item.objectId], transform);
+                    var obj = Instantiate(objFrame, transform);
                     itemTrm = obj.transform;
                     
                     obj.ID = item.objectId;

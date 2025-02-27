@@ -16,6 +16,7 @@ namespace Work.HN.Code.MapMaker.Objects
         [SerializeField] private TriggerDataSO triggerData;
         [SerializeField] private TMP_Text triggerIDText, triggerNameText;
 
+        protected MeshRenderer idTextRenderer, nameTextRenderer;
         protected ITriggerInfo _myInfo;
         protected int _targetTriggerId;
         
@@ -25,6 +26,9 @@ namespace Work.HN.Code.MapMaker.Objects
 
             triggerIDText.text = _targetTriggerId.ToString();
             triggerNameText.text = TriggerType.ToString();
+            
+            idTextRenderer = triggerIDText.GetComponent<MeshRenderer>();
+            nameTextRenderer = triggerNameText.GetComponent<MeshRenderer>();
         }
 
         public virtual void SetData(ITriggerInfo info)
@@ -61,6 +65,19 @@ namespace Work.HN.Code.MapMaker.Objects
             if (info is T myInfo)
             {
                 _myInfo = myInfo;
+            }
+        }
+
+        protected override void HandleInfoChange(InfoType type, object info)
+        {
+            base.HandleInfoChange(type, info);
+            
+            if(notChangeableInfos.Contains(type)) return;
+
+            if (type == InfoType.SortingOrder)
+            {
+                idTextRenderer.sortingOrder = (int)info;
+                nameTextRenderer.sortingOrder = (int)info;
             }
         }
 

@@ -29,7 +29,7 @@ namespace Work.HN.Code.MapMaker.Objects
             InfoManager.OnInfoChange += HandleInfoChange;
         }
 
-        private void HandleInfoChange(InfoType type, object info)
+        protected virtual void HandleInfoChange(InfoType type, object info)
         {
             if(notChangeableInfos.Contains(type)) return;
             

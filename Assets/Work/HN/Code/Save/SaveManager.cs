@@ -61,7 +61,6 @@ namespace Work.HN.Code.Save
         private UserBuiltInData _userData;
         private DataReceiver _dataReceiver;
         private string _path;
-        private string _beforeName;
 
         private void Awake()
         {
@@ -101,11 +100,7 @@ namespace Work.HN.Code.Save
 
         private void HandleObjectSave(ObjectSaveEvent evt)
         {
-            if (evt.isInitialize)
-            {
-                InitializeData();
-            }
-            else if (evt.isFinish)
+            if (evt.isFinish)
             {
                 FinishData();
             }
@@ -115,7 +110,7 @@ namespace Work.HN.Code.Save
 
         private void FinishData()
         {
-            MapData mapData = GetUsersMap(_mapData.mapName);
+             MapData mapData = GetUsersMap(_mapData.mapName);
             
             if(mapData != null) _userData.userMapList.Remove(mapData);
             
@@ -140,11 +135,6 @@ namespace Work.HN.Code.Save
             return null;
         }
 
-        private void InitializeData()
-        {
-            _mapData = new MapData();
-        }
-
         public void RegisterMapData()
         {   
             _mapData.isRegistered = true;
@@ -158,7 +148,8 @@ namespace Work.HN.Code.Save
 
         public bool CanSaveData(string mapName)
         {
-            return GetUsersMap(mapName) == null;
+            MapData mapData = GetUsersMap(mapName);
+            return mapData == null || mapData == _mapData;
         }
 
         private void SaveObject(EditorObject targetObject)
@@ -221,6 +212,11 @@ namespace Work.HN.Code.Save
         public void SetMapName(string mapName)
         {
             _mapData.mapName = mapName;
+        }
+        
+        public void ClearObjects()
+        {
+            _mapData.objectList.Clear();
         }
 
         [ContextMenu("TestLoad")]

@@ -141,7 +141,6 @@ namespace Work.HN.Code.EventSystems
 
     public class ObjectSaveEvent : GameEvent
     {
-        public bool isInitialize;
         public bool isFinish;
         public EditorObject targetObject;
     }

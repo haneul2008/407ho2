@@ -19,5 +19,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ObjectName: ChainsawObject
-  ObjectImage: {fileID: 0}
+  ObjectImage: {fileID: 21300000, guid: a43df791734b00f4e8f82b329230cd91, type: 3}
   description: "\uD1B1\uB2C8 \uC624\uBE0C\uC81D\uD2B8"
