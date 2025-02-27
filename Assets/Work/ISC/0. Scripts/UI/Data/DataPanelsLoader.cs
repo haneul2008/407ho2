@@ -27,6 +27,8 @@ namespace Work.ISC._0._Scripts.UI.Data
 
         private void SplitData(string obj)
         {
+            if (string.IsNullOrEmpty(obj)) return;
+            
             if (panels.Count > 0)
             {
                 RemoveAllData();
