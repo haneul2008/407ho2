@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.HN.Code.Save;
+using Newtonsoft.Json;
 
 namespace Work.ISC._0._Scripts.Save.ExelData
 {
@@ -11,7 +12,7 @@ namespace Work.ISC._0._Scripts.Save.ExelData
         public UnityEvent<MapData> OnMapDataLoadEvent;
         
         [SerializeField] private SaveData saveData;
-
+        
         [ContextMenu("Load Data")]
         public void LoadingData()
         {
@@ -20,7 +21,7 @@ namespace Work.ISC._0._Scripts.Save.ExelData
 
         private void DataSettings(string jsonData)
         { 
-           MapData datas =  JsonUtility.FromJson<MapData>(jsonData);
+           MapData datas = JsonConvert.DeserializeObject<MapData>(jsonData, SaveManager.jsonSettings);
            
            OnMapDataLoadEvent?.Invoke(datas);
         }

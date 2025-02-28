@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using Work.HN.Code.Save;
 using Work.ISC._0._Scripts.Save.ExelData;
@@ -59,7 +60,7 @@ namespace Work.ISC._0._Scripts.UI.Data
 
         private string ConvertName(string data)
         {
-            MapData mapData = JsonUtility.FromJson<MapData>(data);
+            MapData mapData = JsonConvert.DeserializeObject<MapData>(data, SaveManager.jsonSettings);
             
             return mapData.mapName;
         }

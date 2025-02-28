@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.HN.Code.EventSystems;
-using Work.HN.Code.MapMaker.Core;
 using Work.HN.Code.MapMaker.Objects;
 using Work.HN.Code.MapMaker.Objects.Triggers;
 using Work.ISC._0._Scripts.Save.ExelData;
@@ -67,6 +66,12 @@ namespace Work.HN.Code.Save
         private DataReceiver _dataReceiver;
         private string _path;
         private MapData _capacityData;
+        public static readonly JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            DefaultValueHandling = DefaultValueHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore
+        };
 
         private void Awake()
         {
@@ -154,7 +159,9 @@ namespace Work.HN.Code.Save
         {   
             _mapData.isRegistered = true;
             
-            string mapDataJson = JsonUtility.ToJson(_mapData);
+            
+            
+            string mapDataJson = JsonConvert.SerializeObject(_mapData, jsonSettings);
             saveData.DataSave(GetMinifiedJson(mapDataJson), HandleFailSave);
             
             string userDataJson = JsonUtility.ToJson(_userData);
@@ -212,7 +219,6 @@ namespace Work.HN.Code.Save
                 SetInfo(newData, trigger);
             }
 
-            print(newData.triggerData);
             return newData;
         }
 
@@ -268,7 +274,7 @@ namespace Work.HN.Code.Save
                 _capacityData.objectList.Add(GetNewObjectData(obj));
             }
             
-            string json = JsonUtility.ToJson(_capacityData);
+            string json = JsonConvert.SerializeObject(_capacityData, jsonSettings);
             
             return GetMinifiedJson(json).Length;
         }
