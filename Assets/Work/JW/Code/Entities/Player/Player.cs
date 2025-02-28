@@ -28,6 +28,11 @@ namespace Work.JW.Code.Entities.Player
             ChangeState("IDLE");
         }
 
+        private void OnDestroy()
+        {
+            InputReader.ClearPlayerAction();
+        }
+
         private void Update()
         {
             _stateMachine.StateMachineUpdate();

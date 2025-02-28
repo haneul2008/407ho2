@@ -119,5 +119,11 @@ namespace Work.HN.Code.Input
             if(context.canceled)
                 OnJumpReleaseEvent?.Invoke();
         }
+        
+        public void ClearPlayerAction()
+        { 
+            OnJumpPressEvent = null; 
+            OnJumpReleaseEvent = null;
+        }
     }
 }
