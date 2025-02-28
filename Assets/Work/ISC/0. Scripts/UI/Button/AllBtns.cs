@@ -54,6 +54,8 @@ namespace Work.ISC._0._Scripts.UI.Button
             float xPos = dir.x;
             optionPanel.transform.DOMoveX(xPos, 0.5f);
         }
+        
+        public void Quit() => Application.Quit();
 
         public void MapMake()
         {
