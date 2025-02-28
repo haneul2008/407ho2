@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using Work.HN.Code.Save;
 
 namespace Work.ISC._0._Scripts.Save.ExelData
 {
@@ -11,12 +12,14 @@ namespace Work.ISC._0._Scripts.Save.ExelData
         private readonly string _savePath = "https://docs.google.com/forms/u/0/d/e/1FAIpQLScRGhhXMlSvI7_GmmOj_sevSXpNKjHuEnwxeEactqgC1iZJTQ/formResponse";
 
         private readonly string _loadPath = "https://docs.google.com/spreadsheets/d/1kz1M84oW3nPViQVUkclT1XkeLQTZhVLQOq5iO0UjI6I";
+
+        public const int maxCapacity = 30000;
         
         public UnityWebRequest Data { get; private set; }
 
-        public void DataSave(string data)
+        public void DataSave(string data, Action<ErrorType> onFailed = null) 
         {
-            StartCoroutine(UploadData(data));
+            StartCoroutine(UploadData(data, onFailed));
         }
         
         public void DataLoad(string column, Action<string> onComplete = null)
@@ -24,9 +27,18 @@ namespace Work.ISC._0._Scripts.Save.ExelData
             StartCoroutine(LoadData(column, onComplete));
         }
         
-        private IEnumerator UploadData(string data)
+        private IEnumerator UploadData(string data, Action<ErrorType> onFailed = null)
         {
             WWWForm form = new WWWForm();
+            
+            int dataLength = data.Length;
+            
+            if (dataLength >= maxCapacity)
+            {
+                Debug.LogWarning("max capacity exceeded");
+                onFailed?.Invoke(ErrorType.ExceededMaxCapacity);
+                yield break;
+            }
             
             form.AddField("entry.256987994", data);
 
@@ -37,7 +49,11 @@ namespace Work.ISC._0._Scripts.Save.ExelData
             if (www.result == UnityWebRequest.Result.Success)
                 Debug.Log("Save Success");
             else
+            {
                 Debug.LogError("Save Error. Check your savePath or form FieldName");
+                Debug.LogError($"Save Error: {www.error}");
+                onFailed?.Invoke(ErrorType.FailRequest);
+            }
         }
 
         private IEnumerator LoadData(string column, Action<string> onComplete = null)

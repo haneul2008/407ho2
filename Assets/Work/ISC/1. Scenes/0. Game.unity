@@ -353,7 +353,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283189de21c640ebb825c7922192be77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadObj: {fileID: 8490947678811256070, guid: c7202133960da1e48aab8d534ca40665, type: 3}
+  OnMapDataLoadEvent:
+    m_PersistentCalls:
+      m_Calls: []
   saveData: {fileID: 514447070}
 --- !u!4 &757053028
 Transform:

@@ -18,7 +18,7 @@ namespace Work.HN.Code.Test
             _mapName = mapData.mapName;
             
             mapNameText.text = _mapName;
-            registeredText.text = $"registered : {mapData.isRegistered}";
+            registeredText.text = mapData.isRegistered ? "맵이 등록됨" : "";
             
             editBtn.SetActive(!mapData.isRegistered);
         }

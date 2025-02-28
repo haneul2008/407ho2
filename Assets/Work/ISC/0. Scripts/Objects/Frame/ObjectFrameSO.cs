@@ -11,7 +11,13 @@ namespace Work.ISC._0._Scripts.Objects.Frame
         
         public string ObjectName;
         public Sprite ObjectImage;
+        
+        public LayerMask ObjectLayer;
+        public Vector2 ColliderSize;
+        public Vector2 ColliderOffset;
 
+        public bool isTrigger;
+        
         [TextArea] public string description;
 
         public abstract void ObjectAbility(Entity entity);

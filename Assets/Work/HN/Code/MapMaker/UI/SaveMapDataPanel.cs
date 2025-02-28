@@ -40,6 +40,9 @@ namespace Work.HN.Code.MapMaker.UI
                 
                 case ErrorType.EmptyName : descText.text = "맵 이름이 비어있습니다.";
                     break;
+                
+                case ErrorType.NoneStartOrEnd : descText.text = "시작 지점 또는 도착 지점이 없습니다.";
+                    break;
             }
         }
     }

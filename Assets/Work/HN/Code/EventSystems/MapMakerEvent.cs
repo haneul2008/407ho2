@@ -3,6 +3,7 @@ using Work.HN.Code.MapMaker.Core;
 using Work.HN.Code.MapMaker.History;
 using Work.HN.Code.MapMaker.Objects;
 using Work.HN.Code.MapMaker.UI;
+using Work.HN.Code.Save;
 using Work.JW.Code.TriggerSystem;
 
 namespace Work.HN.Code.EventSystems
@@ -44,6 +45,7 @@ namespace Work.HN.Code.EventSystems
         public static readonly TriggerIDChangeEvent TriggerIDChangeEvent = new TriggerIDChangeEvent();
         public static readonly SortingOrderChangeEvent SortingOrderChangeEvent = new SortingOrderChangeEvent();
         public static readonly MapNameChangeEvent MapNameChangeEvent = new MapNameChangeEvent();
+        public static readonly SaveFailEvent SaveFailEvent = new SaveFailEvent();
     }
 
     public class ObjectSelectEvent : GameEvent //in object spawn mode
@@ -172,5 +174,10 @@ namespace Work.HN.Code.EventSystems
     public class MapNameChangeEvent : GameEvent
     {
         public string mapName;
+    }
+
+    public class SaveFailEvent : GameEvent
+    {
+        public ErrorType errorType;
     }
 }
