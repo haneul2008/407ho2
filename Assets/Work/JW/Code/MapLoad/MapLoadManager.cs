@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Work.HN.Code.MapMaker.Objects.Triggers;
@@ -31,12 +32,14 @@ namespace Work.JW.Code.MapLoad
         [SerializeField] private TriggerPrefabDataSO triggerPrefabData;
         [SerializeField] private ObjPrefabDataSO objPrefabData;
         [SerializeField] private ObjectFrame objFrame;
+        [SerializeField] private Transform outGameLineTrm;
         
         private Dictionary<TriggerType, Trigger> _triggers;
         private Dictionary<int, ObjectFrame> _inGamePrefabs;
         private Dictionary<int, List<Transform>> _idToObjTrms;
         
         private List<Trigger> _initTriggers;
+        private float _minYValue;
 
         private void Awake()
         {
@@ -68,7 +71,7 @@ namespace Work.JW.Code.MapLoad
                 {
                     itemTrm = AddTriggerToObj(item);
                     itemTrm.position = item.position;
-                    itemTrm.localScale = item.scale;
+                    itemTrm.localScale = item.scale * 1.5f;
                 }
                 else
                 {
@@ -85,6 +88,8 @@ namespace Work.JW.Code.MapLoad
                 }
 
                 TriggerIDFilter(item, itemTrm);
+                
+                CheckMinYValue(itemTrm.position.y);
             }
 
             _initTriggers.ForEach(item =>
@@ -98,6 +103,17 @@ namespace Work.JW.Code.MapLoad
                     Debug.Log($"Key not found : {item.TargetID}");
                 }
             });
+            
+            
+            outGameLineTrm.position = new Vector3(0, _minYValue - 10);
+        }
+
+        private void CheckMinYValue(float yValue)
+        {
+            if (yValue < _minYValue)
+            {
+                _minYValue = yValue;
+            }
         }
 
         private void TriggerIDFilter(ObjectData data, Transform itemTrm)
@@ -122,6 +138,8 @@ namespace Work.JW.Code.MapLoad
             TriggerData triggerData = data.triggerData;
             TriggerType type = data.triggerData.triggerType;
             var trigger = Instantiate(_triggers[type], transform);
+            
+            trigger.SetOutLineColor(data.color);
             
             trigger.TargetID = triggerData.targetID;
             trigger.TriggerID = string.IsNullOrEmpty(data.triggerID) ? null : int.Parse(data.triggerID);
