@@ -499,6 +499,10 @@ MonoBehaviour:
   mapNameText: {fileID: 7665615810910631164}
   registeredText: {fileID: 5047067919961304187}
   editBtn: {fileID: 1653217876667875300}
+  clickSoundID:
+    ID: 536870912
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 8106923113153137195}
 --- !u!1 &8167460934416601505
 GameObject:
   m_ObjectHideFlags: 0

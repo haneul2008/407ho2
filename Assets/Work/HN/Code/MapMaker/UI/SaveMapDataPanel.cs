@@ -1,4 +1,5 @@
 using System;
+using Ami.BroAudio;
 using TMPro;
 using UnityEngine;
 using Work.HN.Code.Save;
@@ -10,6 +11,8 @@ namespace Work.HN.Code.MapMaker.UI
         [SerializeField] private TextMeshProUGUI descText;
         [SerializeField] private ObjectInvoker objectInvoker;
         [SerializeField] private GameObject checkBtn;
+        
+        [SerializeField] private SoundID clickSoundID;
 
         private void Awake()
         {
@@ -18,6 +21,8 @@ namespace Work.HN.Code.MapMaker.UI
 
         public void Active(bool isActive)
         {
+            BroAudio.Play(clickSoundID);
+            
             if (isActive)
             {
                 if (objectInvoker.SaveData(HandleSaveFail))

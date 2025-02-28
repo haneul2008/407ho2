@@ -1,3 +1,4 @@
+using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace Work.HN.Code.MapMaker.UI.Delete
     {
         [SerializeField] private Image objectImage;
         [SerializeField] private GameEventChannelSO mapMakerChannel;
+        [SerializeField] private SoundID clickSoundID;
         
         private EditorObject _targetObject;
         
@@ -25,6 +27,8 @@ namespace Work.HN.Code.MapMaker.UI.Delete
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            BroAudio.Play(clickSoundID);
+            
             BulkDeleteEvent bulkDeleteEvent = MapMakerEvent.BulkDeleteEvent;
             bulkDeleteEvent.targetObject = _targetObject;
             mapMakerChannel.RaiseEvent(bulkDeleteEvent);

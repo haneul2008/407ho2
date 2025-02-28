@@ -146,6 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01fa53f6876642e29e3d227158d51306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickSoundID:
+    ID: 536870912
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 6040233736939166983}
 --- !u!1 &6871716683988471018
 GameObject:
   m_ObjectHideFlags: 0

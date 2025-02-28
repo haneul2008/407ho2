@@ -1,3 +1,4 @@
+using Ami.BroAudio;
 using TMPro;
 using UnityEngine;
 using Work.HN.Code.EventSystems;
@@ -7,6 +8,8 @@ namespace Work.HN.Code.MapMaker.UI.Position
 {
     public class PositionEditBtn : MonoBehaviour
     {
+        [SerializeField] private SoundID clickSoundID;
+        
         private GameEventChannelSO _mapMakerChannel;
         private PositionEditBtnDataSO _uiData;
         private TextMeshProUGUI _text;
@@ -29,6 +32,8 @@ namespace Work.HN.Code.MapMaker.UI.Position
         
         public void OnClick()
         {
+            BroAudio.Play(clickSoundID);
+            
             if(_currentObject == null) return;
             
             MoveEvent moveEvt = MapMakerEvent.MoveEvent;

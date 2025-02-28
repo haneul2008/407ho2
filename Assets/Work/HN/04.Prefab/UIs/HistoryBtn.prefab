@@ -149,6 +149,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapMakerChannel: {fileID: 11400000, guid: 644dbe292e74b04459eda341a1d54887, type: 2}
   isUndo: 1
+  clickSoundID:
+    ID: 536870912
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 274352451617360569}
 --- !u!1 &8685240027811936124
 GameObject:
   m_ObjectHideFlags: 0

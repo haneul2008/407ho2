@@ -418,6 +418,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1391083621}
     m_Modifications:
+    - target: {fileID: -7955799005143431363, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
+      propertyPath: clickSoundID.ID
+      value: 536870912
+      objectReference: {fileID: 0}
+    - target: {fileID: -7955799005143431363, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
+      propertyPath: clickSoundID._sourceAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    - target: {fileID: -7955799005143431363, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
+      propertyPath: clickSoundID.<DebugObject>k__BackingField
+      value: 
+      objectReference: {fileID: 19869354}
     - target: {fileID: 274352451617360569, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
       propertyPath: m_Name
       value: UndoBtn
@@ -534,6 +546,11 @@ PrefabInstance:
 --- !u!224 &19869353 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5264977084252185270, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
+  m_PrefabInstance: {fileID: 19869352}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &19869354 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 274352451617360569, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
   m_PrefabInstance: {fileID: 19869352}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &23371158
@@ -2691,6 +2708,10 @@ MonoBehaviour:
   descText: {fileID: 96974242}
   objectInvoker: {fileID: 245144891}
   checkBtn: {fileID: 626487136}
+  clickSoundID:
+    ID: 536870912
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 507496513}
 --- !u!1 &509962336
 GameObject:
   m_ObjectHideFlags: 0
@@ -3516,6 +3537,10 @@ MonoBehaviour:
   objectInvoker: {fileID: 245144891}
   capacityText: {fileID: 1281282666}
   maxText: 10
+  clickSoundID:
+    ID: 536870912
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 653457179}
 --- !u!1 &657661679
 GameObject:
   m_ObjectHideFlags: 0
@@ -4515,6 +4540,10 @@ MonoBehaviour:
   failText: {fileID: 1462973375}
   objectInvoker: {fileID: 245144891}
   mapMakerChannel: {fileID: 11400000, guid: 644dbe292e74b04459eda341a1d54887, type: 2}
+  clickSoundID:
+    ID: 536870912
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 779870822}
 --- !u!1 &801023758
 GameObject:
   m_ObjectHideFlags: 0
@@ -4722,6 +4751,18 @@ PrefabInstance:
       propertyPath: value
       value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 5809616815453963650, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: clickSoundID.ID
+      value: 536870912
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809616815453963650, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: clickSoundID._sourceAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    - target: {fileID: 5809616815453963650, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: clickSoundID.<DebugObject>k__BackingField
+      value: 
+      objectReference: {fileID: 825483645}
     - target: {fileID: 6787437933272318295, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
       propertyPath: m_Name
       value: MinusBtn
@@ -4746,6 +4787,11 @@ PrefabInstance:
 --- !u!224 &825483644 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3168583732136999207, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+  m_PrefabInstance: {fileID: 825483643}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &825483645 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6787437933272318295, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
   m_PrefabInstance: {fileID: 825483643}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &860274998
@@ -12673,6 +12719,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectInvoker: {fileID: 245144891}
   saveAndExitBtnText: {fileID: 1728544290}
+  clickSoundID:
+    ID: 536870912
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 2136113500}
 --- !u!1 &2136866484
 GameObject:
   m_ObjectHideFlags: 0
@@ -13336,6 +13386,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5809616815453963650, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: clickSoundID.ID
+      value: 536870912
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809616815453963650, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: clickSoundID._sourceAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    - target: {fileID: 5809616815453963650, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: clickSoundID.<DebugObject>k__BackingField
+      value: 
+      objectReference: {fileID: 2278530399632092322}
     - target: {fileID: 6787437933272318295, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
       propertyPath: m_Name
       value: PlusBtn
@@ -13357,6 +13419,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+--- !u!1 &2278530399632092322 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6787437933272318295, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+  m_PrefabInstance: {fileID: 2278530399632092321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3187702192610355222
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14328,6 +14395,18 @@ PrefabInstance:
       propertyPath: isUndo
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7955799005143431363, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
+      propertyPath: clickSoundID.ID
+      value: 536870912
+      objectReference: {fileID: 0}
+    - target: {fileID: -7955799005143431363, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
+      propertyPath: clickSoundID._sourceAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    - target: {fileID: -7955799005143431363, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
+      propertyPath: clickSoundID.<DebugObject>k__BackingField
+      value: 
+      objectReference: {fileID: 6768408246826947493}
     - target: {fileID: 274352451617360569, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
       propertyPath: m_Name
       value: RedoBtn
@@ -14457,6 +14536,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
+--- !u!1 &6768408246826947493 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 274352451617360569, guid: c8a9f05cd3b80c54c974f983ba005893, type: 3}
+  m_PrefabInstance: {fileID: 6768408246826947492}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6840347574028085725 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3051118600590168902, guid: 021d30c7e1f6a944b81f1186d603c282, type: 3}
