@@ -1,4 +1,5 @@
 using System;
+using Ami.BroAudio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ namespace Work.HN.Code.Test
     {
         [SerializeField] private TextMeshProUGUI mapNameText, registeredText;
         [SerializeField] private GameObject editBtn;
+        [SerializeField] private SoundID clickSoundID;
 
         private string _mapName;
 
@@ -25,6 +27,8 @@ namespace Work.HN.Code.Test
         
         public void OnEditBtnClick()
         {
+            BroAudio.Play(clickSoundID);
+            
             DataReceiver.Instance.SetMapEditData(_mapName);
             SceneManager.LoadScene("HN");
         }

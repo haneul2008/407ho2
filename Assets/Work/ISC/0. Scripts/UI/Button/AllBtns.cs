@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Ami.BroAudio;
+using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using MaximovInk.UI;
@@ -14,9 +15,12 @@ namespace Work.ISC._0._Scripts.UI.Button
             
         [SerializeField] private RoundedPanel subPanel;
         [SerializeField] private Image optionPanel;
+        [SerializeField] private SoundID clickSoundID;
         
         public void Play()
         {
+            BroAudio.Play(clickSoundID);
+            
             Vector3 dir = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
             float yPos = dir.y;
             subPanel.transform.DOMoveY(yPos, 0.5f);
@@ -26,6 +30,8 @@ namespace Work.ISC._0._Scripts.UI.Button
 
         public void Exit()
         {
+            BroAudio.Play(clickSoundID);
+            
             Vector3 dir = Camera.main.WorldToScreenPoint(new Vector3(0, -17, 0));
             float yPos = dir.y;
             subPanel.transform.DOMoveY(yPos, 0.5f);
@@ -33,6 +39,8 @@ namespace Work.ISC._0._Scripts.UI.Button
 
         public void Option()
         {
+            BroAudio.Play(clickSoundID);
+            
             Vector3 dir = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
             float xPos = dir.x;
             optionPanel.transform.DOMoveX(xPos, 0.5f);
@@ -40,6 +48,8 @@ namespace Work.ISC._0._Scripts.UI.Button
 
         public void OptionExit()
         {
+            BroAudio.Play(clickSoundID);
+
             Vector3 dir = Camera.main.WorldToScreenPoint(new Vector3(30, 0, 0));
             float xPos = dir.x;
             optionPanel.transform.DOMoveX(xPos, 0.5f);
@@ -47,6 +57,8 @@ namespace Work.ISC._0._Scripts.UI.Button
 
         public void MapMake()
         {
+            BroAudio.Play(clickSoundID);
+
             DataReceiver.Instance.CreateNewMap();
             SceneManager.LoadScene("HN");
         }
