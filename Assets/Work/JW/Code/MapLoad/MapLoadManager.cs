@@ -174,6 +174,11 @@ namespace Work.JW.Code.MapLoad
 
         public void Clear()
         {
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+            _idToObjTrms.Clear();
             _initTriggers.Clear();
             _inGamePrefabs.Clear();
         }

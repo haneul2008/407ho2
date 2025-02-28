@@ -11,6 +11,7 @@ namespace Work.JW.Code.Entities.Player
     {
         [field: SerializeField] public InputReaderSO InputReader { get; private set; }
 
+        [SerializeField] private LayerMask obstacleLayer;
         [SerializeField] private StateListSO stateList;
         private StateMachine _stateMachine;
 
@@ -40,6 +41,14 @@ namespace Work.JW.Code.Entities.Player
             }
 
             if (other.gameObject.layer == 8)
+            {
+                OnHit?.Invoke();
+            }
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
             {
                 OnHit?.Invoke();
             }
