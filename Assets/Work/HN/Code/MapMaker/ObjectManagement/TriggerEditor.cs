@@ -26,6 +26,8 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             
             mapMakerChannel.AddListener<CurrentObjectChangeEvent>(HandleCurrentObjectChanged);
             mapMakerChannel.AddListener<TriggerInfoChangeEvent>(HandleTriggerInfoChanged);
+            mapMakerChannel.AddListener<TriggerSelectEvent>(HandleTriggerSelectEvent);
+            inputReader.OnClickEvent += HandleClickEvent;
         }
 
         protected override void OnDestroy()
@@ -34,6 +36,8 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             
             mapMakerChannel.RemoveListener<CurrentObjectChangeEvent>(HandleCurrentObjectChanged);
             mapMakerChannel.RemoveListener<TriggerInfoChangeEvent>(HandleTriggerInfoChanged);
+            mapMakerChannel.RemoveListener<TriggerSelectEvent>(HandleTriggerSelectEvent);
+            inputReader.OnClickEvent -= HandleClickEvent;
         }
 
         private void HandleTriggerInfoChanged(TriggerInfoChangeEvent evt)
@@ -56,30 +60,16 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             _currentTrigger = trigger;
         }
 
-        protected override void OnActive(bool isActive)
-        {
-            base.OnActive(isActive);
-
-            if (isActive)
-            {
-                mapMakerChannel.AddListener<TriggerSelectEvent>(HandleTriggerSelectEvent);
-                inputReader.OnClickEvent += HandleClickEvent;
-            }
-            else
-            {
-                mapMakerChannel.RemoveListener<TriggerSelectEvent>(HandleTriggerSelectEvent);
-                inputReader.OnClickEvent -= HandleClickEvent;
-            }
-        }
-
         private void HandleTriggerSelectEvent(TriggerSelectEvent evt)
         {
+            if(!_isActive) return;
+            
             _selectedTrigger = evt.selectedTrigger;
         }
 
         private void HandleClickEvent()
         {
-            if(_selectedTrigger == null || mapMakerCanvas.IsPointerOverUI(inputReader.MouseScreenPos)) return;
+            if(!_isActive || _selectedTrigger == null || mapMakerCanvas.IsPointerOverUI(inputReader.MouseScreenPos)) return;
             
             Vector2 mousePos = inputReader.MouseWorldPos;
             Vector2 targetPos = new Vector2(Mathf.Round(mousePos.x), Mathf.Round(mousePos.y));

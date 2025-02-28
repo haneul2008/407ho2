@@ -58,6 +58,7 @@ namespace Work.HN.Code.MapMaker.UI
 
         public void OnClick()
         {
+            Time.timeScale = 1f;
             SceneManager.LoadScene("TitleHN");
         }
     }
