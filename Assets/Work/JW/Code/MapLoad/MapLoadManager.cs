@@ -71,7 +71,7 @@ namespace Work.JW.Code.MapLoad
                 {
                     itemTrm = AddTriggerToObj(item);
                     itemTrm.position = item.position;
-                    itemTrm.localScale = item.scale;
+                    itemTrm.localScale = item.scale * 1.5f;
                 }
                 else
                 {
