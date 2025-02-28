@@ -51,6 +51,7 @@ namespace Work.HN.Code.MapMaker.Core
         private void Start()
         {
             inputReader.SetEnable(InputType.Player, false);
+            inputReader.SetEnable(InputType.MapMaker, true);
             
             EditModeChangeEvent editModeEvt = MapMakerEvent.EditModeChangeEvent;
             editModeEvt.editType = startEditMode;

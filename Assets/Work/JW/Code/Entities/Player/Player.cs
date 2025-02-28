@@ -21,6 +21,9 @@ namespace Work.JW.Code.Entities.Player
             base.InitializeCompo();
 
             _stateMachine = new StateMachine(this, stateList);
+            
+            InputReader.SetEnable(InputType.MapMaker, false);
+            InputReader.SetEnable(InputType.Player, true);
         }
 
         private void Start()

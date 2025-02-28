@@ -259,12 +259,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5809616815453963650}
-        m_TargetAssemblyTypeName: Work.HN.Code.MapMaker.UI.AngleEditBtn, Assembly-CSharp
+        m_TargetAssemblyTypeName: Work.HN.Code.MapMaker.UI.Angle.AngleEditBtn, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: Work.HN.Code.MapMaker.UI.AngleEditPanel,
+          m_ObjectArgumentAssemblyTypeName: Work.HN.Code.MapMaker.UI.Angle.AngleEditPanel,
             Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0

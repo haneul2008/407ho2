@@ -4768,9 +4768,17 @@ PrefabInstance:
       value: MinusBtn
       objectReference: {fileID: 0}
     - target: {fileID: 7482468170911010329, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Work.HN.Code.MapMaker.UI.Angle.AngleEditBtn, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7482468170911010329, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 2049133603}
+    - target: {fileID: 7482468170911010329, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Work.HN.Code.MapMaker.UI.Angle.AngleEditPanel, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13395,9 +13403,17 @@ PrefabInstance:
       value: PlusBtn
       objectReference: {fileID: 0}
     - target: {fileID: 7482468170911010329, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Work.HN.Code.MapMaker.UI.Angle.AngleEditBtn, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7482468170911010329, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 2049133603}
+    - target: {fileID: 7482468170911010329, guid: 9f65a26e01baa2b41b62168fc0a08efc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Work.HN.Code.MapMaker.UI.Angle.AngleEditPanel, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
