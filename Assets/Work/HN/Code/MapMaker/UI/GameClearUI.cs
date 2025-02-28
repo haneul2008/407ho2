@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Work.HN.Code.Save;
+using Work.ISC._0._Scripts.Objects;
 
 namespace Work.HN.Code.MapMaker.UI
 {
@@ -12,7 +13,8 @@ namespace Work.HN.Code.MapMaker.UI
     {
         [SerializeField] private TextMeshProUGUI mapNameText;
         [SerializeField] private float yPosInActive = 0, duration = 0.5f;
-
+        [SerializeField] private ArrivalPointObjectSO endPointSO;
+        
         private float yPosInDeactivate;
         private RectTransform _rectTrm;
 
@@ -20,6 +22,17 @@ namespace Work.HN.Code.MapMaker.UI
         {
             _rectTrm = transform as RectTransform;
             yPosInDeactivate = _rectTrm.anchoredPosition.y;
+            endPointSO.OnClearEvent += HandleOnClear;
+        }
+
+        private void OnDestroy()
+        {
+            endPointSO.OnClearEvent -= HandleOnClear;
+        }
+
+        private void HandleOnClear()
+        {
+            Active(true);
         }
 
         public void Active(bool isActive)
