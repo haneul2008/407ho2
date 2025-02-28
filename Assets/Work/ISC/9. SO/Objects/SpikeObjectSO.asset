@@ -20,9 +20,7 @@ MonoBehaviour:
       m_Calls: []
   ObjectName: SpikeObject
   ObjectImage: {fileID: 21300000, guid: 5c57302cd3d49814d9b75b449034472f, type: 3}
-  ObjectLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  ObjectLayer: 8
   ColliderSize: {x: 1, y: 0.5}
   ColliderOffset: {x: 0, y: -0.25}
   isTrigger: 0

@@ -6,7 +6,6 @@ namespace Work.JW.Code.TriggerSystem
 {
     public class AlphaTrigger : Trigger
     {
-        [SerializeField] private SpriteRenderer targetSpr;
         [SerializeField] private float alphaValue;
         [SerializeField] private float fadeTime;
         private SpriteRenderer[] _spriters;
@@ -39,12 +38,12 @@ namespace Work.JW.Code.TriggerSystem
         public void AlphaChange(Entity entity)
         {
             _isTrigger = true;
-            
-            Color color = targetSpr.color;
-            color.a = alphaValue;
 
             foreach (var item in _spriters)
             {
+                Color color = item.color;
+                color.a = alphaValue;
+                
                 item.DOColor(color, fadeTime).OnComplete(() =>
                 {
                     _isTrigger = false;

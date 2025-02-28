@@ -55,10 +55,10 @@ namespace Work.JW.Code.MapLoad
             Debug.Assert(mapData != null, "MapData is null!");
             
             _currentMapData = mapData;
-            SetMapObjSpawn(mapData);
+            SetMapObjSpawn();
         }
 
-        private void SetMapObjSpawn(MapData mapData)
+        public void SetMapObjSpawn()
         {
             foreach (var item in _currentMapData.objectList)
             {
@@ -170,6 +170,17 @@ namespace Work.JW.Code.MapLoad
             
             _initTriggers.Add(trigger);
             return trigger.transform;
+        }
+
+        public void Clear()
+        {
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+            _idToObjTrms.Clear();
+            _initTriggers.Clear();
+            _inGamePrefabs.Clear();
         }
     }
 }
