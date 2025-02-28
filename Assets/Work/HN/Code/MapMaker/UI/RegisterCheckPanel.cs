@@ -1,4 +1,5 @@
 using System;
+using Ami.BroAudio;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace Work.HN.Code.MapMaker.UI
         [SerializeField] private TextMeshProUGUI failText;
         [SerializeField] private ObjectInvoker objectInvoker;
         [SerializeField] private GameEventChannelSO mapMakerChannel;
+        
+        [SerializeField] private SoundID clickSoundID;
 
         private string _originText;
         private bool _isRegistered;
@@ -55,11 +58,15 @@ namespace Work.HN.Code.MapMaker.UI
 
         public void Active(bool isActive)
         {
+            BroAudio.Play(clickSoundID);
+            
             gameObject.SetActive(isActive);
         }
 
         public void OnClick()
         {
+            BroAudio.Play(clickSoundID);
+            
             if(_isRegistered) return;
             
             if (!objectInvoker.SaveData(type => print(type)))

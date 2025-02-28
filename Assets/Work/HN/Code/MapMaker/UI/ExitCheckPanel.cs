@@ -1,4 +1,5 @@
 ﻿using System;
+using Ami.BroAudio;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,8 @@ namespace Work.HN.Code.MapMaker.UI
     {
         [SerializeField] private ObjectInvoker objectInvoker;
         [SerializeField] private TextMeshProUGUI saveAndExitBtnText;
-
+        [SerializeField] private SoundID clickSoundID;
+        
         private string _originText;
 
         private void Awake()
@@ -23,6 +25,8 @@ namespace Work.HN.Code.MapMaker.UI
 
         public void SaveAndExit()
         {
+            BroAudio.Play(clickSoundID);
+            
             if (objectInvoker.SaveData())
             {
                 SceneManager.LoadScene("TitleHN");
@@ -37,6 +41,8 @@ namespace Work.HN.Code.MapMaker.UI
 
         public void Exit()
         {
+            BroAudio.Play(clickSoundID);
+
             SceneManager.LoadScene("TitleHN");
         }
 

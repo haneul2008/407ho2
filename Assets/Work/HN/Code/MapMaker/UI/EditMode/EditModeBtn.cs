@@ -1,3 +1,4 @@
+using Ami.BroAudio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,8 @@ namespace Work.HN.Code.MapMaker.UI.EditMode
     public class EditModeBtn : MonoBehaviour
     {
         [SerializeField] private GameEventChannelSO mapMakerChannel;
-        
+        [SerializeField] private SoundID clickSoundID;
+
         private TextMeshProUGUI _text;
         private EditType _editType;
 
@@ -21,6 +23,8 @@ namespace Work.HN.Code.MapMaker.UI.EditMode
 
         public void OnClick()
         {
+            BroAudio.Play(clickSoundID);
+            
             EditModeChangeEvent editModeEvt = MapMakerEvent.EditModeChangeEvent;
             editModeEvt.editType = _editType;
             
