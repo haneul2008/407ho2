@@ -21,7 +21,7 @@ namespace Work.ISC._0._Scripts.Save.ExelData
 
         private void DataSettings(string jsonData)
         { 
-           MapData datas = JsonConvert.DeserializeObject<MapData>(jsonData, SaveManager.jsonSettings);
+           MapData datas = JsonUtility.FromJson<MapData>(jsonData);
            
            OnMapDataLoadEvent?.Invoke(datas);
         }

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Work.HN.Code.EventSystems;
 using Work.HN.Code.MapMaker.Objects;
 using Work.HN.Code.MapMaker.Objects.Triggers;
@@ -66,12 +66,6 @@ namespace Work.HN.Code.Save
         private DataReceiver _dataReceiver;
         private string _path;
         private MapData _capacityData;
-        public static readonly JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore
-        };
 
         private void Awake()
         {
@@ -159,10 +153,8 @@ namespace Work.HN.Code.Save
         {   
             _mapData.isRegistered = true;
             
-            
-            
-            string mapDataJson = JsonConvert.SerializeObject(_mapData, jsonSettings);
-            saveData.DataSave(GetMinifiedJson(mapDataJson), HandleFailSave);
+            string mapDataJson = JsonUtility.ToJson(_mapData);
+            saveData.DataSave(GetMinifiedJson(mapDataJson), HandleFailSave, () => SceneManager.LoadScene("TitleHN"));
             
             string userDataJson = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, userDataJson);
@@ -224,6 +216,11 @@ namespace Work.HN.Code.Save
 
         private void SetInfo(ObjectData newData, EditorTrigger trigger)
         {
+            newData.triggerData.moveInfo = new MoveInfo();
+            newData.triggerData.alphaInfo = new AlphaInfo();
+            newData.triggerData.shakeInfo = new ShakeInfo();
+            newData.triggerData.spawnOrDestroyInfo = new SpawnOrDestroyInfo();
+            
             switch (trigger.TriggerType)
             {
                 case TriggerType.ObjectMove:
@@ -274,7 +271,7 @@ namespace Work.HN.Code.Save
                 _capacityData.objectList.Add(GetNewObjectData(obj));
             }
             
-            string json = JsonConvert.SerializeObject(_capacityData, jsonSettings);
+            string json = JsonUtility.ToJson(_capacityData);
             
             return GetMinifiedJson(json).Length;
         }

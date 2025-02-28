@@ -1,5 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Work.HN.Code.Save;
 using Work.ISC._0._Scripts.Save.ExelData;
 
 namespace Work.ISC._0._Scripts.UI.Data
@@ -18,6 +20,12 @@ namespace Work.ISC._0._Scripts.UI.Data
             _jsonData = jsonData;
             mapName.text = name;
             _id = id;
+        }
+
+        public void Click()
+        {
+            DataReceiver.Instance.SetPlayUserMapData(_id);
+            SceneManager.LoadScene("JW");
         }
         
     }
