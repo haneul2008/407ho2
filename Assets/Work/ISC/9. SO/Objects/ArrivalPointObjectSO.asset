@@ -20,9 +20,7 @@ MonoBehaviour:
       m_Calls: []
   ObjectName: ArrivalPointObject
   ObjectImage: {fileID: 21300000, guid: cef6baf7fb34e4646a386620e1b035af, type: 3}
-  ObjectLayer:
-    serializedVersion: 2
-    m_Bits: 1
+  ObjectLayer: 12
   ColliderSize: {x: 1, y: 1}
   ColliderOffset: {x: 0, y: 0}
   isTrigger: 1

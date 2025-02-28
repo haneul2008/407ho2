@@ -741,10 +741,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1586121641}
     m_Modifications:
-    - target: {fileID: 4574713823652661027, guid: 05df59f3946288e4e82dad925adbbf29, type: 3}
-      propertyPath: endPointSO
-      value: 
-      objectReference: {fileID: 11400000, guid: 69bfb4e40e2371541bc3ba92b5f05e67, type: 2}
     - target: {fileID: 4879604900573338483, guid: 05df59f3946288e4e82dad925adbbf29, type: 3}
       propertyPath: m_Name
       value: GameClearUI

@@ -536,6 +536,7 @@ MonoBehaviour:
   mapNameText: {fileID: 5250276922047921027}
   yPosInActive: 0
   duration: 0.5
+  endPointSO: {fileID: 11400000, guid: 69bfb4e40e2371541bc3ba92b5f05e67, type: 2}
 --- !u!1 &5594523522978953473
 GameObject:
   m_ObjectHideFlags: 0
