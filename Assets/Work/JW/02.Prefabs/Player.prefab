@@ -99,8 +99,8 @@ MonoBehaviour:
   wallCheckerTrm: {fileID: 7521953801355047151}
   wallCheckDistance: 0.4
   groundCheckerTrm: {fileID: 3524677675820230413}
-  groundCheckDistance: 0.16
-  groundBoxWidth: 0.95
+  groundCheckDistance: 0.08
+  groundBoxWidth: 0.37
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1024
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 8070268898855530505}
   - component: {fileID: 1371218840994809623}
   - component: {fileID: 4894724677709911205}
-  - component: {fileID: 1690558792540210821}
+  - component: {fileID: 377983179148548308}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -156,6 +156,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   <InputReader>k__BackingField: {fileID: 11400000, guid: e78818ae570efcf44af0a5bcb93951d9, type: 2}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
   stateList: {fileID: 11400000, guid: cf6c2096dc628c84780edd1121e9e5cd, type: 2}
 --- !u!50 &4894724677709911205
 Rigidbody2D:
@@ -184,8 +187,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &1690558792540210821
-BoxCollider2D:
+--- !u!70 &377983179148548308
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -194,10 +197,10 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a12ccaa8591af4340aef340c2a2940e5, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -218,18 +221,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.02, y: -0.14}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.65, y: 0.72}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.15}
+  m_Size: {x: 0.67, y: 0.7}
+  m_Direction: 0
 --- !u!1 &6490430343849750237
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +249,7 @@ Transform:
   m_GameObject: {fileID: 6490430343849750237}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
