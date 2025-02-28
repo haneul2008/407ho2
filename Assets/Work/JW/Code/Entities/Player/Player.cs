@@ -38,6 +38,11 @@ namespace Work.JW.Code.Entities.Player
             {
                 trigger.TriggerEvent(this);
             }
+
+            if (other.gameObject.layer == 8)
+            {
+                OnHit?.Invoke();
+            }
         }
 
         public EntityState ChangeState(string newStateName)
