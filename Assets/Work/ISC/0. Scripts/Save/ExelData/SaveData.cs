@@ -17,9 +17,9 @@ namespace Work.ISC._0._Scripts.Save.ExelData
         
         public UnityWebRequest Data { get; private set; }
 
-        public void DataSave(string data, Action<ErrorType> onFailed = null) 
+        public void DataSave(string data, Action<ErrorType> onFailed = null, Action onComplete = null) 
         {
-            StartCoroutine(UploadData(data, onFailed));
+            StartCoroutine(UploadData(data, onFailed, onComplete));
         }
         
         public void DataLoad(string column, Action<string> onComplete = null)
@@ -27,7 +27,7 @@ namespace Work.ISC._0._Scripts.Save.ExelData
             StartCoroutine(LoadData(column, onComplete));
         }
         
-        private IEnumerator UploadData(string data, Action<ErrorType> onFailed = null)
+        private IEnumerator UploadData(string data, Action<ErrorType> onFailed = null, Action onComplete = null)
         {
             WWWForm form = new WWWForm();
             
@@ -45,9 +45,12 @@ namespace Work.ISC._0._Scripts.Save.ExelData
             UnityWebRequest www = UnityWebRequest.Post(_savePath, form);
 
             yield return www.SendWebRequest();
-            
+
             if (www.result == UnityWebRequest.Result.Success)
+            {
                 Debug.Log("Save Success");
+                onComplete?.Invoke();
+            }
             else
             {
                 Debug.LogError("Save Error. Check your savePath or form FieldName");

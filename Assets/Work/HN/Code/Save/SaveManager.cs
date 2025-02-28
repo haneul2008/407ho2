@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Work.HN.Code.EventSystems;
 using Work.HN.Code.MapMaker.Objects;
 using Work.HN.Code.MapMaker.Objects.Triggers;
@@ -153,7 +154,7 @@ namespace Work.HN.Code.Save
             _mapData.isRegistered = true;
             
             string mapDataJson = JsonUtility.ToJson(_mapData);
-            saveData.DataSave(GetMinifiedJson(mapDataJson), HandleFailSave);
+            saveData.DataSave(GetMinifiedJson(mapDataJson), HandleFailSave, () => SceneManager.LoadScene("TitleHN"));
             
             string userDataJson = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, userDataJson);
