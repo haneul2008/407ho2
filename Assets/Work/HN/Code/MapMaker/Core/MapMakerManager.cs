@@ -63,7 +63,7 @@ namespace Work.HN.Code.MapMaker.Core
             mapMakerChannel.RemoveListener<ObjectSpawnEvent>(HandleObjectSpawn);
             mapMakerChannel.RemoveListener<ObjectDeleteEvent>(HandleObjectDeleted);
             inputReader.OnClickEvent -= HandleClickEvent;
-
+            
             foreach (EditorObject editorObject in _objectInfoPairs.Keys) editorObject.OnInfoChange -= HandleInfoChange;
         }
 

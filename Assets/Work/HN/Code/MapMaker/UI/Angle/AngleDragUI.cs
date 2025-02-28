@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Work.HN.Code.ETC;
 using Work.HN.Code.EventSystems;
 using Work.HN.Code.Input;
@@ -12,6 +16,7 @@ namespace Work.HN.Code.MapMaker.UI.Angle
         [SerializeField] private InputReaderSO inputReader;
         
         private GameEventChannelSO _mapMakerChannel;
+        private List<Image> _images;
         private Vector2 _centerPos;
         private Vector2 _offset;
         private float _radius;
@@ -24,6 +29,8 @@ namespace Work.HN.Code.MapMaker.UI.Angle
             
             CalculateRadius();
 
+            _images = GetComponentsInChildren<Image>().ToList();
+            
             _mapMakerChannel.AddListener<CameraMoveEvent>(HandleCameraMove);
             _mapMakerChannel.AddListener<CameraZoomInEvent>(HandleCameraZoomIn);
         }
@@ -80,7 +87,14 @@ namespace Work.HN.Code.MapMaker.UI.Angle
 
         public void Active(bool isActive)
         {
-            gameObject.SetActive(isActive);
+            float fade = isActive ? 1 : 0;
+            
+            foreach (Image image in _images)
+            {
+                UnityEngine.Color imageColor = image.color;
+                imageColor.a = fade;
+                image.color = imageColor;
+            }
         }
 
         private Vector2 CalculatePosition(Vector2 targetPos, float angle, float radius)
