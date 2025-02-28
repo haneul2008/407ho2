@@ -24,9 +24,25 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
         public EditorObject TargetObject { get; private set; }
         private Vector2 _moveAmount;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            
+            mapMakerChannel.AddListener<ObjectSelectEvent>(HandleBlockSelected);
+            inputReader.OnClickEvent += HandleClickEvent;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            
+            mapMakerChannel.RemoveListener<ObjectSelectEvent>(HandleBlockSelected);
+            inputReader.OnClickEvent -= HandleClickEvent;
+        }
+
         private void HandleClickEvent()
         {
-            if(TargetObject == null) return;
+            if(TargetObject == null || !_isActive) return;
             
             Vector2 mousePos = inputReader.MouseWorldPos;
             
@@ -63,6 +79,8 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
 
         private void HandleBlockSelected(ObjectSelectEvent evt)
         {
+            if(!_isActive) return;
+            
             EditorObject selectedBlock = evt.selectedObject;
 
             if (selectedBlock == null)
@@ -75,22 +93,6 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             TargetObject = selectedBlock;
         }
 
-        protected override void OnActive(bool isActive)
-        {
-            base.OnActive(isActive);
-
-            if (isActive)
-            {
-                mapMakerChannel.AddListener<ObjectSelectEvent>(HandleBlockSelected);
-                inputReader.OnClickEvent += HandleClickEvent;
-            }
-            else
-            {
-                mapMakerChannel.RemoveListener<ObjectSelectEvent>(HandleBlockSelected);
-                inputReader.OnClickEvent -= HandleClickEvent;
-            }
-        }
-
         private bool ContainsBlock(int blockId, Vector2 targetPos)
         {
             List<EditorObject> objectList = mapMakerManager.GetObjects(blockId);
@@ -99,6 +101,8 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             
             foreach (EditorObject editorObject in objectList)
             {
+                if(editorObject == null) continue;
+                
                 Vector2 position = editorObject.transform.position;
                 
                 if(EqualsBlock(position, targetPos)) return true;

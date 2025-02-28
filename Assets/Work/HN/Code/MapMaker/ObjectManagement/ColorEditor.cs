@@ -8,18 +8,24 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
     {
         public override EditType EditType => EditType.Color;
 
-        protected override void OnActive(bool isActive)
+        public override void Initialize()
         {
-            base.OnActive(isActive);
+            base.Initialize();
             
-            if(isActive)
-                mapMakerChannel.AddListener<ColorChangeEvent>(HandleColorChanged);
-            else
-                mapMakerChannel.RemoveListener<ColorChangeEvent>(HandleColorChanged);
+            mapMakerChannel.AddListener<ColorChangeEvent>(HandleColorChanged);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            
+            mapMakerChannel.RemoveListener<ColorChangeEvent>(HandleColorChanged);
         }
 
         private void HandleColorChanged(ColorChangeEvent evt)
         {
+            if(!_isActive) return;
+            
             EditorObject targetObject = evt.targetObject;
             
             if(targetObject == null) return;
