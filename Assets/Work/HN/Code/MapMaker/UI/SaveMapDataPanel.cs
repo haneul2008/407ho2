@@ -13,6 +13,7 @@ namespace Work.HN.Code.MapMaker.UI
         [SerializeField] private GameObject checkBtn;
         
         [SerializeField] private SoundID clickSoundID;
+        [SerializeField] private SoundID saveSoundID;
 
         private void Awake()
         {
@@ -27,6 +28,7 @@ namespace Work.HN.Code.MapMaker.UI
             {
                 if (objectInvoker.SaveData(HandleSaveFail))
                 {
+                    BroAudio.Play(saveSoundID);
                     descText.text = "저장 성공!";
                 }
                 

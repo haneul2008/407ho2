@@ -1,4 +1,5 @@
 ﻿using System;
+using Ami.BroAudio;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,9 @@ namespace Work.HN.Code.MapMaker.UI
         [SerializeField] private TextMeshProUGUI mapNameText;
         [SerializeField] private float yPosInActive = 0, duration = 0.5f;
         [SerializeField] private ArrivalPointObjectSO endPointSO;
+        [SerializeField] private SoundID clickSoundID;
+        [SerializeField] private SoundID clearSoundID;
+
         
         private float yPosInDeactivate;
         private RectTransform _rectTrm;
@@ -32,6 +36,8 @@ namespace Work.HN.Code.MapMaker.UI
 
         private void HandleOnClear()
         {
+            BroAudio.Play(clearSoundID);
+            
             Active(true);
         }
 
@@ -58,6 +64,8 @@ namespace Work.HN.Code.MapMaker.UI
 
         public void OnClick()
         {
+            BroAudio.Play(clickSoundID);
+            
             Time.timeScale = 1f;
             SceneManager.LoadScene("TitleHN");
         }
