@@ -28,5 +28,11 @@ namespace Work.HN.Code.Test
             DataReceiver.Instance.SetMapEditData(_mapName);
             SceneManager.LoadScene("HN");
         }
+
+        public void OnPlayBtnClick()
+        {
+            DataReceiver.Instance.SetPlayMapData(_mapName);
+            SceneManager.LoadScene("JW");
+        }
     }
 }

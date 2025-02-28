@@ -10,6 +10,7 @@ namespace Work.HN.Code.Save
         public string Path { get; private set; }
         public bool IsCreatedNewMap { get; private set; }
         public string MapEditDataName { get; private set; }
+        public string PlayEditedMapName { get; private set; }
         public int UserMapDataSequence { get; private set; }
 
         private void Awake()
@@ -29,17 +30,31 @@ namespace Work.HN.Code.Save
 
         public void CreateNewMap()
         {
+            ClearData();
+            
             IsCreatedNewMap = true;
         }
         
         public void SetMapEditData(string mapName)
         {
+            ClearData();
+            
             IsCreatedNewMap = false;
             MapEditDataName = mapName;
+        }
+        
+        public void SetPlayMapData(string mapName)
+        {
+            ClearData();
+            
+            IsCreatedNewMap = false;
+            PlayEditedMapName = mapName;
         }
 
         public void SetPlayUserMapData(int sequence)
         {
+            ClearData();
+
             IsCreatedNewMap = false;
             UserMapDataSequence = sequence;
         }
@@ -55,6 +70,13 @@ namespace Work.HN.Code.Save
             {
                 return null;
             }
+        }
+
+        private void ClearData()
+        {
+            MapEditDataName = string.Empty;
+            PlayEditedMapName = string.Empty;
+            UserMapDataSequence = 0;
         }
     }
 }
