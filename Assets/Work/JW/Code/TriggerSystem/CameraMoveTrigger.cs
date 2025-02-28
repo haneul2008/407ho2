@@ -10,7 +10,7 @@ namespace Work.JW.Code.TriggerSystem
     public class CameraMoveTrigger : Trigger
     {
         [SerializeField] private CinemachineCamera targetCam;
-        [SerializeField] private Vector2 movePos;
+        [SerializeField] private Vector3 movePos;
         [SerializeField] private float duration;
         [SerializeField] private Transform targetTrm;
         
@@ -18,7 +18,9 @@ namespace Work.JW.Code.TriggerSystem
         public override void TriggerEvent(Entity entity)
         {
             targetCam.Follow = null;
-            targetCam.transform.DOMove(movePos, duration).SetEase(Ease.InCubic);
+
+            Vector3 curentMovePos = movePos + targetCam.transform.position;
+            targetCam.transform.DOMove(curentMovePos, duration).SetEase(Ease.InCubic);
         }
         
         public void SetData(Vector2 pos, float time)

@@ -32,6 +32,7 @@ namespace Work.JW.Code.TriggerSystem
             base.SetTargets(targets);
             targetStrs = new SpriteRenderer[targets.Length];
             targetCols = new Collider2D[targets.Length];
+            _defaultColors = new Color[targets.Length];
             
             for (int i = 0; i < targets.Length; i++)
             {
