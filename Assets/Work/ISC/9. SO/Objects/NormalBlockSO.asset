@@ -20,9 +20,7 @@ MonoBehaviour:
       m_Calls: []
   ObjectName: NormalBlock
   ObjectImage: {fileID: 21300000, guid: 339aeb8ac602813489ea7b1f76e7c6e3, type: 3}
-  ObjectLayer:
-    serializedVersion: 2
-    m_Bits: 1024
+  ObjectLayer: 10
   ColliderSize: {x: 1, y: 1}
   ColliderOffset: {x: 0, y: 0}
   isTrigger: 0

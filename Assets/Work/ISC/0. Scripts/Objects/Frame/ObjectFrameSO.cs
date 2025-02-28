@@ -12,7 +12,7 @@ namespace Work.ISC._0._Scripts.Objects.Frame
         public string ObjectName;
         public Sprite ObjectImage;
         
-        public LayerMask ObjectLayer;
+        public int ObjectLayer;
         public Vector2 ColliderSize;
         public Vector2 ColliderOffset;
 

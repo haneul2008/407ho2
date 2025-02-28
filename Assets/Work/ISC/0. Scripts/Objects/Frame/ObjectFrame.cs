@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Work.JW.Code.Entities;
 using Work.JW.Code.Entities.Player;
@@ -46,21 +47,19 @@ namespace Work.ISC._0._Scripts.Objects.Frame
         private void InitializeObject()
         {
             if (_objSO == null) return;
-
-            if (_objSO.GetType() == typeof(StartPointObjectSO))
-            {
-                StartPointObjectSO startPointSO = (StartPointObjectSO)_objSO;
-                startPointSO.OnGameStartEvent += SpawnPos;
-            }
             
             _objSO.InitializeObject();
 
             AfterInitObj();
         }
-
-        private void SpawnPos( Entity player)
+        
+        private void Start()
         {
-            player.transform.position = transform.position;
+            if (_objSO.GetType() == typeof(StartPointObjectSO))
+            {
+                StartPointObjectSO startPointSO = (StartPointObjectSO)_objSO;
+                startPointSO.TargetToPosition(transform);
+            }
         }
 
         public void TriggerEvent(Entity entity)
@@ -69,12 +68,13 @@ namespace Work.ISC._0._Scripts.Objects.Frame
         }
 
         private void AfterInitObj()
-        { 
+        {
             gameObject.name = _objSO.name;
             gameObject.layer = _objSO.ObjectLayer;
             SpriteCompo.sprite = _objSO.ObjectImage;
             ColliderCompo.offset = _objSO.ColliderOffset;
             ColliderCompo.size = _objSO.ColliderSize;
+            ColliderCompo.isTrigger = _objSO.isTrigger;
         }
     }
 }
