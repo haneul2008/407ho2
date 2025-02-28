@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Ami.BroAudio;
+using UnityEngine;
 using Work.JW.Code.Animators;
 using Work.JW.Code.Entities.FSM;
 
@@ -15,7 +16,8 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
         public override void Enter()
         {
             base.Enter();
-            
+
+            BroAudio.Play(_player.JumpSoundID);
             _mover.AddJump();
             
             _player.InputReader.OnJumpReleaseEvent += HandleJumpReleaseEvent;

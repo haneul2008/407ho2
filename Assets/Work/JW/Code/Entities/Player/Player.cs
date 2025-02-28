@@ -1,4 +1,5 @@
 ﻿using System;
+using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.HN.Code.Input;
@@ -13,15 +14,20 @@ namespace Work.JW.Code.Entities.Player
 
         [SerializeField] private LayerMask obstacleLayer;
         [SerializeField] private StateListSO stateList;
+
+        [field: SerializeField] public SoundID JumpSoundID { get; private set; }
+        [field: SerializeField] public SoundID DieSoundID { get; private set; }
+        [field: SerializeField] public SoundID GetTriggerSoundID { get; private set; }
+
         private StateMachine _stateMachine;
 
-        
+
         protected override void InitializeCompo()
         {
             base.InitializeCompo();
 
             _stateMachine = new StateMachine(this, stateList);
-            
+
             InputReader.SetEnable(InputType.MapMaker, false);
             InputReader.SetEnable(InputType.Player, true);
         }
@@ -45,6 +51,7 @@ namespace Work.JW.Code.Entities.Player
         {
             if (other.TryGetComponent(out ITriggerEvent trigger))
             {
+                BroAudio.Play(GetTriggerSoundID);
                 trigger.TriggerEvent(this);
             }
 
@@ -58,6 +65,7 @@ namespace Work.JW.Code.Entities.Player
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
             {
+                BroAudio.Play(DieSoundID);
                 OnHit?.Invoke();
             }
         }
