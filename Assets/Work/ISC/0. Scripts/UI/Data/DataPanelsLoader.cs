@@ -60,7 +60,7 @@ namespace Work.ISC._0._Scripts.UI.Data
 
         private string ConvertName(string data)
         {
-            MapData mapData = JsonConvert.DeserializeObject<MapData>(data, SaveManager.jsonSettings);
+            MapData mapData = JsonUtility.FromJson<MapData>(data);
             
             return mapData.mapName;
         }
