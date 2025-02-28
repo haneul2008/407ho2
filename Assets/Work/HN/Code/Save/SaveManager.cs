@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.HN.Code.EventSystems;
@@ -154,7 +155,7 @@ namespace Work.HN.Code.Save
             _mapData.isRegistered = true;
             
             string mapDataJson = JsonUtility.ToJson(_mapData);
-            saveData.DataSave(mapDataJson, HandleFailSave);
+            saveData.DataSave(GetMinifiedJson(mapDataJson), HandleFailSave);
             
             string userDataJson = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, userDataJson);
@@ -162,6 +163,8 @@ namespace Work.HN.Code.Save
 
         private void HandleFailSave(ErrorType type)
         {
+            _mapData.isRegistered = false;
+            
             SaveFailEvent evt = MapMakerEvent.SaveFailEvent;
             evt.errorType = type;
             mapMakerChannel.RaiseEvent(evt);
@@ -200,12 +203,16 @@ namespace Work.HN.Code.Save
             if (targetObject is EditorTrigger trigger)
             {
                 newData.isTrigger = true;
-                newData.triggerData = new TriggerData();
-                newData.triggerData.targetID = trigger.GetTargetID();
-                newData.triggerData.triggerType = trigger.TriggerType;
+                newData.triggerData = new TriggerData()
+                {
+                    triggerType = trigger.TriggerType,
+                    targetID = trigger.GetTargetID()
+                };
+                
                 SetInfo(newData, trigger);
             }
 
+            print(newData.triggerData);
             return newData;
         }
 
@@ -261,9 +268,16 @@ namespace Work.HN.Code.Save
                 _capacityData.objectList.Add(GetNewObjectData(obj));
             }
             
-            return JsonUtility.ToJson(_capacityData).Length;
+            string json = JsonUtility.ToJson(_capacityData);
+            
+            return GetMinifiedJson(json).Length;
         }
 
+        private string GetMinifiedJson(string json)
+        {
+            return Regex.Replace(json, @"\s+", "");
+        }
+        
         [ContextMenu("TestLoad")]
         public void TestLoad()
         {

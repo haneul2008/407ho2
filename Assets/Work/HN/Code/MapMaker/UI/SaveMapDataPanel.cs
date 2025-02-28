@@ -43,6 +43,9 @@ namespace Work.HN.Code.MapMaker.UI
                 
                 case ErrorType.NoneStartOrEnd : descText.text = "시작 지점 또는 도착 지점이 없습니다.";
                     break;
+                
+                case ErrorType.ExceededMaxCapacity : descText.text = "맵 크기가 최대 크기를 초과하였습니다.";
+                    break;
             }
         }
     }
