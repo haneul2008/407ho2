@@ -71,6 +71,12 @@ namespace Work.HN.Code.Save
                 onSaveFail?.Invoke(ErrorType.NoneStartOrEnd);
                 return false;
             }
+
+            if (saveManager.GetMapCapacity(objects) >= ISC._0._Scripts.Save.ExelData.SaveData.maxCapacity)
+            {
+                onSaveFail?.Invoke(ErrorType.ExceededMaxCapacity);
+                return false;
+            }
             
             for (int i = 0; i < objects.Count; i++)
             {

@@ -13,7 +13,7 @@ namespace Work.ISC._0._Scripts.Save.ExelData
 
         private readonly string _loadPath = "https://docs.google.com/spreadsheets/d/1kz1M84oW3nPViQVUkclT1XkeLQTZhVLQOq5iO0UjI6I";
 
-        public const int maxCapacity = 30000;
+        public const int maxCapacity = 31000;
         
         public UnityWebRequest Data { get; private set; }
 
