@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Ami.BroAudio;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -22,11 +23,17 @@ namespace Work.JW.Code.MapLoad
     {
         private MapData _currentMapData;
 
+        [Header("Data")]
         [SerializeField] private TriggerDataBaseSO triggerDataBase;
-        [SerializeField] private ObjPrefabDataSO objPrefabData;
+        // [SerializeField] private ObjPrefabDataSO objPrefabData;
+        
+        [Header("Prefabs")]
         [SerializeField] private ObjectFrame objFrame;
         [SerializeField] private GameObject triggerPrefab;
+        
+        [Header("ETC")]
         [SerializeField] private Transform outGameLineTrm;
+        [SerializeField] private SoundID startSoundID;
 
         private Dictionary<TriggerType, TriggerDataSO> _triggers;
         private Dictionary<int, ObjectFrame> _inGamePrefabs;
@@ -54,6 +61,8 @@ namespace Work.JW.Code.MapLoad
 
             _currentMapData = mapData;
             SetMapObjSpawn();
+            
+            BroAudio.Play(startSoundID);
         }
 
         public void SetMapObjSpawn()

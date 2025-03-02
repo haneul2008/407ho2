@@ -11,7 +11,6 @@ namespace Work.ISC._0._Scripts.Objects
     public class StartPointObjectSO : ObjectFrameSO
     {
         public Entity Player { get; private set; }
-        [SerializeField] private SoundID startSoundID;
         
         public override void InitializeObject()
         {
@@ -20,7 +19,6 @@ namespace Work.ISC._0._Scripts.Objects
 
         public void TargetToPosition(Transform target)
         {
-            BroAudio.Play(startSoundID);
             Player.transform.position = target.position;
         }
         

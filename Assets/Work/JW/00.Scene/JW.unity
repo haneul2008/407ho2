@@ -719,6 +719,10 @@ MonoBehaviour:
   objFrame: {fileID: 8490947678811256070, guid: c7202133960da1e48aab8d534ca40665, type: 3}
   triggerPrefab: {fileID: 894179656919996830, guid: 3cf77d1f146419445ac70611df979d5d, type: 3}
   outGameLineTrm: {fileID: 1635661809}
+  startSoundID:
+    ID: 1073741828
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 1126928208}
 --- !u!4 &1126928210
 Transform:
   m_ObjectHideFlags: 0
