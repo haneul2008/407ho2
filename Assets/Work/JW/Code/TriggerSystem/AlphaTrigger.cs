@@ -1,5 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using Work.HN.Code.MapMaker.Objects.Triggers;
+using Work.HN.Code.Save;
 using Work.JW.Code.Entities;
 
 namespace Work.JW.Code.TriggerSystem
@@ -29,10 +31,12 @@ namespace Work.JW.Code.TriggerSystem
             }
         }
 
-        public void SetData(float alpha, float duration)
+        public override void SetData(TriggerData data)
         {
-            alphaValue = alpha;
-            fadeTime = duration;
+            AlphaInfo info = data.alphaInfo;
+            
+            alphaValue = info.endValue;
+            fadeTime = info.duration;
         }
 
         public void AlphaChange(Entity entity)

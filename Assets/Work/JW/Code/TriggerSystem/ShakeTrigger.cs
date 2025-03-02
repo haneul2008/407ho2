@@ -1,5 +1,7 @@
 ﻿using Unity.Cinemachine;
 using UnityEngine;
+using Work.HN.Code.MapMaker.Objects.Triggers;
+using Work.HN.Code.Save;
 using Work.JW.Code.Entities;
 
 namespace Work.JW.Code.TriggerSystem
@@ -21,15 +23,17 @@ namespace Work.JW.Code.TriggerSystem
             base.TriggerEvent(entity);
         }
 
-        public void SetData(float power, float duration)
+        public override void SetData(TriggerData data)
         {
+            ShakeInfo info = data.shakeInfo;
+            
             _impulseSource = GetComponent<CinemachineImpulseSource>();
             
-            shakeDuration = duration;
-            shakePower = power;
+            shakeDuration = info.duration;
+            shakePower = info.strength;
             
-            _impulseSource.ImpulseDefinition.AmplitudeGain = power;
-            _impulseSource.ImpulseDefinition.TimeEnvelope.SustainTime = duration;
+            _impulseSource.ImpulseDefinition.AmplitudeGain = shakePower;
+            _impulseSource.ImpulseDefinition.TimeEnvelope.SustainTime = shakeDuration;
         }
     }
 }
