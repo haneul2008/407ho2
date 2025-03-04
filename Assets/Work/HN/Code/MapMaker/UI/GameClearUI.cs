@@ -37,6 +37,7 @@ namespace Work.HN.Code.MapMaker.UI
         private void HandleOnClear()
         {
             BroAudio.Play(clearSoundID);
+            DataReceiver.Instance.TryVerify();
             
             Active(true);
         }

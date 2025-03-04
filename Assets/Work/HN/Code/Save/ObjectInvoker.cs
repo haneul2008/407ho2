@@ -15,7 +15,7 @@ namespace Work.HN.Code.Save
         FailRequest,
         ExceededMaxCapacity,
     }
-    
+
     public class ObjectInvoker : MonoBehaviour
     {
         [SerializeField] private MapMakerManager mapMaker;
@@ -44,7 +44,7 @@ namespace Work.HN.Code.Save
             _mapName = evt.mapName;
         }
 
-        public bool SaveData(Action<ErrorType> onSaveFail = null)
+        public bool SaveData(bool isRegister, Action<ErrorType> onSaveFail = null)
         {
             List<EditorObject> objects = mapMaker.GetAllObjects();
 
@@ -59,7 +59,7 @@ namespace Work.HN.Code.Save
                 onSaveFail?.Invoke(ErrorType.EmptyName);
                 return false;
             }
-            
+
             if (!saveManager.CanSaveData(_mapName))
             {
                 onSaveFail?.Invoke(ErrorType.SameName);
@@ -77,28 +77,30 @@ namespace Work.HN.Code.Save
                 onSaveFail?.Invoke(ErrorType.ExceededMaxCapacity);
                 return false;
             }
-            
+
             for (int i = 0; i < objects.Count; i++)
             {
                 if (i == 0)
                 {
+                    if (!isRegister) saveManager.IsVerified = false;
+
                     saveManager.SetMapName(_mapName);
                     saveManager.ClearObjects();
                 }
-                
+
                 ObjectSaveEvent evt = MapMakerEvent.ObjectSaveEvent;
                 evt.targetObject = objects[i];
                 evt.isFinish = i == objects.Count - 1;
                 mapMakerChannel.RaiseEvent(evt);
             }
-            
+
             return true;
         }
 
         public void RegisterData()
         {
-            if(!SaveData()) return;
-            
+            if (!SaveData(true)) return;
+
             saveManager.RegisterMapData();
         }
 

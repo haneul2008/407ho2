@@ -8,7 +8,7 @@ namespace Work.ISC._0._Scripts.Objects
     [CreateAssetMenu(fileName = "ArrivalPointObjectSO", menuName = "SO/Object/ArrivalPoint", order = 0)]
     public class ArrivalPointObjectSO : ObjectFrameSO
     {
-        public event Action OnClearEvent; 
+        public event Action OnClearEvent;
         
         public override void InitializeObject() { }
 

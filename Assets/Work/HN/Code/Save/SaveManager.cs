@@ -42,6 +42,7 @@ namespace Work.HN.Code.Save
     {
         public List<ObjectData> objectList = new List<ObjectData>();
         public string mapName;
+        public bool isVerified = false;
         public bool isRegistered = false;
     }
 
@@ -57,6 +58,12 @@ namespace Work.HN.Code.Save
     public class SaveManager : MonoBehaviour
     {
         public UnityEvent<MapData> OnDataLoaded;
+        public UnityEvent<MapData> OnDataSaved;
+        public bool IsVerified
+        {
+            get => _mapData.isVerified;
+            set => _mapData.isVerified = value;
+        }
         
         [SerializeField] private GameEventChannelSO mapMakerChannel;
         [SerializeField] private SaveData saveData;
@@ -125,13 +132,18 @@ namespace Work.HN.Code.Save
         private void FinishData()
         {
              MapData mapData = GetUsersMap(_mapData.mapName);
-            
-            if(mapData != null) _userData.userMapList.Remove(mapData);
-            
+
+            if (mapData != null)
+            {
+                _userData.userMapList.Remove(mapData);
+            }
+
             _userData.userMapList.Add(_mapData);
             
             string json = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, json);
+
+            OnDataSaved?.Invoke(_mapData);
         }
 
         private MapData GetUsersMap(string mapName)

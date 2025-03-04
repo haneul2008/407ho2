@@ -27,7 +27,7 @@ namespace Work.HN.Code.MapMaker.UI
         {
             BroAudio.Play(clickSoundID);
             
-            if (objectInvoker.SaveData())
+            if (objectInvoker.SaveData(false))
             {
                 SceneManager.LoadScene("TitleHN");
             }

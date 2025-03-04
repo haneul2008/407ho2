@@ -26,7 +26,7 @@ namespace Work.HN.Code.MapMaker.UI
             
             if (isActive)
             {
-                if (objectInvoker.SaveData(HandleSaveFail))
+                if (objectInvoker.SaveData(false, HandleSaveFail))
                 {
                     BroAudio.Play(saveSoundID);
                     descText.text = "저장 성공!";
