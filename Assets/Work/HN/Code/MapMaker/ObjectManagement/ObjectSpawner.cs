@@ -45,8 +45,8 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             if(TargetObject == null || !_isActive) return;
             
             Vector2 mousePos = inputReader.MouseWorldPos;
-            
-            if(mapMakerCanvas.IsPointerOverUI(inputReader.MouseScreenPos)) return;
+
+            if (mapMakerCanvas.IsPointerOverUI(inputReader.MouseScreenPos)) return;
             
             Vector2 targetPos = new Vector2(Mathf.Round(mousePos.x), Mathf.Round(mousePos.y));
 

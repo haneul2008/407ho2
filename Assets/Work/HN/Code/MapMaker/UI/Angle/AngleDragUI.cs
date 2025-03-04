@@ -94,6 +94,7 @@ namespace Work.HN.Code.MapMaker.UI.Angle
                 UnityEngine.Color imageColor = image.color;
                 imageColor.a = fade;
                 image.color = imageColor;
+                image.raycastTarget = isActive;
             }
         }
 

@@ -20,7 +20,6 @@ namespace Work.HN.Code.MapMaker.UI
 
         private void OnDestroy()
         {
-            print("ondestroy");
             titleChannel.RemoveListener<DeleteRequestEvent>(HandleDeleteRequest);
         }
 
