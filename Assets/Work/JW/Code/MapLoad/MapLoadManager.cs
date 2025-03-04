@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Ami.BroAudio;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.Events;
 using Work.HN.Code.MapMaker.Objects.Triggers;
 using Work.HN.Code.Save;
 using Work.ISC._0._Scripts.Objects.Frame;
 using Work.JW.Code.TriggerSystem;
-using Object = Work.HN.Code.MapMaker.Objects.Object;
 
 namespace Work.JW.Code.MapLoad
 {
@@ -22,6 +20,8 @@ namespace Work.JW.Code.MapLoad
     public class MapLoadManager : MonoBehaviour
     {
         private MapData _currentMapData;
+
+        public UnityEvent OnMapLoaded;
 
         [Header("Data")]
         [SerializeField] private TriggerDataBaseSO triggerDataBase;
@@ -87,7 +87,9 @@ namespace Work.JW.Code.MapLoad
 
             SetTriggerTargets();
 
-            outGameLineTrm.position = new Vector3(0, _minYValue - 10);
+            outGameLineTrm.position = new Vector3(0, _minYValue - 5);
+            
+            OnMapLoaded?.Invoke();
         }
 
         private void SetTriggerTargets()
