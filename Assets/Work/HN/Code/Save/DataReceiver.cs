@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using UnityEngine;
 
@@ -12,6 +11,7 @@ namespace Work.HN.Code.Save
         public string MapEditDataName { get; private set; }
         public string PlayEditedMapName { get; private set; }
         public int UserMapDataSequence { get; private set; }
+        public bool _isVerified;
 
         private void Awake()
         {
@@ -20,35 +20,66 @@ namespace Work.HN.Code.Save
                 Destroy(gameObject);
                 return;
             }
-            
+
             Path = $"{Application.persistentDataPath}/GameData.json";
 
             Instance = this;
-            
+
             DontDestroyOnLoad(this);
         }
 
         public void CreateNewMap()
         {
             ClearData();
-            
+
             IsCreatedNewMap = true;
         }
-        
+
         public void SetMapEditData(string mapName)
         {
             ClearData();
-            
+
             IsCreatedNewMap = false;
             MapEditDataName = mapName;
         }
-        
+
         public void SetPlayMapData(string mapName)
         {
             ClearData();
-            
+
             IsCreatedNewMap = false;
             PlayEditedMapName = mapName;
+        }
+
+        public void TryVerify()
+        {
+            if (string.IsNullOrEmpty(PlayEditedMapName)) return;
+
+            UserBuiltInData userData = GetUserMapData();
+
+            if (userData == null) return;
+
+            MapData mapData = GetMapData(userData, PlayEditedMapName);
+
+            if (mapData == null) return;
+
+            mapData.isVerified = true;
+
+            string json = JsonUtility.ToJson(userData);
+            File.WriteAllText(Path, json);
+        }
+
+        private MapData GetMapData(UserBuiltInData userData, string mapName)
+        {
+            foreach (MapData mapData in userData.userMapList)
+            {
+                if (mapData.mapName == mapName)
+                {
+                    return mapData;
+                }
+            }
+
+            return null;
         }
 
         public void SetPlayUserMapData(int sequence)
