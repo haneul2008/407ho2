@@ -26,6 +26,7 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             foreach (ObjectData objectData in mapData.objectList)
             {   
                 EditorObject obj = GetObject(objectData.objectId);
+
                 EditorObject spawnedObj = Instantiate(obj);
 
                 _objectDataPairs.Add(spawnedObj, objectData);
@@ -49,29 +50,49 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             SetObjectInfo(obj, _objectDataPairs[obj]);
         }
 
-        private static void SetTriggerInfo(ObjectData objectData, EditorTrigger trigger)
+        private void SetTriggerInfo(ObjectData objectData, EditorTrigger trigger)
         {
             TriggerData triggerData = objectData.triggerData;
+            int targetID = triggerData.targetID;
             
             switch (triggerData.triggerType)
             {
                 case TriggerType.ObjectMove:
                 case TriggerType.CameraMove:
-                    trigger.SetData(triggerData.moveInfo);
+                    MoveInfo moveInfo = GetInfo<MoveInfo>(triggerData.moveInfo, targetID);
+                    trigger.SetData(moveInfo);
                     break;
                 
                 case TriggerType.Alpha:
-                    trigger.SetData(triggerData.alphaInfo);
+                    AlphaInfo alphaInfo = GetInfo<AlphaInfo>(triggerData.alphaInfo, targetID);
+                    trigger.SetData(alphaInfo);
                     break;
                 
                 case TriggerType.Shake:
-                    trigger.SetData(triggerData.shakeInfo);
+                    ShakeInfo shakeInfo = GetInfo<ShakeInfo>(triggerData.shakeInfo, targetID);
+                    trigger.SetData(shakeInfo);
                     break;
                 
                 case TriggerType.Spawn:
                 case TriggerType.Destroy:
-                    trigger.SetData(triggerData.spawnOrDestroyInfo);
+                    SpawnOrDestroyInfo spawnOrDestroyInfo = GetInfo<SpawnOrDestroyInfo>(triggerData.spawnOrDestroyInfo, targetID);
+                    trigger.SetData(spawnOrDestroyInfo);
                     break;
+            }
+        }
+
+        private T GetInfo<T>(ITriggerInfo targetInfo, int targetID) where T : ITriggerInfo
+        {
+            if(targetInfo is T info)
+            {
+                T returnValue = info;
+                returnValue.ID = targetID;
+
+                return returnValue;
+            }
+            else
+            {
+                return default;
             }
         }
 

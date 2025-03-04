@@ -45,6 +45,8 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             EditorTrigger targetTrigger = evt.targetTrigger;
             
             if(targetTrigger == null) return;
+
+            print($"Trigger Info Changed info id = {evt.info.ID}");
             
             targetTrigger.SetData(evt.info);
         }
