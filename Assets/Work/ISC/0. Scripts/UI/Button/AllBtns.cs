@@ -15,6 +15,7 @@ namespace Work.ISC._0._Scripts.UI.Button
             
         [SerializeField] private RoundedPanel subPanel;
         [SerializeField] private Image optionPanel;
+        [SerializeField] private Image networkCheckPanel;
         [SerializeField] private SoundID clickSoundID;
         
         public void Play()
