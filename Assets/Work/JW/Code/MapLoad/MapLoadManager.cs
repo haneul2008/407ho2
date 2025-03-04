@@ -87,7 +87,7 @@ namespace Work.JW.Code.MapLoad
 
             SetTriggerTargets();
 
-            outGameLineTrm.position = new Vector3(0, _minYValue - 10);
+            outGameLineTrm.position = new Vector3(0, _minYValue - 5);
             
             OnMapLoaded?.Invoke();
         }
