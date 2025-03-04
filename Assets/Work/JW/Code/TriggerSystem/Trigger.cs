@@ -2,6 +2,7 @@
 using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Work.HN.Code.Save;
 using Work.JW.Code.Entities;
 
 namespace Work.JW.Code.TriggerSystem
@@ -34,6 +35,8 @@ namespace Work.JW.Code.TriggerSystem
         {
             _targets = targets;
         }
+
+        public abstract void SetData(TriggerData data);
 
         public void TriggerLineScaleSetting(Vector2 size)
         {

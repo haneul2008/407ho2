@@ -26,9 +26,14 @@ namespace Work.HN.Code.MapMaker.Objects
 
             triggerIDText.text = _targetTriggerId.ToString();
             triggerNameText.text = TriggerType.ToString();
-            
-            idTextRenderer = triggerIDText.GetComponent<MeshRenderer>();
-            nameTextRenderer = triggerNameText.GetComponent<MeshRenderer>();
+
+            GetRenderers();
+        }
+
+        private void GetRenderers()
+        {
+            idTextRenderer ??= triggerIDText.GetComponent<MeshRenderer>();
+            nameTextRenderer ??= triggerNameText.GetComponent<MeshRenderer>();
         }
 
         public virtual void SetData(ITriggerInfo info)
@@ -76,6 +81,8 @@ namespace Work.HN.Code.MapMaker.Objects
 
             if (type == InfoType.SortingOrder)
             {
+                GetRenderers();
+
                 idTextRenderer.sortingOrder = (int)info;
                 nameTextRenderer.sortingOrder = (int)info;
             }

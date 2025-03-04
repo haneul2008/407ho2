@@ -57,7 +57,7 @@ namespace Work.JW.Code.Entities.Player
 
             if (other.gameObject.layer == 8)
             {
-                OnHit?.Invoke();
+                OnDead();
             }
         }
 
@@ -66,13 +66,19 @@ namespace Work.JW.Code.Entities.Player
             if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
             {
                 BroAudio.Play(DieSoundID);
-                OnHit?.Invoke();
+                OnDead();
             }
         }
 
         public EntityState ChangeState(string newStateName)
         {
             return _stateMachine.ChangeState(newStateName);
+        }
+
+        public override void OnDead()
+        {
+            base.OnDead();
+            ChangeState("IDLE");
         }
     }
 }

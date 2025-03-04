@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Work.HN.Code.Save;
 using Work.JW.Code.Entities;
 
 namespace Work.JW.Code.TriggerSystem
@@ -8,6 +9,11 @@ namespace Work.JW.Code.TriggerSystem
         public override void TriggerEvent(Entity entity)
         {
             print("Hit");
+        }
+
+        public override void SetData(TriggerData data)
+        {
+            
         }
     }
 }

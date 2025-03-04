@@ -3,6 +3,8 @@ using DG.Tweening;
 using Unity.Burst.Intrinsics;
 using Unity.Cinemachine;
 using UnityEngine;
+using Work.HN.Code.MapMaker.Objects.Triggers;
+using Work.HN.Code.Save;
 using Work.JW.Code.Entities;
 
 namespace Work.JW.Code.TriggerSystem
@@ -22,14 +24,16 @@ namespace Work.JW.Code.TriggerSystem
             Vector3 curentMovePos = movePos + targetCam.transform.position;
             targetCam.transform.DOMove(curentMovePos, duration).SetEase(Ease.InCubic);
         }
-        
-        public void SetData(Vector2 pos, float time)
+
+        public override void SetData(TriggerData data)
         {
+            MoveInfo info = data.moveInfo;
+            
             targetCam = FindAnyObjectByType<CinemachineCamera>();
             targetTrm = targetCam.Follow;
             
-            movePos = pos;
-            duration = time;
+            movePos = info.moveAmount;
+            duration = info.duration;
         }
 
         private void OnTriggerExit2D(Collider2D other)

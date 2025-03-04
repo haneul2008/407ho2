@@ -1,6 +1,8 @@
 ﻿using System;
 using DG.Tweening;
 using UnityEngine;
+using Work.HN.Code.MapMaker.Objects.Triggers;
+using Work.HN.Code.Save;
 using Work.JW.Code.Entities;
 
 namespace Work.JW.Code.TriggerSystem
@@ -18,10 +20,12 @@ namespace Work.JW.Code.TriggerSystem
             MovePosition(entity);
         }
 
-        public void SetData(Vector2 pos, float duration)
+        public override void SetData(TriggerData data)
         {
-            _duration = duration;
-            toPos = pos;
+            MoveInfo info = data.moveInfo;
+            
+            toPos = info.moveAmount;
+            _duration = info.duration;
         }
 
         public void MovePosition(Entity entity)

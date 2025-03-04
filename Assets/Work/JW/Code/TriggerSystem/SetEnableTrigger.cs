@@ -1,6 +1,8 @@
 ﻿using System;
 using DG.Tweening;
 using UnityEngine;
+using Work.HN.Code.MapMaker.Objects.Triggers;
+using Work.HN.Code.Save;
 using Work.JW.Code.Entities;
 
 namespace Work.JW.Code.TriggerSystem
@@ -17,14 +19,8 @@ namespace Work.JW.Code.TriggerSystem
         public override void TriggerEvent(Entity entity)
         {
             if (_targets == null) return;
-            
-            EnableOrDisable(isEnable);
-        }
 
-        public void SetData(bool enable, float time = 0)
-        {
-            isEnable = enable;
-            fadeTime = time;
+            EnableOrDisable(isEnable);
         }
 
         public override void SetTargets(Transform[] targets)
@@ -33,14 +29,21 @@ namespace Work.JW.Code.TriggerSystem
             targetStrs = new SpriteRenderer[targets.Length];
             targetCols = new Collider2D[targets.Length];
             _defaultColors = new Color[targets.Length];
-            
+
             for (int i = 0; i < targets.Length; i++)
             {
                 targetStrs[i] = targets[i].GetComponentInChildren<SpriteRenderer>();
                 targetCols[i] = targets[i].GetComponent<Collider2D>();
-                
+
                 _defaultColors[i] = targetStrs[i].color;
             }
+        }
+
+        public override void SetData(TriggerData data)
+        {
+            isEnable = data.triggerType != TriggerType.Destroy;
+
+            fadeTime = 0.15f;
         }
 
         private void EnableOrDisable(bool enable)

@@ -13,15 +13,9 @@ MonoBehaviour:
   m_Name: TriggerPrefabs
   m_EditorClassIdentifier: 
   triggerPrefabAndTypes:
-  - prefab: {fileID: 7286937904304749378, guid: b50c62680dbf4454c946bad5c3ac84e6, type: 3}
-    type: 0
-  - prefab: {fileID: 5253897254548795478, guid: 93564ccba8ca3e448a7a19b360b3031b, type: 3}
-    type: 1
-  - prefab: {fileID: 2200665111759625693, guid: af8870e47e3d064419057b33436f0b22, type: 3}
-    type: 2
-  - prefab: {fileID: 4117704514541570139, guid: 6fe5c1bbb32b48d46af49d66839bb723, type: 3}
-    type: 3
-  - prefab: {fileID: 4117704514541570139, guid: 6fe5c1bbb32b48d46af49d66839bb723, type: 3}
-    type: 4
-  - prefab: {fileID: 2839484491532933915, guid: 2a0b55ecd99f9104ebfacb21283ea5da, type: 3}
-    type: 5
+  - {fileID: 11400000, guid: 76959602dc508944eaa287b78cd81284, type: 2}
+  - {fileID: 11400000, guid: 3b4a4c2ad91745a4388984807834edd8, type: 2}
+  - {fileID: 11400000, guid: 76a6836ec89a3634ca0b35add2beb12e, type: 2}
+  - {fileID: 11400000, guid: 32b6c3b27418c934495e3c581d93ea5a, type: 2}
+  - {fileID: 11400000, guid: 77bb564eea86ba649bab725852b43a6b, type: 2}
+  - {fileID: 11400000, guid: 9df378f43083aaf42aebd4860a383453, type: 2}
