@@ -2712,6 +2712,10 @@ MonoBehaviour:
     ID: 536870912
     _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
     <DebugObject>k__BackingField: {fileID: 507496513}
+  saveSoundID:
+    ID: 0
+    _sourceAsset: {fileID: 0}
+    <DebugObject>k__BackingField: {fileID: 0}
 --- !u!1 &509962336
 GameObject:
   m_ObjectHideFlags: 0
@@ -13441,6 +13445,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 318286974836310249, guid: 0994f8344702c48488abed27c641f012, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 318286974836310249, guid: 0994f8344702c48488abed27c641f012, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -13537,6 +13545,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2754129528065954669, guid: 0994f8344702c48488abed27c641f012, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754129528065954669, guid: 0994f8344702c48488abed27c641f012, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -13550,6 +13562,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2767776011272057756, guid: 0994f8344702c48488abed27c641f012, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2767776011272057756, guid: 0994f8344702c48488abed27c641f012, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2767776011272057756, guid: 0994f8344702c48488abed27c641f012, type: 3}
@@ -13580,8 +13596,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4313504177135084471, guid: 0994f8344702c48488abed27c641f012, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4514944756969885356, guid: 0994f8344702c48488abed27c641f012, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4514944756969885356, guid: 0994f8344702c48488abed27c641f012, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6072566722151522085, guid: 0994f8344702c48488abed27c641f012, type: 3}
