@@ -25,7 +25,7 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
         public override void Update()
         {
             base.Update();
-            if (_mover.IsGroundDetected() == false && _mover.CanMove)
+            if (_mover.IsGroundDetected() == false && _mover.CanMove && _mover.GetVelocity().y < -0.05f)
             {
                 _player.ChangeState("FALL");
             }

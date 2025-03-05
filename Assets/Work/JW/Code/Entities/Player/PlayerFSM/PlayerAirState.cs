@@ -18,8 +18,8 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
         {
             base.Enter();
             
-            _mover.StopImmediately(true);
-            _mover.SetMoveSpeedMultiplier(0.7f);
+            // _mover.StopImmediately(true);
+            _mover.SetMoveSpeedMultiplier(0.8f);
         }
 
         public override void Update()

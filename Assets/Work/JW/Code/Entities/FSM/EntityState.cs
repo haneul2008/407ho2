@@ -26,6 +26,11 @@ namespace Work.JW.Code.Entities.FSM
             
         }
 
+        public virtual void FixedUpdate()
+        {
+            
+        }
+
         public virtual void Exit()
         {
             _renderer.SetParam(_param, false);
