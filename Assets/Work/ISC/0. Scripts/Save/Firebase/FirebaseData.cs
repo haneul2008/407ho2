@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Firebase.Database;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,8 +18,11 @@ namespace Work.ISC._0._Scripts.Save.Firebase
         
         public UnityEvent<MapData> OnMapDataLoaded; 
         
+        public List<MapData> MapDataList { get; private set; }
+
         private void Start()
         {
+            MapDataList = new List<MapData>();
             _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         }
 
@@ -51,6 +56,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                     foreach (var json in dataSnapshot.Children)
                     {
                         dataString += json.Key + " " + json.Value + "\n";
+                        Debug.Log(dataString);
                     }
 
                     bool isNullOrEmpty = String.IsNullOrEmpty(dataString);
@@ -60,6 +66,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                     else
                     {
                         OnSuccess?.Invoke(dataString);
+
                     }
 
                     OnIsNull?.Invoke(isNullOrEmpty);
@@ -70,6 +77,31 @@ namespace Work.ISC._0._Scripts.Save.Firebase
         public void Load(string data)
         {
             LoadData(data, OnIsNull: null, jsonData => LoadJsonData(jsonData));
+        }
+
+        [ContextMenu("All Load")]
+        public void LoadAll()
+        {
+            LoadAllData();
+        }
+
+        private void LoadAllData(Action loadComplete = null )
+        {
+            _databaseReference.GetValueAsync().ContinueWith(task =>
+            {
+                var dataSnapshot  = task.Result;
+                print(dataSnapshot.Children.ToList().Count);
+                
+                foreach (var data in dataSnapshot.Children)
+                {
+                    print(data.Value.ToString());
+                    
+                    MapDataList.Add(JsonUtility.FromJson<MapData>(data.Value.ToString())); 
+                }
+                
+                Debug.Log("성공");
+                loadComplete?.Invoke();
+            });
         }
 
         private void LoadJsonData(string jsonData)
@@ -113,6 +145,12 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             from = to;
             
             DeleteCallback?.Invoke(from);
+        }
+
+        [ContextMenu("Load")]
+        public void Load()
+        {
+            Load("Test6");
         }
     }
 }
