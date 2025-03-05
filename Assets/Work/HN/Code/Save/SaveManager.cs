@@ -215,19 +215,10 @@ namespace Work.HN.Code.Save
             
             string mapDataJson = JsonUtility.ToJson(_mapData);
             //saveData.SaveData(GetMinifiedJson(mapDataJson), HandleFailSave, () => SceneManager.LoadScene("TitleHN"));
-            saveData.SaveData(_mapData.mapName, GetMinifiedJson(mapDataJson));
+            saveData.SaveData(_mapData.mapName, GetMinifiedJson(mapDataJson), () => SceneManager.LoadScene("TitleHN"));
             
             string userDataJson = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, userDataJson);
-        }
-
-        private void HandleFailSave(ErrorType type)
-        {
-            _mapData.isRegistered = false;
-            
-            SaveFailEvent evt = MapMakerEvent.SaveFailEvent;
-            evt.errorType = type;
-            mapMakerChannel.RaiseEvent(evt);
         }
 
         public bool CanSaveData(string mapName)
