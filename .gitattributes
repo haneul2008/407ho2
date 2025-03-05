@@ -166,3 +166,5 @@ PPv2URPConverters.csproj filter=lfs diff=lfs merge=lfs -text
 Unity.Cinemachine.Editor.csproj filter=lfs diff=lfs merge=lfs -text
 Unity.RenderPipelines.Core.Editor.csproj filter=lfs diff=lfs merge=lfs -text
 Unity.RenderPipelines.Universal.2D.Runtime.Player.csproj filter=lfs diff=lfs merge=lfs -text
+FirebaseCppApp-12_6 filter=lfs diff=lfs merge=lfs -text
+FirebaseCppApp-12_6_0.so filter=lfs diff=lfs merge=lfs -text
