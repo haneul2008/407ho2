@@ -18,6 +18,8 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
             base.Enter();
 
             BroAudio.Play(_player.JumpSoundID);
+            
+            _mover.ResetVelocity(true);
             _mover.AddJump();
             
             _player.InputReader.OnJumpReleaseEvent += HandleJumpReleaseEvent;

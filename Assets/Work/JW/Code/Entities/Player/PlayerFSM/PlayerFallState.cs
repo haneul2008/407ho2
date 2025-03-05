@@ -14,5 +14,11 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
             base.Update();
             if (_mover.IsGroundDetected()) _player.ChangeState("IDLE");
         }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            _mover.AddVelocityY(-0.14f);
+        }
     }
 }

@@ -93,7 +93,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _limitYSpeed: 9.8
-  jumpPower: 6
+  jumpPower: 6.1
   maxJumpTime: 0.5
   minJumpTimeOut: 0.1
   wallCheckerTrm: {fileID: 7521953801355047151}
@@ -154,12 +154,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Work.JW.Code.MapLoad.UI.FadeInOut, Assembly-CSharp
+        m_MethodName: Fade
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2770635379732288663}
+        m_TargetAssemblyTypeName: Work.JW.Code.Entities.EntityMover, Assembly-CSharp
+        m_MethodName: set_CanMove
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Work.JW.Code.MapLoad.MapLoadManager, Assembly-CSharp
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Work.JW.Code.MapLoad.MapLoadManager, Assembly-CSharp
+        m_MethodName: SetMapObjSpawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <InputReader>k__BackingField: {fileID: 11400000, guid: e78818ae570efcf44af0a5bcb93951d9, type: 2}
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
   stateList: {fileID: 11400000, guid: cf6c2096dc628c84780edd1121e9e5cd, type: 2}
+  <JumpSoundID>k__BackingField:
+    ID: 1073741826
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 6079060841125567144}
+  <DieSoundID>k__BackingField:
+    ID: 1073741825
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 6079060841125567144}
+  <GetTriggerSoundID>k__BackingField:
+    ID: 1073741829
+    _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
+    <DebugObject>k__BackingField: {fileID: 6079060841125567144}
 --- !u!50 &4894724677709911205
 Rigidbody2D:
   serializedVersion: 5
@@ -175,7 +235,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1.2
+  m_GravityScale: 1.22
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -185,7 +245,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &377983179148548308
 CapsuleCollider2D:
