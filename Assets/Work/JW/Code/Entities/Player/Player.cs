@@ -47,6 +47,11 @@ namespace Work.JW.Code.Entities.Player
             _stateMachine.StateMachineUpdate();
         }
 
+        private void FixedUpdate()
+        {
+            _stateMachine.StateMachineFixedUpdate();
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out ITriggerEvent trigger))
