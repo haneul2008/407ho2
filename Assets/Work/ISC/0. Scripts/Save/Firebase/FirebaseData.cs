@@ -23,7 +23,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         }
         
-        public void SaveData(string data)
+        public void SaveData(ref MapData data)
         {
             string jsonData = JsonUtility.ToJson(data);
             _databaseReference.Child(_data).SetRawJsonValueAsync(jsonData);

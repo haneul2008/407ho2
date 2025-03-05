@@ -10,13 +10,6 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
         {
         }
 
-        public override void Enter()
-        {
-            base.Enter();
-
-            _mover.StopImmediately(false);
-        }
-
         public override void Update()
         {
             base.Update();

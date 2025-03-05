@@ -18,13 +18,14 @@ namespace Work.JW.Code.Entities
             {
                 float targetSpeed = _movementX * _moveSpeed * _moveSpeedMultiplier;
                 float speedDifference = targetSpeed - _rigidCompo.linearVelocityX;
+                float accelerationRate = (Mathf.Abs(targetSpeed) > 0.1f) ? acceleration : deceleration;
                 
-                float movement = Mathf.Pow(Mathf.Abs(speedDifference) * acceleration, velocityPower) *
+                float movement = Mathf.Pow(Mathf.Abs(speedDifference) * accelerationRate, velocityPower) *
                                  Mathf.Sign(speedDifference);
 
                 _rigidCompo.AddForce(Vector2.right * movement, ForceMode2D.Force);
             }
-            // _rigidCompo.linearVelocityX = _movementX * _moveSpeed * _moveSpeedMultiplier;
+            
             _rigidCompo.linearVelocityY = Mathf.Clamp(_rigidCompo.linearVelocityY, -_limitYSpeed, _limitYSpeed);
         }
 
@@ -112,7 +113,8 @@ namespace Work.JW.Code.Entities
         private float _moveSpeedMultiplier;
 
         private float acceleration = 10f; // 가속도
-        private float velocityPower = 0.9f; // 부드러운 가속을 위한 보정값
+        public float deceleration = 100f; // 감속도
+        private float velocityPower = 0.85f; // 부드러운 가속을 위한 보정값
 
         [SerializeField] private float _limitYSpeed = 9.8f;
         private float _originalGravityScale;

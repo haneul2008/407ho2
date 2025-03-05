@@ -92,6 +92,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  deceleration: 20
   _limitYSpeed: 9.8
   jumpPower: 6.1
   maxJumpTime: 0.5
@@ -158,6 +159,18 @@ MonoBehaviour:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Work.JW.Code.MapLoad.UI.FadeInOut, Assembly-CSharp
         m_MethodName: Fade
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2770635379732288663}
+        m_TargetAssemblyTypeName: Work.JW.Code.Entities.EntityMover, Assembly-CSharp
+        m_MethodName: StopImmediately
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
