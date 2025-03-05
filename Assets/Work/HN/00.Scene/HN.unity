@@ -2417,6 +2417,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 245144891}
+        m_TargetAssemblyTypeName: Work.HN.Code.Save.ObjectInvoker, Assembly-CSharp
+        m_MethodName: HandleMapDataChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDataSaved:
     m_PersistentCalls:
       m_Calls:
@@ -2432,8 +2444,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 245144891}
+        m_TargetAssemblyTypeName: Work.HN.Code.Save.ObjectInvoker, Assembly-CSharp
+        m_MethodName: HandleMapDataChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   mapMakerChannel: {fileID: 11400000, guid: 644dbe292e74b04459eda341a1d54887, type: 2}
-  saveData: {fileID: 1861811827}
+  saveData: {fileID: 1861811828}
 --- !u!1 &372751445
 GameObject:
   m_ObjectHideFlags: 0
@@ -10653,7 +10677,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 400}
+  m_SizeDelta: {x: 600, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1632696326
 MonoBehaviour:
@@ -12097,6 +12121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1861811826}
   - component: {fileID: 1861811827}
+  - component: {fileID: 1861811828}
   m_Layer: 0
   m_Name: SaveData
   m_TagString: Untagged
@@ -12131,6 +12156,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02c7a5ffa364127bfbcda4c8e11d5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1861811828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861811825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af514bcaa9fc4fa8943ed0508194754d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data: 
+  OnMapDataLoaded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1891889686
 GameObject:
   m_ObjectHideFlags: 0

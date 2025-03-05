@@ -4,6 +4,7 @@ using UnityEngine;
 using Work.HN.Code.EventSystems;
 using Work.HN.Code.MapMaker.Core;
 using Work.HN.Code.MapMaker.Objects;
+using Work.ISC._0._Scripts.Save.Firebase;
 
 namespace Work.HN.Code.Save
 {
@@ -22,7 +23,9 @@ namespace Work.HN.Code.Save
         [SerializeField] private GameEventChannelSO mapMakerChannel;
         [SerializeField] private SaveManager saveManager;
 
+        private MapData _lastSavedMapData;
         private string _mapName;
+        private bool _isRegister;
 
         private void Awake()
         {
@@ -44,7 +47,7 @@ namespace Work.HN.Code.Save
             _mapName = evt.mapName;
         }
 
-        public bool SaveData(bool isRegister, Action<ErrorType> onSaveFail = null)
+        public bool SaveData(Action<ErrorType> onSaveFail = null)
         {
             List<EditorObject> objects = mapMaker.GetAllObjects();
 
@@ -72,7 +75,7 @@ namespace Work.HN.Code.Save
                 return false;
             }
 
-            if (saveManager.GetMapCapacity(objects) >= ISC._0._Scripts.Save.ExelData.SaveData.maxCapacity)
+            if (saveManager.GetMapCapacity(objects) >= FirebaseData.maxCapacity)
             {
                 onSaveFail?.Invoke(ErrorType.ExceededMaxCapacity);
                 return false;
@@ -82,8 +85,6 @@ namespace Work.HN.Code.Save
             {
                 if (i == 0)
                 {
-                    if (!isRegister) saveManager.IsVerified = false;
-
                     saveManager.SetMapName(_mapName);
                     saveManager.ClearObjects();
                 }
@@ -94,19 +95,61 @@ namespace Work.HN.Code.Save
                 mapMakerChannel.RaiseEvent(evt);
             }
 
+            if (!saveManager.IsEqualsMap(_lastSavedMapData))
+            {
+                saveManager.IsVerified = false;
+                print("not equals map");
+                return false;
+            }
+
             return true;
         }
 
-        public void RegisterData()
+        public bool RegisterData(Action<ErrorType> onFail = null)
         {
-            if (!SaveData(true)) return;
+            _isRegister = true;
+
+            if (!SaveData(onFail) || !saveManager.IsVerified)
+            {
+                _isRegister = false;
+
+                return false;
+            }
 
             saveManager.RegisterMapData();
+
+            return true;
         }
 
         public int GetMapCapacity()
         {
             return saveManager.GetMapCapacity(mapMaker.GetAllObjects());
+        }
+
+
+        public void HandleMapDataChanged(MapData mapData)
+        {
+            if (_isRegister)
+            {
+                _isRegister = false;
+                return;
+            }
+
+            _lastSavedMapData = GetNewMapData(mapData);
+        }
+
+        private MapData GetNewMapData(MapData mapData)
+        {
+            MapData returnValue = new MapData();
+
+            returnValue.mapName = mapData.mapName;
+
+            foreach (ObjectData objData in mapData.objectList)
+            {
+                returnValue.objectList.Add(objData);
+            }
+
+            return returnValue;
         }
     }
 }

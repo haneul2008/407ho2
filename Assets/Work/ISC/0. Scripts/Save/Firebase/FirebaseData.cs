@@ -14,8 +14,10 @@ namespace Work.ISC._0._Scripts.Save.Firebase
 
         private Action<bool> DeleteCallback;
         
-        public UnityEvent<MapData> OnMapDataLoaded; 
-        
+        public UnityEvent<MapData> OnMapDataLoaded;
+
+        public const int maxCapacity = 200000;
+
         private void Start()
         {
             _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
