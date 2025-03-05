@@ -4,6 +4,7 @@ using UnityEngine;
 using Work.HN.Code.EventSystems;
 using Work.HN.Code.MapMaker.Core;
 using Work.HN.Code.MapMaker.Objects;
+using Work.ISC._0._Scripts.Save.Firebase;
 
 namespace Work.HN.Code.Save
 {
@@ -74,7 +75,7 @@ namespace Work.HN.Code.Save
                 return false;
             }
 
-            if (saveManager.GetMapCapacity(objects) >= ISC._0._Scripts.Save.ExelData.SaveData.maxCapacity)
+            if (saveManager.GetMapCapacity(objects) >= FirebaseData.maxCapacity)
             {
                 onSaveFail?.Invoke(ErrorType.ExceededMaxCapacity);
                 return false;

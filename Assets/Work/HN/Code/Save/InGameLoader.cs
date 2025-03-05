@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.ISC._0._Scripts.Save.ExelData;
+using Work.ISC._0._Scripts.Save.Firebase;
 
 namespace Work.HN.Code.Save
 {
@@ -10,7 +11,7 @@ namespace Work.HN.Code.Save
     {
         public UnityEvent<MapData> OnMapLoaded;
         
-        [SerializeField] private SaveData saveData;
+        [SerializeField] private FirebaseData saveData;
         
         private void Start()
         {
@@ -29,15 +30,23 @@ namespace Work.HN.Code.Save
 
         private void GetMapData(int seq)
         {
-            saveData.DataLoad($"B{seq}", data =>
+            /*saveData.DataLoad($"B{seq}", data =>
             {
                 string json = data;
                 MapData mapData = JsonUtility.FromJson<MapData>(json);
                 
                 OnMapLoaded?.Invoke(mapData);
-            });
+            });*/
+
+            /*saveData.Load($"B{seq}", data =>
+            {
+                string json = data;
+                MapData mapData = JsonUtility.FromJson<MapData>(json);
+
+                OnMapLoaded?.Invoke(mapData);
+            });*/
         }
-        
+
         private void GetMapData(string mapName)
         {
             string json = File.ReadAllText(DataReceiver.Instance.Path);

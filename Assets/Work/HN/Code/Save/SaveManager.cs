@@ -9,6 +9,7 @@ using Work.HN.Code.EventSystems;
 using Work.HN.Code.MapMaker.Objects;
 using Work.HN.Code.MapMaker.Objects.Triggers;
 using Work.ISC._0._Scripts.Save.ExelData;
+using Work.ISC._0._Scripts.Save.Firebase;
 
 namespace Work.HN.Code.Save
 {
@@ -113,7 +114,7 @@ namespace Work.HN.Code.Save
         }
         
         [SerializeField] private GameEventChannelSO mapMakerChannel;
-        [SerializeField] private SaveData saveData;
+        [SerializeField] private FirebaseData saveData;
         
         private MapData _mapData;
         private UserBuiltInData _userData;
@@ -213,7 +214,8 @@ namespace Work.HN.Code.Save
             _mapData.isRegistered = true;
             
             string mapDataJson = JsonUtility.ToJson(_mapData);
-            saveData.DataSave(GetMinifiedJson(mapDataJson), HandleFailSave, () => SceneManager.LoadScene("TitleHN"));
+            //saveData.SaveData(GetMinifiedJson(mapDataJson), HandleFailSave, () => SceneManager.LoadScene("TitleHN"));
+            saveData.SaveData(GetMinifiedJson(mapDataJson));
             
             string userDataJson = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, userDataJson);
@@ -345,15 +347,6 @@ namespace Work.HN.Code.Save
             if(_mapData == null) return false;
 
             return _mapData.IsEqualsMap(targetMap);
-        }
-
-        [ContextMenu("TestLoad")]
-        public void TestLoad()
-        {
-            saveData.DataLoad("B2:B1000", data =>
-            {
-                print(data);
-            });
         }
     }
 }
