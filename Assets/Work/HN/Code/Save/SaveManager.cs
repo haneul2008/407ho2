@@ -215,7 +215,7 @@ namespace Work.HN.Code.Save
             
             string mapDataJson = JsonUtility.ToJson(_mapData);
             //saveData.SaveData(GetMinifiedJson(mapDataJson), HandleFailSave, () => SceneManager.LoadScene("TitleHN"));
-            saveData.SaveData(GetMinifiedJson(mapDataJson));
+            saveData.SaveData(_mapData.mapName, GetMinifiedJson(mapDataJson));
             
             string userDataJson = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, userDataJson);

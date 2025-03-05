@@ -16,7 +16,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
         
         public UnityEvent<MapData> OnMapDataLoaded;
 
-        public const int maxCapacity = 100000;
+        public const int maxCapacity = 200000;
 
         private void Start()
         {
