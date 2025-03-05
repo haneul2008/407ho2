@@ -20,12 +20,17 @@ namespace Work.ISC._0._Scripts.Save.Firebase
         {
             _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         }
-        
-        public void SaveData(string mapName, string data)
+
+        public void SaveData(string mapName, string data, Action OnComplete = null)
         {
-            _databaseReference.Child(mapName).SetRawJsonValueAsync(data);
-            
-            Debug.Log("저장");
+            _databaseReference.Child(mapName).SetRawJsonValueAsync(data).ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    OnComplete?.Invoke();
+                    Debug.Log("저장");
+                }
+            });
         }
         
         private void LoadData(string data, Action<bool> OnIsNull = null, Action<string> OnSuccess = null)
