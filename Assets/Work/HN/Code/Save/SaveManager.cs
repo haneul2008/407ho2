@@ -24,6 +24,26 @@ namespace Work.HN.Code.Save
         public int sortingOrder;
         public bool isTrigger;
         public TriggerData triggerData;
+
+        public bool IsEqualsObject(ObjectData target)
+        {
+            bool isEqualsTriggerData;
+
+            if(triggerData == null || target.triggerData == null)
+            {
+                isEqualsTriggerData = true;
+            }
+            else
+            {
+                isEqualsTriggerData = triggerData.IsEquals(target.triggerData);
+            }
+
+            return objectId == target.objectId && position == target.position &&
+                triggerID == target.triggerID && scale == target.scale &&
+                angle == target.angle && color == target.color &&
+                sortingOrder == target.sortingOrder && isTrigger == target.isTrigger &&
+                isEqualsTriggerData;
+        }
     }
 
     [Serializable]
@@ -35,6 +55,16 @@ namespace Work.HN.Code.Save
         public AlphaInfo alphaInfo;
         public ShakeInfo shakeInfo;
         public SpawnOrDestroyInfo spawnOrDestroyInfo;
+
+        public bool IsEquals(TriggerData target)
+        {
+            return targetID == target.targetID &&
+                triggerType == target.triggerType &&
+                moveInfo.Equals(target.moveInfo) &&
+                alphaInfo.Equals(target.alphaInfo) &&
+                shakeInfo.Equals(target.shakeInfo) &&
+                spawnOrDestroyInfo.Equals(target.spawnOrDestroyInfo);
+        }
     }
     
     [Serializable]
@@ -44,6 +74,23 @@ namespace Work.HN.Code.Save
         public string mapName;
         public bool isVerified = false;
         public bool isRegistered = false;
+
+        public bool IsEqualsMap(MapData target)
+        {
+            List<ObjectData> targetObjects = target.objectList;
+
+            if (targetObjects.Count != objectList.Count) return false;
+
+            for(int i = 0; i < objectList.Count; i++)
+            {
+                if (!objectList[i].IsEqualsObject(targetObjects[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 
     [Serializable]
@@ -292,7 +339,14 @@ namespace Work.HN.Code.Save
         {
             return Regex.Replace(json, @"\s+", "");
         }
-        
+
+        public bool IsEqualsMap(MapData targetMap)
+        {
+            if(_mapData == null) return false;
+
+            return _mapData.IsEqualsMap(targetMap);
+        }
+
         [ContextMenu("TestLoad")]
         public void TestLoad()
         {
