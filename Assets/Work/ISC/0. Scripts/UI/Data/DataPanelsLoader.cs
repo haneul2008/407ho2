@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 using Newtonsoft.Json;
 using UnityEngine;
 using Work.HN.Code.Save;
@@ -11,7 +13,6 @@ namespace Work.ISC._0._Scripts.UI.Data
     public class DataPanelsLoader : MonoBehaviour
     {
         [SerializeField] private FirebaseData saveData;
-        [SerializeField] private SaveData testSaveData;
         [SerializeField] private DataPanel dataPanel;
 
         public static int Id = 1;
@@ -25,28 +26,16 @@ namespace Work.ISC._0._Scripts.UI.Data
 
         public void PanelLoad()
         {
-            //saveData.Load("");
-            testSaveData.DataLoad("B2:B1000", SplitData);
+            saveData.LoadAllData(HandleDataListLoaded);
         }
 
-        private void SplitData(string obj)
+        private void HandleDataListLoaded()
         {
-            if (string.IsNullOrEmpty(obj)) return;
-            
-            if (panels.Count > 0)
+            foreach (MapData mapData in saveData.MapDataList)
             {
-                RemoveAllData();
-            }
-            Id = 1;
-            string[] datas = obj.Split("\n");
-
-            foreach (string data in datas)
-            {
-                Id++;
                 DataPanel panel = Instantiate(dataPanel, transform);
-                panel.DataSetup(data, ConvertName(data), Id);
+                panel.DataSetup(mapData.mapName);
                 panels.Add(panel);
-                Debug.Log(Id);
             }
         }
 
@@ -58,14 +47,6 @@ namespace Work.ISC._0._Scripts.UI.Data
             {
                 Destroy(trm.gameObject);
             }
-        }
-
-
-        private string ConvertName(string data)
-        {
-            MapData mapData = JsonUtility.FromJson<MapData>(data);
-            
-            return mapData.mapName;
         }
     }
 }

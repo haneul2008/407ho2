@@ -432,8 +432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5203e32b5a5e4e4db6e3cb130a4ba531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: {fileID: 8897609706435005209}
+  mapNameText: {fileID: 8897609706435005209}
   clickSoundID:
     ID: 536870912
     _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
     <DebugObject>k__BackingField: {fileID: 6627078728069468961}
+  _mapName: 

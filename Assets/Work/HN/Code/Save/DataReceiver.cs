@@ -10,8 +10,7 @@ namespace Work.HN.Code.Save
         public bool IsCreatedNewMap { get; private set; }
         public string MapEditDataName { get; private set; }
         public string PlayEditedMapName { get; private set; }
-        public int UserMapDataSequence { get; private set; }
-        public bool _isVerified;
+        public string UserMapName { get; private set; }
 
         private void Awake()
         {
@@ -82,12 +81,12 @@ namespace Work.HN.Code.Save
             return null;
         }
 
-        public void SetPlayUserMapData(int sequence)
+        public void SetPlayUserMapData(string mapName)
         {
             ClearData();
 
             IsCreatedNewMap = false;
-            UserMapDataSequence = sequence;
+            UserMapName = mapName;
         }
 
         public UserBuiltInData GetUserMapData()
@@ -107,7 +106,7 @@ namespace Work.HN.Code.Save
         {
             MapEditDataName = string.Empty;
             PlayEditedMapName = string.Empty;
-            UserMapDataSequence = 0;
+            UserMapName = string.Empty;
         }
     }
 }

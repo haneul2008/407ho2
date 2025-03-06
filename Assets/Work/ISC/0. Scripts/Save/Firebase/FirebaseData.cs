@@ -1,20 +1,18 @@
 ﻿using Firebase.Database;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.HN.Code.Save;
-using Newtonsoft.Json;
-using System.Data;
 
 namespace Work.ISC._0._Scripts.Save.Firebase
 {
     public class FirebaseData : MonoBehaviour
     {
         [SerializeField] private string _data;
-        [SerializeField] private List<MapData> testMapDatas = new List<MapData>();
 
         private DatabaseReference _databaseReference;
 
@@ -27,6 +25,11 @@ namespace Work.ISC._0._Scripts.Save.Firebase
         public List<MapData> MapDataList { get; private set; }
 
         public const int maxCapacity = 200000;
+
+        private JsonSerializerSettings _settings = new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+        };
 
         private void Start()
         {
@@ -47,45 +50,57 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             });
         }
 
-        private void LoadData(string data, Action<bool> OnIsNull = null, Action<string> OnSuccess = null)
+        public void LoadData(string data, Action<bool> OnIsNull = null, Action<MapData> OnSuccess = null)
+        {
+            StartCoroutine(LoadDataCoroutine(data, OnIsNull, OnSuccess));
+        }
+
+        private IEnumerator LoadDataCoroutine(string data, Action<bool> OnIsNull = null, Action<MapData> OnSuccess = null)
         {
             _data = data;
 
-            _databaseReference.Child(data).GetValueAsync().ContinueWith(task =>
+            var task = _databaseReference.Child(data).GetValueAsync();
+
+            yield return new WaitUntil(() => task.IsCompleted);
+
+            if (task.IsFaulted)
+                Debug.Log("로드 실패");
+            else if (task.IsCanceled)
+                Debug.Log("로드 취소");
+            else
             {
-                if (task.IsFaulted)
-                    Debug.Log("로드 실패");
-                else if (task.IsCanceled)
-                    Debug.Log("로드 취소");
+                DataSnapshot dataSnapshot = task.Result;
+                IDictionary dataPairs = (IDictionary)dataSnapshot.Value;
+
+                string registerJson = GetJson(dataPairs["isRegistered"]);
+                string verifyJson = GetJson(dataPairs["isVerified"]);
+                string mapNameJson = GetJson(dataPairs["mapName"]);
+                string objectListJson = GetJson(dataPairs["objectList"]);
+
+                string json = GetFormatJson(registerJson, verifyJson, mapNameJson, objectListJson);
+
+                MapData mapData = JsonConvert.DeserializeObject<MapData>(json, _settings);
+                bool isNullOrEmpty = string.IsNullOrEmpty(json);
+
+                if (isNullOrEmpty || string.IsNullOrEmpty(data))
+                    Debug.Log("로드 실패. 데이터값이 잘못되었거나 항목이 비어있습니다.");
                 else
                 {
-                    var dataSnapshot = task.Result;
-
-                    string dataString = "";
-                    foreach (var json in dataSnapshot.Children)
-                    {
-                        dataString += json.Key + " " + json.Value + "\n";
-                        Debug.Log(dataString);
-                    }
-
-                    bool isNullOrEmpty = String.IsNullOrEmpty(dataString);
-
-                    if (isNullOrEmpty || String.IsNullOrEmpty(data))
-                        Debug.Log("로드 실패. 데이터값이 잘못되었거나 항목이 비어있습니다.");
-                    else
-                    {
-                        OnSuccess?.Invoke(dataString);
-
-                    }
-
-                    OnIsNull?.Invoke(isNullOrEmpty);
+                    OnSuccess?.Invoke(mapData);
                 }
-            });
+
+                OnIsNull?.Invoke(isNullOrEmpty);
+            }
         }
 
-        public void Load(string data)
+        private string GetJson(object value)
         {
-            LoadData(data, OnIsNull: null, jsonData => LoadJsonData(jsonData));
+            return JsonConvert.SerializeObject(value, _settings);
+        }
+
+        private string GetFormatJson(string isRegistered, string isVerified, string mapName, string objectList)
+        {
+            return @$"{{""isRegistered"":{isRegistered},""isVerified"":{isVerified},""mapName"":{mapName},""objectList"":{objectList}}}";
         }
 
         [ContextMenu("All Load")]
@@ -94,57 +109,34 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             LoadAllData();
         }
 
-        private void LoadAllData(Action loadComplete = null)
+        public void LoadAllData(Action loadComplete = null)
         {
-            _databaseReference.GetValueAsync().ContinueWith(task =>
+            StartCoroutine(LoadAllDataCoroutine(loadComplete));
+        }
+
+        private IEnumerator LoadAllDataCoroutine(Action loadComplete)
+        {
+            var task = _databaseReference.GetValueAsync();
+
+            yield return new WaitUntil(() => task.IsCompleted);
+
+            if (task.IsCompletedSuccessfully)
             {
-                if (task.IsCompleted)
+                DataSnapshot snapshot = task.Result;
+                IDictionary dataPairs = (IDictionary)snapshot.Value;
+
+                MapDataList.Clear();
+
+                foreach (var value in dataPairs.Values)
                 {
-                    JsonSerializerSettings settings = new JsonSerializerSettings()
-                    {
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    };
+                    string json = JsonConvert.SerializeObject(value);
+                    MapData mapData = JsonConvert.DeserializeObject<MapData>(json, _settings);
 
-                    DataSnapshot snapshot = task.Result;
-                    IDictionary dataPairs = (IDictionary)snapshot.Value;
-
-                    string json = string.Empty;
-                    foreach (var value in dataPairs.Values)
-                    {
-                        json = JsonConvert.SerializeObject(value);
-                        MapData mapData = JsonConvert.DeserializeObject<MapData>(json, settings);
-
-                        testMapDatas.Add(mapData);
-                        json = string.Empty;
-                    }
-
-                    /*var dataSnapshot = task.Result;
-                    string json = dataSnapshot.ToString();
-
-                    IDictionary data = null;
-
-                    foreach (var item in dataSnapshot.Children)
-                    {
-                        data = (IDictionary)item.Value;
-                        var key = item.Key;
-
-                        _mapData.Add(key, data);
-                    }
-                    DictionaryForEach(_mapData);*/
+                    MapDataList.Add(mapData);
                 }
-            });
-        }
 
-        public void DictionaryForEach(Dictionary<string, IDictionary> dic)
-        {
-            dic.ToList().ForEach(kv => print($"Key : {kv.Key} \nValue : {kv.Value}"));
-        }
-
-        private void LoadJsonData(string jsonData)
-        {
-            var data = JsonUtility.FromJson<MapData>(jsonData);
-
-            OnMapDataLoaded?.Invoke(data);
+                loadComplete?.Invoke();
+            }
         }
 
         public void DeleteData()
@@ -186,7 +178,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
         [ContextMenu("Load")]
         public void Load()
         {
-            Load("Test6");
+            LoadData("Test6");
         }
     }
 }

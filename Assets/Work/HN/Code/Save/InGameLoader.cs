@@ -15,39 +15,20 @@ namespace Work.HN.Code.Save
         
         private void Start()
         {
-            int sequence = DataReceiver.Instance.UserMapDataSequence;
+            string userMapName = DataReceiver.Instance.UserMapName;
             string editedMapName = DataReceiver.Instance.PlayEditedMapName;
 
             if (string.IsNullOrEmpty(editedMapName))
             {
-                GetMapData(sequence);
+                GetUserMapData(userMapName);
             }
-            else if (sequence == 0)
+            else if (string.IsNullOrEmpty(userMapName))
             {
-                GetMapData(editedMapName);
+                GetEditedMapData(editedMapName);
             }
         }
 
-        private void GetMapData(int seq)
-        {
-            /*saveData.DataLoad($"B{seq}", data =>
-            {
-                string json = data;
-                MapData mapData = JsonUtility.FromJson<MapData>(json);
-                
-                OnMapLoaded?.Invoke(mapData);
-            });*/
-
-            /*saveData.Load($"B{seq}", data =>
-            {
-                string json = data;
-                MapData mapData = JsonUtility.FromJson<MapData>(json);
-
-                OnMapLoaded?.Invoke(mapData);
-            });*/
-        }
-
-        private void GetMapData(string mapName)
+        private void GetEditedMapData(string mapName)
         {
             string json = File.ReadAllText(DataReceiver.Instance.Path);
             UserBuiltInData userData = JsonUtility.FromJson<UserBuiltInData>(json);
@@ -60,6 +41,11 @@ namespace Work.HN.Code.Save
                     return;
                 }
             }
+        }
+
+        private void GetUserMapData(string mapName)
+        {
+            saveData.LoadData(mapName, null, mapData => OnMapLoaded?.Invoke(mapData));
         }
     }
 }

@@ -10,25 +10,22 @@ namespace Work.ISC._0._Scripts.UI.Data
     
     public class DataPanel : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI mapName;
+        [SerializeField] private TextMeshProUGUI mapNameText;
         [SerializeField] private SoundID clickSoundID;
 
-        private int _id;
+        public string _mapName;
         
-        public string _jsonData { get; private set; }
-        
-        public void DataSetup(string jsonData, string name, int id)
+        public void DataSetup(string name)
         {
-            _jsonData = jsonData;
-            mapName.text = name;
-            _id = id;
+            _mapName = name;
+            mapNameText.text = name;
         }
 
         public void Click()
         {
             BroAudio.Play(clickSoundID);
             
-            DataReceiver.Instance.SetPlayUserMapData(_id);
+            DataReceiver.Instance.SetPlayUserMapData(_mapName);
             SceneManager.LoadScene("JW");
         }
         
