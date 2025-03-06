@@ -19,6 +19,8 @@ namespace Work.ISC._0._Scripts.Save.Firebase
         public UnityEvent<MapData> OnMapDataLoaded; 
         
         public List<MapData> MapDataList { get; private set; }
+        
+        public const int maxCapacity = 200000;
 
         private void Start()
         {
@@ -89,18 +91,16 @@ namespace Work.ISC._0._Scripts.Save.Firebase
         {
             _databaseReference.GetValueAsync().ContinueWith(task =>
             {
-                var dataSnapshot  = task.Result;
-                print(dataSnapshot.Children.ToList().Count);
-                
-                foreach (var data in dataSnapshot.Children)
+                if (task.IsCompleted)
                 {
-                    print(data.Value.ToString());
-                    
-                    MapDataList.Add(JsonUtility.FromJson<MapData>(data.Value.ToString())); 
-                }
-                
-                Debug.Log("성공");
-                loadComplete?.Invoke();
+                    var dataSnapshot  = task.Result;
+                    string json = dataSnapshot.ToString();
+
+                    foreach (var item in dataSnapshot.Children)
+                    {
+                        print(item.Value.GetType());
+                    }
+                }   
             });
         }
 

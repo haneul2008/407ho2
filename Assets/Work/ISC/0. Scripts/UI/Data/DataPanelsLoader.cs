@@ -11,6 +11,7 @@ namespace Work.ISC._0._Scripts.UI.Data
     public class DataPanelsLoader : MonoBehaviour
     {
         [SerializeField] private FirebaseData saveData;
+        [SerializeField] private SaveData testSaveData;
         [SerializeField] private DataPanel dataPanel;
 
         public static int Id = 1;
@@ -24,7 +25,8 @@ namespace Work.ISC._0._Scripts.UI.Data
 
         public void PanelLoad()
         {
-            saveData.Load("");
+            //saveData.Load("");
+            testSaveData.DataLoad("B2:B1000", SplitData);
         }
 
         private void SplitData(string obj)
