@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Firebase.Database;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Firebase.Database;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.HN.Code.Save;
@@ -12,22 +12,22 @@ namespace Work.ISC._0._Scripts.Save.Firebase
     public class FirebaseData : MonoBehaviour
     {
         [SerializeField] private string _data;
-        
+
         private DatabaseReference _databaseReference;
 
         private Action<bool> DeleteCallback;
-        
+
         private Dictionary<string, IDictionary> _mapData;
-        
-        public UnityEvent<MapData> OnMapDataLoaded; 
-        
+
+        public UnityEvent<MapData> OnMapDataLoaded;
+
         public List<MapData> MapDataList { get; private set; }
-        
+
         public const int maxCapacity = 200000;
 
         private void Start()
         {
-            MapDataList = new List<MapData>(); 
+            MapDataList = new List<MapData>();
             _mapData = new Dictionary<string, IDictionary>();
             _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         }
@@ -43,11 +43,11 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                 }
             });
         }
-        
+
         private void LoadData(string data, Action<bool> OnIsNull = null, Action<string> OnSuccess = null)
         {
             _data = data;
-            
+
             _databaseReference.Child(data).GetValueAsync().ContinueWith(task =>
             {
                 if (task.IsFaulted)
@@ -56,7 +56,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                     Debug.Log("로드 취소");
                 else
                 {
-                    var dataSnapshot  = task.Result;
+                    var dataSnapshot = task.Result;
 
                     string dataString = "";
                     foreach (var json in dataSnapshot.Children)
@@ -66,7 +66,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                     }
 
                     bool isNullOrEmpty = String.IsNullOrEmpty(dataString);
-                    
+
                     if (isNullOrEmpty || String.IsNullOrEmpty(data))
                         Debug.Log("로드 실패. 데이터값이 잘못되었거나 항목이 비어있습니다.");
                     else
@@ -91,7 +91,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             LoadAllData();
         }
 
-        private void LoadAllData(Action loadComplete = null )
+        private void LoadAllData(Action loadComplete = null)
         {
             _databaseReference.GetValueAsync().ContinueWith(task =>
             {
@@ -106,7 +106,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                     {
                         data = (IDictionary)item.Value;
                         var key = item.Key;
-                        
+
                         _mapData.Add(key, data);
                     }
                     DictionaryForEach(_mapData);
@@ -124,14 +124,14 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             var data = JsonUtility.FromJson<MapData>(jsonData);
 
             OnMapDataLoaded?.Invoke(data);
-        }   
+        }
 
         public void DeleteData()
         {
             bool isNull = true;
 
             DeleteCallback += Delete;
-            
+
             LoadData(_data, isNullOrEmpty => DataChange(out isNull, isNullOrEmpty));
         }
 
@@ -151,14 +151,14 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                         Debug.Log("성공");
                 });
             }
-            
+
             DeleteCallback -= Delete;
         }
 
         private void DataChange(out bool from, bool to)
         {
             from = to;
-            
+
             DeleteCallback?.Invoke(from);
         }
 
