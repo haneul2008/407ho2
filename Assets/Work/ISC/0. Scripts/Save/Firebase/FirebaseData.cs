@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Firebase.Database;
@@ -16,6 +17,8 @@ namespace Work.ISC._0._Scripts.Save.Firebase
 
         private Action<bool> DeleteCallback;
         
+        private Dictionary<string, IDictionary> _mapData;
+        
         public UnityEvent<MapData> OnMapDataLoaded; 
         
         public List<MapData> MapDataList { get; private set; }
@@ -24,7 +27,8 @@ namespace Work.ISC._0._Scripts.Save.Firebase
 
         private void Start()
         {
-            MapDataList = new List<MapData>();
+            MapDataList = new List<MapData>(); 
+            _mapData = new Dictionary<string, IDictionary>();
             _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         }
 
@@ -93,15 +97,26 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             {
                 if (task.IsCompleted)
                 {
-                    var dataSnapshot  = task.Result;
+                    var dataSnapshot = task.Result;
                     string json = dataSnapshot.ToString();
+
+                    IDictionary data = null;
 
                     foreach (var item in dataSnapshot.Children)
                     {
-                        print(item.Value.GetType());
+                        data = (IDictionary)item.Value;
+                        var key = item.Key;
+                        
+                        _mapData.Add(key, data);
                     }
-                }   
+                    DictionaryForEach(_mapData);
+                }
             });
+        }
+
+        public void DictionaryForEach(Dictionary<string, IDictionary> dic)
+        {
+            dic.ToList().ForEach(kv => print($"Key : {kv.Key} \nValue : {kv.Value}"));
         }
 
         private void LoadJsonData(string jsonData)
