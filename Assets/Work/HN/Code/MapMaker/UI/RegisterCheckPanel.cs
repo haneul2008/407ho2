@@ -70,21 +70,13 @@ namespace Work.HN.Code.MapMaker.UI
             
             if(_isRegistered) return;
 
-            if (!objectInvoker.SaveData(true, type => print(type)))
+            if (!objectInvoker.RegisterData(errorType => print(errorType)))
             {
                 TweenFailText("내보내기 실패");
-                
-                return;
-            }
-
-            if (!saveManager.IsVerified)
-            {
-                TweenFailText("맵을 클리어해주세요.");
 
                 return;
             }
 
-            objectInvoker.RegisterData();
             _isRegistered = true;
         }
 

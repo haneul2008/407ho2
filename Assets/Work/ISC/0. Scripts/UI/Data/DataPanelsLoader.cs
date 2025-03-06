@@ -4,12 +4,14 @@ using Newtonsoft.Json;
 using UnityEngine;
 using Work.HN.Code.Save;
 using Work.ISC._0._Scripts.Save.ExelData;
+using Work.ISC._0._Scripts.Save.Firebase;
 
 namespace Work.ISC._0._Scripts.UI.Data
 {
     public class DataPanelsLoader : MonoBehaviour
     {
-        [SerializeField] private SaveData saveData;
+        [SerializeField] private FirebaseData saveData;
+        [SerializeField] private SaveData testSaveData;
         [SerializeField] private DataPanel dataPanel;
 
         public static int Id = 1;
@@ -23,7 +25,8 @@ namespace Work.ISC._0._Scripts.UI.Data
 
         public void PanelLoad()
         {
-            saveData.DataLoad("B2:B1000", SplitData);
+            //saveData.Load("");
+            testSaveData.DataLoad("B2:B1000", SplitData);
         }
 
         private void SplitData(string obj)
