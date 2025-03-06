@@ -19,9 +19,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ObjectName: NormalBlock
-  ObjectImage: {fileID: 21300000, guid: 339aeb8ac602813489ea7b1f76e7c6e3, type: 3}
+  ObjectImage: {fileID: -492010065, guid: 6e08e83b7cf0e3e43883e82fd53e1c4f, type: 3}
   ObjectLayer: 10
+  colliderType: 0
   ColliderSize: {x: 1, y: 1}
+  CircleColliderRadius: 0
   ColliderOffset: {x: 0, y: 0}
   isTrigger: 0
   description: "\uAE30\uBCF8 \uBE14\uB7ED \uC624\uBE0C\uC81D\uD2B8 \uC544\uBB34\uD6A8\uB3C4

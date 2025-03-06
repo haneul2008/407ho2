@@ -19,7 +19,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ObjectName: SpikeObject
-  ObjectImage: {fileID: 21300000, guid: 5c57302cd3d49814d9b75b449034472f, type: 3}
+  ObjectImage: {fileID: 1703789999, guid: 6e08e83b7cf0e3e43883e82fd53e1c4f, type: 3}
   ObjectLayer: 8
   colliderType: 0
   ColliderSize: {x: 1, y: 0.3}
