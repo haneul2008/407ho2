@@ -214,7 +214,6 @@ namespace Work.HN.Code.Save
             _mapData.isRegistered = true;
             
             string mapDataJson = JsonUtility.ToJson(_mapData);
-            //saveData.SaveData(GetMinifiedJson(mapDataJson), HandleFailSave, () => SceneManager.LoadScene("TitleHN"));
             saveData.SaveData(_mapData.mapName, GetMinifiedJson(mapDataJson), () => SceneManager.LoadScene("TitleHN"));
             
             string userDataJson = JsonUtility.ToJson(_userData);

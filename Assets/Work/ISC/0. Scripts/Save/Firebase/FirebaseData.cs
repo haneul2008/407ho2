@@ -6,12 +6,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.HN.Code.Save;
+using Newtonsoft.Json;
+using System.Data;
 
 namespace Work.ISC._0._Scripts.Save.Firebase
 {
     public class FirebaseData : MonoBehaviour
     {
         [SerializeField] private string _data;
+        [SerializeField] private List<MapData> testMapDatas = new List<MapData>();
 
         private DatabaseReference _databaseReference;
 
@@ -97,7 +100,25 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             {
                 if (task.IsCompleted)
                 {
-                    var dataSnapshot = task.Result;
+                    JsonSerializerSettings settings = new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    };
+
+                    DataSnapshot snapshot = task.Result;
+                    IDictionary dataPairs = (IDictionary)snapshot.Value;
+
+                    string json = string.Empty;
+                    foreach (var value in dataPairs.Values)
+                    {
+                        json = JsonConvert.SerializeObject(value);
+                        MapData mapData = JsonConvert.DeserializeObject<MapData>(json, settings);
+
+                        testMapDatas.Add(mapData);
+                        json = string.Empty;
+                    }
+
+                    /*var dataSnapshot = task.Result;
                     string json = dataSnapshot.ToString();
 
                     IDictionary data = null;
@@ -109,7 +130,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
 
                         _mapData.Add(key, data);
                     }
-                    DictionaryForEach(_mapData);
+                    DictionaryForEach(_mapData);*/
                 }
             });
         }
