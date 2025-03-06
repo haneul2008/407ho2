@@ -260,6 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 85813854}
   - component: {fileID: 85813853}
+  - component: {fileID: 85813855}
   m_Layer: 0
   m_Name: Load Data
   m_TagString: Untagged
@@ -310,6 +311,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &85813855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85813852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af514bcaa9fc4fa8943ed0508194754d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data: 
+  OnMapDataLoaded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &104365120
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +926,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  saveData: {fileID: 0}
+  saveData: {fileID: 85813855}
 --- !u!4 &473544185
 Transform:
   m_ObjectHideFlags: 0
@@ -1517,8 +1534,8 @@ Canvas:
   m_GameObject: {fileID: 1109789939}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1025691756}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1528,8 +1545,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -438036129
+  m_SortingOrder: 8
   m_TargetDisplay: 0
 --- !u!224 &1109789943
 RectTransform:
@@ -1719,7 +1736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 472, y: 99.1}
+  m_AnchoredPosition: {x: 472, y: 99.100006}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1343838337
