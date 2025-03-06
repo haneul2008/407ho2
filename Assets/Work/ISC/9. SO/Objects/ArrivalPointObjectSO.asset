@@ -19,9 +19,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ObjectName: ArrivalPointObject
-  ObjectImage: {fileID: 21300000, guid: cef6baf7fb34e4646a386620e1b035af, type: 3}
+  ObjectImage: {fileID: 664898724, guid: 6e08e83b7cf0e3e43883e82fd53e1c4f, type: 3}
   ObjectLayer: 12
+  colliderType: 0
   ColliderSize: {x: 1, y: 1}
+  CircleColliderRadius: 0
   ColliderOffset: {x: 0, y: 0}
   isTrigger: 1
   description: "\uAC8C\uC784\uD074\uB9AC\uC5B4\uC624\uBE0C\uC81D\uD2B8"

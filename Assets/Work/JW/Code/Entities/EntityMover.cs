@@ -114,7 +114,7 @@ namespace Work.JW.Code.Entities
 
         private float acceleration = 10f; // 가속도
         public float deceleration = 100f; // 감속도
-        private float velocityPower = 0.85f; // 부드러운 가속을 위한 보정값
+        private float velocityPower = 0.82f; // 부드러운 가속을 위한 보정값
 
         [SerializeField] private float _limitYSpeed = 9.8f;
         private float _originalGravityScale;
