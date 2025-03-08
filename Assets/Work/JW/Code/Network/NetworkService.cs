@@ -28,7 +28,7 @@ namespace Code.Network
         {
             try
             {
-                Allocation allocation = await RelayService.Instance.CreateAllocationAsync(1);
+                Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
             
                 string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
                 Debug.Log($"Join code: {joinCode}");

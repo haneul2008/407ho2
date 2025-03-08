@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Work.JW.Code.Entities
 {
-    public abstract class Entity : MonoBehaviour
+    public abstract class Entity : NetworkBehaviour
     {
         public UnityEvent OnHit;
         protected Dictionary<Type, IEntityComponent> _components;

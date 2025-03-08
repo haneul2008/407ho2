@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using Work.HN.Code.Input;
 using Work.JW.Code.Entities.FSM;
+using Work.JW.Code.MapLoad;
+using Work.JW.Code.MapLoad.UI;
 using Work.JW.Code.TriggerSystem;
 
 namespace Work.JW.Code.Entities.Player
@@ -30,6 +32,12 @@ namespace Work.JW.Code.Entities.Player
 
             InputReader.SetEnable(InputType.MapMaker, false);
             InputReader.SetEnable(InputType.Player, true);
+            
+            OnHit.AddListener(() => FindAnyObjectByType<FadeInOut>().Fade(true));
+            OnHit.AddListener(() => GetCompo<EntityMover>().StopImmediately(true));
+            OnHit.AddListener(() => GetCompo<EntityMover>().CanMove = false);
+            OnHit.AddListener(() => FindAnyObjectByType<MapLoadManager>().Clear());
+            OnHit.AddListener(() => FindAnyObjectByType<MapLoadManager>().SetMapObjSpawn());
         }
 
         private void Start()
