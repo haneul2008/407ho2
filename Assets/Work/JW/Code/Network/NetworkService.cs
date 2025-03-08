@@ -1,4 +1,6 @@
-﻿using Unity.Netcode;
+﻿using System;
+using System.Threading.Tasks;
+using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
@@ -6,32 +8,40 @@ using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Code.Network
 {
     public class NetworkService : MonoBehaviour
     {
+        public UnityEvent OnErrorFromJoinCode;
         private string _joinCode;
+
         private async void Start()
         {
-            await UnityServices.InitializeAsync();
-
-            AuthenticationService.Instance.SignedIn += () =>
-            {
-                Debug.Log($"Signed in: {AuthenticationService.Instance.PlayerId}");
-            };
+            // DontDestroyOnLoad(gameObject);
             
+            await UnityServices.InitializeAsync();
+        }
+
+        public async void StartOnline()
+        {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
 
-        public async void CreateRelay()
+        public void Shutdown()
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
+
+        public async Task CreateRelay()
         {
             try
             {
                 Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
             
                 string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-                Debug.Log($"Join code: {joinCode}");
+                PlayerPrefs.SetString("CurrentJoinCodeWithHost", joinCode);
                 
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
                     allocation.RelayServer.IpV4,
@@ -69,13 +79,15 @@ namespace Code.Network
             }
             catch (RelayServiceException e)
             {
-                Debug.Log(e);
-                throw;
+                OnErrorFromJoinCode?.Invoke();
+                return;
             }
         }
 
         public void WriteCode(string code)
         {
+            if (string.IsNullOrEmpty(code)) return;
+            
             _joinCode = code;
         }
     }

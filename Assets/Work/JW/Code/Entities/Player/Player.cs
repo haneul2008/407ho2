@@ -2,6 +2,7 @@
 using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 using Work.HN.Code.Input;
 using Work.JW.Code.Entities.FSM;
 using Work.JW.Code.MapLoad;
@@ -32,7 +33,12 @@ namespace Work.JW.Code.Entities.Player
 
             InputReader.SetEnable(InputType.MapMaker, false);
             InputReader.SetEnable(InputType.Player, true);
-            
+
+            InitEvent();
+        }
+
+        protected virtual void InitEvent()
+        {
             OnHit.AddListener(() => FindAnyObjectByType<FadeInOut>().Fade(true));
             OnHit.AddListener(() => GetCompo<EntityMover>().StopImmediately(true));
             OnHit.AddListener(() => GetCompo<EntityMover>().CanMove = false);

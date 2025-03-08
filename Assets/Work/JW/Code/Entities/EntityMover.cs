@@ -32,6 +32,8 @@ namespace Work.JW.Code.Entities
 
         public void Initialize(Entity entity)
         {
+            _entity = entity;
+            
             _rigidCompo = entity.GetComponent<Rigidbody2D>();
 
             _moveSpeedMultiplier = 1;
