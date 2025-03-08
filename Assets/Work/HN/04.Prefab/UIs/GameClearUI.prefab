@@ -537,6 +537,14 @@ MonoBehaviour:
   yPosInActive: 0
   duration: 0.5
   endPointSO: {fileID: 11400000, guid: 69bfb4e40e2371541bc3ba92b5f05e67, type: 2}
+  clickSoundID:
+    ID: 0
+    _sourceAsset: {fileID: 0}
+    <DebugObject>k__BackingField: {fileID: 4879604900573338483}
+  clearSoundID:
+    ID: 0
+    _sourceAsset: {fileID: 0}
+    <DebugObject>k__BackingField: {fileID: 4879604900573338483}
 --- !u!1 &5594523522978953473
 GameObject:
   m_ObjectHideFlags: 0
