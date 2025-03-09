@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Work.HN.Code.EventSystems;
@@ -10,11 +11,13 @@ namespace Work.HN.Code.Save
 {
     public enum ErrorType
     {
-        SameName,
+        DuplicatedMyMapName,
         EmptyName,
         NoneStartOrEnd,
         FailRequest,
         ExceededMaxCapacity,
+        DuplicatedUserMapName,
+        NotVerified
     }
 
     public class ObjectInvoker : MonoBehaviour
@@ -59,26 +62,22 @@ namespace Work.HN.Code.Save
 
             if (string.IsNullOrEmpty(_mapName))
             {
-                onSaveFail?.Invoke(ErrorType.EmptyName);
-                return false;
+                return InvokeSaveFailAction(ErrorType.EmptyName, onSaveFail);
             }
 
             if (!saveManager.CanSaveData(_mapName))
             {
-                onSaveFail?.Invoke(ErrorType.SameName);
-                return false;
+                return InvokeSaveFailAction(ErrorType.DuplicatedMyMapName, onSaveFail);
             }
 
             if (!mapMaker.HasStart() || !mapMaker.HasEnd())
             {
-                onSaveFail?.Invoke(ErrorType.NoneStartOrEnd);
-                return false;
+                return InvokeSaveFailAction(ErrorType.NoneStartOrEnd, onSaveFail);
             }
 
             if (saveManager.GetMapCapacity(objects) >= FirebaseData.maxCapacity)
             {
-                onSaveFail?.Invoke(ErrorType.ExceededMaxCapacity);
-                return false;
+                return InvokeSaveFailAction(ErrorType.ExceededMaxCapacity, onSaveFail);
             }
 
             for (int i = 0; i < objects.Count; i++)
@@ -98,11 +97,16 @@ namespace Work.HN.Code.Save
             if (!saveManager.IsEqualsMap(_lastSavedMapData))
             {
                 saveManager.IsVerified = false;
-                print("not equals map");
-                return false;
+                return InvokeSaveFailAction(ErrorType.NotVerified, onSaveFail);
             }
 
             return true;
+        }
+
+        private bool InvokeSaveFailAction(ErrorType errorType, Action<ErrorType> onSaveFail = null)
+        {
+            onSaveFail?.Invoke(errorType);
+            return false;
         }
 
         public bool RegisterData(Action<ErrorType> onFail = null)

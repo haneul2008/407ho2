@@ -23,7 +23,7 @@ MonoBehaviour:
   ObjectLayer: 8
   colliderType: 1
   ColliderSize: {x: 0, y: 0}
-  CircleColliderRadius: 0.6
+  CircleColliderRadius: 0.5
   ColliderOffset: {x: 0, y: 0}
   isTrigger: 0
   description: "\uD1B1\uB2C8 \uC624\uBE0C\uC81D\uD2B8"

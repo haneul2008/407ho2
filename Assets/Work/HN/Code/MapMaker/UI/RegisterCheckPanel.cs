@@ -70,7 +70,7 @@ namespace Work.HN.Code.MapMaker.UI
             
             if(_isRegistered) return;
 
-            if (!objectInvoker.RegisterData(errorType => print(errorType)))
+            if (!objectInvoker.RegisterData())
             {
                 TweenFailText("내보내기 실패");
 
