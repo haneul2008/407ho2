@@ -10,6 +10,13 @@ namespace Work.HN.Code.Save
 {
     public class InGameLoaderNetwork : InGameLoader
     {
+        private string _userMapName;
+        
+        private void Awake()
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback += HandleSetMapDataToClient;
+        }
+
         protected override void Start()
         {
             string userMapName = DataReceiver.Instance.UserMapName;
@@ -17,14 +24,23 @@ namespace Work.HN.Code.Save
 
             if (string.IsNullOrEmpty(editedMapName))
             {
+                _userMapName = userMapName;
                 if (NetworkManager.Singleton.IsHost)
                 {
-                    GetUserMapDataClientRpc(userMapName);
+                    GetUserMapDataClientRpc(_userMapName);
                 }
             }
             else if (string.IsNullOrEmpty(userMapName))
             {
                 GetEditedMapData(editedMapName);
+            }
+        }
+        
+        private void HandleSetMapDataToClient(ulong obj)
+        {
+            if (NetworkManager.Singleton.IsHost)
+            {
+                GetUserMapDataClientRpc(_userMapName);
             }
         }
 

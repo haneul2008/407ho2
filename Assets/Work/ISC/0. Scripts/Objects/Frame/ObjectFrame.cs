@@ -52,9 +52,9 @@ namespace Work.ISC._0._Scripts.Objects.Frame
 
         private void Start()
         {
-            if (_objSO.GetType() == typeof(StartPointObjectSO))
+            if (_objSO.GetType() == typeof(StartPointObjectNetworkSO))
             {
-                StartPointObjectSO startPointSO = (StartPointObjectSO)_objSO;
+                StartPointObjectNetworkSO startPointSO = (StartPointObjectNetworkSO)_objSO;
                 startPointSO.TargetToPosition(transform);
             }
             else if (_objSO is ChainsawFramSO chainsawData)

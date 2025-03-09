@@ -1,5 +1,6 @@
 ﻿using System;
 using Ami.BroAudio;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -13,15 +14,19 @@ namespace Work.JW.Code.Entities.Player
 {
     public class PlayerNetwork : Player
     {
-        protected override void InitEvent()
+        protected override void InitializeCompo()
         {
+            base.InitializeCompo();
+            
             if(!IsOwner) return;
-
-            base.InitEvent();
             
             GetCompo<EntityMover>().CanMove = false;
+            GetCompo<EntityMover>().SetGravityScale(0);
+            
+            OnHit.AddListener(() => GetCompo<EntityMover>().SetGravityScale(0));
             
             FindAnyObjectByType<MapLoadManager>().OnMapLoaded.AddListener(() => GetCompo<EntityMover>().CanMove = true);
+            FindAnyObjectByType<MapLoadManager>().OnMapLoaded.AddListener(() => GetCompo<EntityMover>().SetGravityScale(1.22f));
         }
     }
 }

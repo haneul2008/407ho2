@@ -14,6 +14,7 @@ namespace Work.JW.Code.MapLoad.UI
         [SerializeField] private TextMeshProUGUI currentClientText;
         [SerializeField] private TextMeshProUGUI joinCodeText;
         [SerializeField] private Button readyBtn;
+        [SerializeField] private Canvas networkCanvas;
         [SerializeField] private int maxClientCount;
         private int _currentClientCount = 0;
 
@@ -76,6 +77,7 @@ namespace Work.JW.Code.MapLoad.UI
         [ClientRpc]
         private void GameStartClientRpc()
         {
+            networkCanvas.gameObject.SetActive(false);
             OnGameStart?.Invoke();
         }
     }

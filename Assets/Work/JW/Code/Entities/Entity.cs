@@ -12,7 +12,7 @@ namespace Work.JW.Code.Entities
         public UnityEvent OnHit;
         protected Dictionary<Type, IEntityComponent> _components;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _components = new Dictionary<Type, IEntityComponent>();
             

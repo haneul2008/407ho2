@@ -34,11 +34,6 @@ namespace Work.JW.Code.Entities.Player
             InputReader.SetEnable(InputType.MapMaker, false);
             InputReader.SetEnable(InputType.Player, true);
 
-            InitEvent();
-        }
-
-        protected virtual void InitEvent()
-        {
             OnHit.AddListener(() => FindAnyObjectByType<FadeInOut>().Fade(true));
             OnHit.AddListener(() => GetCompo<EntityMover>().StopImmediately(true));
             OnHit.AddListener(() => GetCompo<EntityMover>().CanMove = false);
@@ -80,11 +75,10 @@ namespace Work.JW.Code.Entities.Player
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        protected virtual void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
             {
-                BroAudio.Play(DieSoundID);
                 OnDead();
             }
         }
@@ -96,6 +90,7 @@ namespace Work.JW.Code.Entities.Player
 
         public override void OnDead()
         {
+            BroAudio.Play(DieSoundID);
             base.OnDead();
             ChangeState("IDLE");
         }

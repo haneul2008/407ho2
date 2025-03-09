@@ -7,32 +7,33 @@ namespace Code.Entities.Network
     public class EntityMoverNetwork : EntityMover
     {
         private NetworkVariable<float> _moveSpeedNetwork = new NetworkVariable<float>();
-        
-        // public override bool CanMove { get; set; }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-
-            _moveSpeedNetwork.OnValueChanged += HandleMoveSpeedValueChange;
-        }
-
-        private void HandleMoveSpeedValueChange(float previousValue, float newValue)
-        {
-            _moveSpeed = newValue;
-        }
-
-        public override float SetMoveSpeed(float speed)
-        {
-            _moveSpeedNetwork.Value = speed;
-            return speed;
-        }
 
         protected override void FixedUpdate()
         {
             if (!_entity.IsOwner) return;
 
             MoveUpdateServerRpc(_movementX);
+        }
+
+        public override void SetMovementX(float xMovement)
+        {
+            if(!_entity.IsOwner) return;
+
+            base.SetMovementX(xMovement);
+        }
+
+        public override void AddForce(Vector2 force)
+        {
+            if(!_entity.IsOwner) return;
+
+            base.AddForce(force);
+        }
+
+        public override void AddJump()
+        {
+            if(!_entity.IsOwner) return;
+
+            base.AddJump();
         }
 
         [ServerRpc]

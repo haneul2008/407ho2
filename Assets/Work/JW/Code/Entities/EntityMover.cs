@@ -40,11 +40,6 @@ namespace Work.JW.Code.Entities
             _originalGravityScale = _rigidCompo.gravityScale;
         }
 
-        public virtual float SetMoveSpeed(float speed)
-        {
-            return _moveSpeed = speed;
-        }
-
         public virtual float SetMoveSpeedMultiplier(float speed)
         {
             return _moveSpeedMultiplier = speed;
@@ -57,7 +52,7 @@ namespace Work.JW.Code.Entities
 
         public virtual void SetGravityScale(float value)
         {
-            _rigidCompo.gravityScale = _originalGravityScale * value;
+            _rigidCompo.gravityScale = value;
         }
 
         public void AddVelocityY(float value) => _rigidCompo.linearVelocityY += value;
@@ -65,11 +60,11 @@ namespace Work.JW.Code.Entities
         public float GetJumpPower() => jumpPower;
         public void SetJumpPower(float value) => jumpPower = value;
 
-        public void AddForce(Vector2 force) => _rigidCompo.AddForce(force, ForceMode2D.Impulse);
+        public virtual void AddForce(Vector2 force) => _rigidCompo.AddForce(force, ForceMode2D.Impulse);
 
-        public void AddJump() => AddForce(new Vector2(0, jumpPower));
+        public virtual void AddJump() => AddForce(new Vector2(0, jumpPower));
 
-        public void SetMovementX(float xMovement)
+        public virtual void SetMovementX(float xMovement)
         {
             _movementX = Mathf.Abs(xMovement) > 0 ? Mathf.Sign(xMovement) : 0;
             OnXInput?.Invoke(_movementX);
