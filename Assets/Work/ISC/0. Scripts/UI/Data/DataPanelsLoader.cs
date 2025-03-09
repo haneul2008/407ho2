@@ -25,6 +25,8 @@ namespace Work.ISC._0._Scripts.UI.Data
 
         private void HandleDataListLoaded()
         {
+            ClearPanels();
+
             _mapDataPairs.Clear();
 
             foreach (MapData mapData in saveData.MapDataList)
