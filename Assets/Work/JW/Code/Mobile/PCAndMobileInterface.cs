@@ -10,7 +10,7 @@ namespace Work.JW.Code.Mobile
     {
         [SerializeField] private GameObject pcInterfaceImage;
         [SerializeField] private GameObject mobileInterfaceImage;
-        [SerializeField] private float moveY = 20f;
+        [SerializeField] private float moveY = 15f;
 
         private void Awake()
         {

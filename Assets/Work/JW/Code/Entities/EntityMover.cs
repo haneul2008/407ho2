@@ -1,18 +1,19 @@
 ﻿using System;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Work.JW.Code.Entities
 {
-    public class EntityMover : MonoBehaviour, IEntityComponent
+    public class EntityMover : NetworkBehaviour, IEntityComponent
     {
         public UnityEvent<float> OnXInput;
-        private Rigidbody2D _rigidCompo;
+        protected Rigidbody2D _rigidCompo;
 
         public bool CanMove { get; set; } = true;
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             if (CanMove)
             {
@@ -31,30 +32,27 @@ namespace Work.JW.Code.Entities
 
         public void Initialize(Entity entity)
         {
+            _entity = entity;
+            
             _rigidCompo = entity.GetComponent<Rigidbody2D>();
 
             _moveSpeedMultiplier = 1;
             _originalGravityScale = _rigidCompo.gravityScale;
         }
 
-        public float SetMoveSpeed(float speed)
-        {
-            return _moveSpeed = speed;
-        }
-
-        public float SetMoveSpeedMultiplier(float speed)
+        public virtual float SetMoveSpeedMultiplier(float speed)
         {
             return _moveSpeedMultiplier = speed;
         }
 
-        public float SetLimitYSpeed(float speed)
+        public virtual float SetLimitYSpeed(float speed)
         {
             return _limitYSpeed = speed;
         }
 
-        public void SetGravityScale(float value)
+        public virtual void SetGravityScale(float value)
         {
-            _rigidCompo.gravityScale = _originalGravityScale * value;
+            _rigidCompo.gravityScale = value;
         }
 
         public void AddVelocityY(float value) => _rigidCompo.linearVelocityY += value;
@@ -62,11 +60,11 @@ namespace Work.JW.Code.Entities
         public float GetJumpPower() => jumpPower;
         public void SetJumpPower(float value) => jumpPower = value;
 
-        public void AddForce(Vector2 force) => _rigidCompo.AddForce(force, ForceMode2D.Impulse);
+        public virtual void AddForce(Vector2 force) => _rigidCompo.AddForce(force, ForceMode2D.Impulse);
 
-        public void AddJump() => AddForce(new Vector2(0, jumpPower));
+        public virtual void AddJump() => AddForce(new Vector2(0, jumpPower));
 
-        public void SetMovementX(float xMovement)
+        public virtual void SetMovementX(float xMovement)
         {
             _movementX = Mathf.Abs(xMovement) > 0 ? Mathf.Sign(xMovement) : 0;
             OnXInput?.Invoke(_movementX);
@@ -108,13 +106,14 @@ namespace Work.JW.Code.Entities
 
         #region Data
 
-        private float _movementX;
-        private float _moveSpeed = 5f;
-        private float _moveSpeedMultiplier;
+        protected Entity _entity;
+        protected float _movementX;
+        protected float _moveSpeed = 5f;
+        protected float _moveSpeedMultiplier;
 
-        private float acceleration = 10f; // 가속도
+        protected float acceleration = 10f; // 가속도
         public float deceleration = 100f; // 감속도
-        private float velocityPower = 0.82f; // 부드러운 가속을 위한 보정값
+        protected float velocityPower = 0.82f; // 부드러운 가속을 위한 보정값
 
         [SerializeField] private float _limitYSpeed = 9.8f;
         private float _originalGravityScale;

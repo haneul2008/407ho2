@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Work/ISC/1. Scenes/TitleISC.unity
     guid: bf533c9a9c7210d44934007d49aa46b6
+  - enabled: 1
+    path: Assets/Work/JW/00.Scene/NetworkMap.unity
+    guid: 9505523e32456874caca9d86d908e2f7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

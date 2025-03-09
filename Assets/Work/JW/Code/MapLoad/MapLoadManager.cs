@@ -60,8 +60,10 @@ namespace Work.JW.Code.MapLoad
             Debug.Assert(mapData != null, "MapData is null!");
 
             _currentMapData = mapData;
-            SetMapObjSpawn();
-            
+        }
+
+        public void OnStartGameSound()
+        {
             BroAudio.Play(startSoundID);
         }
 

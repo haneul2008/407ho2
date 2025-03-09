@@ -914,6 +914,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1126928209}
+        m_TargetAssemblyTypeName: Work.JW.Code.MapLoad.MapLoadManager, Assembly-CSharp
+        m_MethodName: SetMapObjSpawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1126928209}
+        m_TargetAssemblyTypeName: Work.JW.Code.MapLoad.MapLoadManager, Assembly-CSharp
+        m_MethodName: OnStartGameSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1581328744}
         m_TargetAssemblyTypeName: Work.HN.Code.MapMaker.UI.GameClearUI, Assembly-CSharp
         m_MethodName: HandleMapLoaded
@@ -2677,18 +2701,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1371218840994809623, guid: f984aff5bbbc76d48ba9f7752ad93267, type: 3}
-      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 925096166}
-    - target: {fileID: 1371218840994809623, guid: f984aff5bbbc76d48ba9f7752ad93267, type: 3}
-      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[3].m_Target
-      value: 
-      objectReference: {fileID: 1126928209}
-    - target: {fileID: 1371218840994809623, guid: f984aff5bbbc76d48ba9f7752ad93267, type: 3}
-      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[4].m_Target
-      value: 
-      objectReference: {fileID: 1126928209}
     - target: {fileID: 6079060841125567144, guid: f984aff5bbbc76d48ba9f7752ad93267, type: 3}
       propertyPath: m_Name
       value: Player

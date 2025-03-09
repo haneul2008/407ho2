@@ -10,14 +10,14 @@ namespace Work.ISC._0._Scripts.Objects
     [CreateAssetMenu(fileName = "StartPointObjectSO", menuName = "SO/Object/StartPoint", order = 0)]
     public class StartPointObjectSO : ObjectFrameSO
     {
-        public Entity Player { get; private set; }
+        public Entity Player { get; protected set; }
         
         public override void InitializeObject()
         {
             Player = FindAnyObjectByType<Player>();
         }
 
-        public void TargetToPosition(Transform target)
+        public virtual void TargetToPosition(Transform target)
         {
             Player.transform.position = target.position;
         }

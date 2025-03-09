@@ -1,0 +1,32 @@
+﻿using System;
+using Ami.BroAudio;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Rendering;
+using Work.HN.Code.Input;
+using Work.JW.Code.Entities.FSM;
+using Work.JW.Code.MapLoad;
+using Work.JW.Code.MapLoad.UI;
+using Work.JW.Code.TriggerSystem;
+
+namespace Work.JW.Code.Entities.Player
+{
+    public class PlayerNetwork : Player
+    {
+        protected override void InitializeCompo()
+        {
+            base.InitializeCompo();
+            
+            if(!IsOwner) return;
+            
+            GetCompo<EntityMover>().CanMove = false;
+            GetCompo<EntityMover>().SetGravityScale(0);
+            
+            OnHit.AddListener(() => GetCompo<EntityMover>().SetGravityScale(0));
+            
+            FindAnyObjectByType<MapLoadManager>().OnMapLoaded.AddListener(() => GetCompo<EntityMover>().CanMove = true);
+            FindAnyObjectByType<MapLoadManager>().OnMapLoaded.AddListener(() => GetCompo<EntityMover>().SetGravityScale(1.22f));
+        }
+    }
+}
