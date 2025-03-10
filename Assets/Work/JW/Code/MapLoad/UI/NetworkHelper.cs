@@ -49,13 +49,6 @@ namespace Work.JW.Code.MapLoad.UI
             readyBtn.gameObject.SetActive(false);
         }
 
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-            if (NetworkManager.Singleton.IsHost)
-                NetworkManager.Singleton.OnClientConnectedCallback -= HandleAddClient;
-        }
-
         private void HandleAddClient(ulong clientId)
         {
             NetworkObject client = Instantiate(playerPrefab);
