@@ -18,8 +18,6 @@ namespace Work.JW.Code.Entities.Player
         {
             base.InitializeCompo();
             
-            if(!IsOwner) return;
-            
             GetCompo<EntityMover>().CanMove = false;
             GetCompo<EntityMover>().SetGravityScale(0);
             

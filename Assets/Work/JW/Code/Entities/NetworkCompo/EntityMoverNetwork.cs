@@ -26,14 +26,21 @@ namespace Code.Entities.Network
         {
             if(!_entity.IsOwner) return;
 
-            base.AddForce(force);
+            AddForceServerRpc(force);
         }
 
         public override void AddJump()
         {
             if(!_entity.IsOwner) return;
 
-            base.AddJump();
+            JumpServerRpc();
+        }
+
+        public override bool IsGroundDetected()
+        {
+            if(!_entity.IsOwner) return false;
+            
+            return base.IsGroundDetected();
         }
 
         [ServerRpc]
@@ -51,12 +58,26 @@ namespace Code.Entities.Network
 
             if (distance > 0.3f)
             {
-                transform.position = Vector2.Lerp(transform.position, newPosition, 0.5f);
+                _entity.transform.position = Vector2.Lerp(transform.position, newPosition, 0.5f);
             }
             else
             {
-                transform.position = newPosition;
+                _entity.transform.position = newPosition;
             }
+        }
+
+        [ServerRpc]
+        private void JumpServerRpc()
+        {
+            base.AddJump();
+            SyncPositionClientRpc(_rigidCompo.position);
+        }
+
+        [ServerRpc]
+        private void AddForceServerRpc(Vector2 force)
+        {
+            base.AddForce(force);
+            SyncPositionClientRpc(_rigidCompo.position);
         }
     }
 }

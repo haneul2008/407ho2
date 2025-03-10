@@ -91,7 +91,7 @@ namespace Work.JW.Code.Entities
         public bool IsWallDetected(float facingDir) =>
             Physics2D.Raycast(wallCheckerTrm.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
 
-        public bool IsGroundDetected()
+        public virtual bool IsGroundDetected()
         {
             float boxHeight = 0.05f;
             Vector2 boxSize = new Vector2(groundBoxWidth, boxHeight);

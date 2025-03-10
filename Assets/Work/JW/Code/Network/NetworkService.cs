@@ -26,6 +26,9 @@ namespace Code.Network
 
         public async void StartOnline()
         {
+            //이미 로그인 되었는지 확인
+            if (AuthenticationService.Instance.IsSignedIn) return;
+            
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
 
