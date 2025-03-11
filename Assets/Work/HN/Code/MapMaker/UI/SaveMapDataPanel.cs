@@ -42,6 +42,9 @@ namespace Work.HN.Code.MapMaker.UI
         {
             switch (type)
             {
+                case ErrorType.EmptyObject: descText.text = "오브젝트가 없습니다.";
+                    break;
+
                 case ErrorType.DuplicatedMyMapName : descText.text = "같은 이름으로 저장된 맵이 존재합니다.";
                     break;
                 

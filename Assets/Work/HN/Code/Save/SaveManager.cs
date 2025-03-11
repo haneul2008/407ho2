@@ -220,7 +220,7 @@ namespace Work.HN.Code.Save
             File.WriteAllText(_path, userDataJson);
         }
 
-        public bool CanSaveData(string mapName)
+        public bool IsDuplicatedName(string mapName)
         {
             MapData mapData = GetUsersMap(mapName);
             return mapData == null || mapData == _mapData;
