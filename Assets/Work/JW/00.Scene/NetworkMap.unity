@@ -2364,7 +2364,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   triggerDataBase: {fileID: 11400000, guid: 89df48f07a2e3724fb9a7cb265640f5c, type: 2}
-  objFrame: {fileID: 6175002274985928727, guid: a945f0a100835f6479173d600dcc0f97, type: 3}
+  objFrame: {fileID: 253784333770808759, guid: a945f0a100835f6479173d600dcc0f97, type: 3}
   triggerPrefab: {fileID: 894179656919996830, guid: 3cf77d1f146419445ac70611df979d5d, type: 3}
   outGameLineTrm: {fileID: 1635661809}
   startSoundID:

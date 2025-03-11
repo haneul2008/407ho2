@@ -21,10 +21,20 @@ namespace Work.JW.Code.Entities.Player
             GetCompo<EntityMover>().CanMove = false;
             GetCompo<EntityMover>().SetGravityScale(0);
             
-            OnHit.AddListener(() => GetCompo<EntityMover>().SetGravityScale(0));
-            
             FindAnyObjectByType<MapLoadManager>().OnMapLoaded.AddListener(() => GetCompo<EntityMover>().CanMove = true);
             FindAnyObjectByType<MapLoadManager>().OnMapLoaded.AddListener(() => GetCompo<EntityMover>().SetGravityScale(1.22f));
+        }
+
+        protected override void Update()
+        {
+            if (!IsOwner) return;
+            base.Update();
+        }
+
+        protected override void FixedUpdate()
+        {
+            if (!IsOwner) return;
+            base.FixedUpdate();
         }
     }
 }

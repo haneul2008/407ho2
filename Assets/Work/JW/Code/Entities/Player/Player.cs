@@ -1,8 +1,5 @@
-﻿using System;
-using Ami.BroAudio;
+﻿using Ami.BroAudio;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Rendering;
 using Work.HN.Code.Input;
 using Work.JW.Code.Entities.FSM;
 using Work.JW.Code.MapLoad;
@@ -46,17 +43,18 @@ namespace Work.JW.Code.Entities.Player
             ChangeState("IDLE");
         }
 
-        private void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
             InputReader.ClearPlayerAction();
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             _stateMachine.StateMachineUpdate();
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             _stateMachine.StateMachineFixedUpdate();
         }
@@ -83,9 +81,11 @@ namespace Work.JW.Code.Entities.Player
             }
         }
 
-        public EntityState ChangeState(string newStateName)
+        public void ChangeState(string newStateName)
         {
-            return _stateMachine.ChangeState(newStateName);
+            if (!IsOwner) return;
+            
+            _stateMachine.ChangeState(newStateName);
         }
 
         public override void OnDead()
