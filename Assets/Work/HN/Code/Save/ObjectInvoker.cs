@@ -11,6 +11,7 @@ namespace Work.HN.Code.Save
 {
     public enum ErrorType
     {
+        EmptyObject,
         DuplicatedMyMapName,
         EmptyName,
         NoneStartOrEnd,
@@ -25,66 +26,54 @@ namespace Work.HN.Code.Save
         [SerializeField] private MapMakerManager mapMaker;
         [SerializeField] private GameEventChannelSO mapMakerChannel;
         [SerializeField] private SaveManager saveManager;
+        [SerializeField] private DelegateModerator<Action<ErrorType>> saveModerator;
 
         private MapData _lastSavedMapData;
-        private string _mapName;
+        private MapNameContainer _mapNameContainer;
         private bool _isRegister;
-
-        private void Awake()
-        {
-            mapMakerChannel.AddListener<MapNameChangeEvent>(HandleMapNameChanged);
-        }
 
         private void OnDestroy()
         {
-            mapMakerChannel.RemoveListener<MapNameChangeEvent>(HandleMapNameChanged);
+            _mapNameContainer?.Dispose();
         }
 
-        private void Start()
+        public void HandleMapLoaded(MapData mapData)
         {
-            _mapName = saveManager.GetMapName();
+            _mapNameContainer = new MapNameContainer(mapData.mapName, mapMakerChannel);
         }
-
-        private void HandleMapNameChanged(MapNameChangeEvent evt)
-        {
-            _mapName = evt.mapName;
-        }
-
+        
         public bool SaveData(Action<ErrorType> onSaveFail = null)
         {
+            saveModerator.SetAction(onSaveFail);
+
+            if (!saveModerator.Execute()) return false;
+
             List<EditorObject> objects = mapMaker.GetAllObjects();
 
-            if (objects.Count == 0)
+            SaveObjects(objects);
+
+            return IsMapFixed(onSaveFail);
+        }
+
+        private bool IsMapFixed(Action<ErrorType> onSaveFail)
+        {
+            if (!saveManager.IsEqualsMap(_lastSavedMapData))
             {
-                Debug.LogWarning("No objects found!");
+                saveManager.IsVerified = false;
+                onSaveFail?.Invoke(ErrorType.NotVerified);
                 return false;
             }
 
-            if (string.IsNullOrEmpty(_mapName))
-            {
-                return InvokeSaveFailAction(ErrorType.EmptyName, onSaveFail);
-            }
+            return true;
+        }
 
-            if (!saveManager.CanSaveData(_mapName))
-            {
-                return InvokeSaveFailAction(ErrorType.DuplicatedMyMapName, onSaveFail);
-            }
-
-            if (!mapMaker.HasStart() || !mapMaker.HasEnd())
-            {
-                return InvokeSaveFailAction(ErrorType.NoneStartOrEnd, onSaveFail);
-            }
-
-            if (saveManager.GetMapCapacity(objects) >= FirebaseData.maxCapacity)
-            {
-                return InvokeSaveFailAction(ErrorType.ExceededMaxCapacity, onSaveFail);
-            }
-
+        private void SaveObjects(List<EditorObject> objects)
+        {
             for (int i = 0; i < objects.Count; i++)
             {
                 if (i == 0)
                 {
-                    saveManager.SetMapName(_mapName);
+                    saveManager.SetMapName(_mapNameContainer.MapName);
                     saveManager.ClearObjects();
                 }
 
@@ -93,20 +82,6 @@ namespace Work.HN.Code.Save
                 evt.isFinish = i == objects.Count - 1;
                 mapMakerChannel.RaiseEvent(evt);
             }
-
-            if (!saveManager.IsEqualsMap(_lastSavedMapData))
-            {
-                saveManager.IsVerified = false;
-                return InvokeSaveFailAction(ErrorType.NotVerified, onSaveFail);
-            }
-
-            return true;
-        }
-
-        private bool InvokeSaveFailAction(ErrorType errorType, Action<ErrorType> onSaveFail = null)
-        {
-            onSaveFail?.Invoke(errorType);
-            return false;
         }
 
         public bool RegisterData(Action<ErrorType> onFail = null)
@@ -144,16 +119,11 @@ namespace Work.HN.Code.Save
 
         private MapData GetNewMapData(MapData mapData)
         {
-            MapData returnValue = new MapData();
-
-            returnValue.mapName = mapData.mapName;
-
-            foreach (ObjectData objData in mapData.objectList)
+            return new MapData()
             {
-                returnValue.objectList.Add(objData);
-            }
-
-            return returnValue;
+                mapName = mapData.mapName,
+                objectList = new List<ObjectData>(mapData.objectList)
+            };
         }
     }
 }
