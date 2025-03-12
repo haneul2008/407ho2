@@ -1,7 +1,7 @@
 ﻿using Unity.Netcode.Components;
 using UnityEngine;
 
-namespace Code.Entities.Network
+namespace Work.JW.Code.Network
 {
     [DisallowMultipleComponent]
     public class ClientNetworkAnimator : NetworkAnimator
