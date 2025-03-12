@@ -934,8 +934,8 @@ MonoBehaviour:
   mapNameText: {fileID: 8897609706435005209}
   registeredText: {fileID: 5455516295707765004}
   titleChannel: {fileID: 11400000, guid: 4e8377e9edc0dc04485e67dd3d86c1e7, type: 2}
-  editBtn: {fileID: 9751991549140402}
-  deleteBtn: {fileID: 3341492964725978113}
+  editBtn: {fileID: 2630749476694657724}
+  deleteBtn: {fileID: 8139926467238891284}
   clickSoundID:
     ID: 536870912
     _sourceAsset: {fileID: 11400000, guid: e057461ad3a13204f865fed7f4be346c, type: 2}
