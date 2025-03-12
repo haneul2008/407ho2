@@ -56,8 +56,36 @@ PrefabInstance:
       propertyPath: '<ObjectSOList>k__BackingField.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 9b40298b55c5508409447ceb1944c50b, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8490947678811256070, guid: c7202133960da1e48aab8d534ca40665, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6056086053624474972, guid: c7202133960da1e48aab8d534ca40665, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 253784333770808759}
   m_SourcePrefab: {fileID: 100100000, guid: c7202133960da1e48aab8d534ca40665, type: 3}
+--- !u!1 &8389201266336657485 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6056086053624474972, guid: c7202133960da1e48aab8d534ca40665, type: 3}
+  m_PrefabInstance: {fileID: 2335085858672811281}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &253784333770808759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8389201266336657485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7428bd2d6a174fc3b21973d4c77dcbb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ObjectSOList>k__BackingField:
+  - {fileID: 11400000, guid: 23c8c5bdf9b86584caf09987bf9948e9, type: 2}
+  - {fileID: 11400000, guid: bf659e3bc52810c4fa1897799b88ecad, type: 2}
+  - {fileID: 11400000, guid: 9f884e9105ae3074fa4eb5f4067b2bb5, type: 2}
+  - {fileID: 11400000, guid: 9b40298b55c5508409447ceb1944c50b, type: 2}
+  - {fileID: 11400000, guid: 69bfb4e40e2371541bc3ba92b5f05e67, type: 2}
+  _objSO: {fileID: 0}

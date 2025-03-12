@@ -11,7 +11,7 @@ namespace Work.JW.Code.Entities
         public SpriteRenderer Spriter { get; private set; }
         private Animator _animCompo;
 
-        public void Initialize(Entity entity)
+        public virtual void Initialize(Entity entity)
         {
             Spriter = entity.GetComponentInChildren<SpriteRenderer>();
             _animCompo = entity.GetComponentInChildren<Animator>();
@@ -20,10 +20,10 @@ namespace Work.JW.Code.Entities
 
         #region Param section
 
-        public void SetParam(AnimParamSO param, bool value) => _animCompo.SetBool(param.hashValue, value);
-        public void SetParam(AnimParamSO param, int value) => _animCompo.SetInteger(param.hashValue, value);
-        public void SetParam(AnimParamSO param, float value) => _animCompo.SetFloat(param.hashValue, value);
-        public void SetParam(AnimParamSO param) => _animCompo.SetTrigger(param.hashValue);
+        public virtual void SetParam(AnimParamSO param, bool value) => _animCompo.SetBool(param.hashValue, value);
+        public virtual void SetParam(AnimParamSO param, int value) => _animCompo.SetInteger(param.hashValue, value);
+        public virtual void SetParam(AnimParamSO param, float value) => _animCompo.SetFloat(param.hashValue, value);
+        public virtual void SetParam(AnimParamSO param) => _animCompo.SetTrigger(param.hashValue);
 
         #endregion
         

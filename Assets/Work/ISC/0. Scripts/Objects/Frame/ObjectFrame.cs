@@ -7,7 +7,7 @@ namespace Work.ISC._0._Scripts.Objects.Frame
 {
     public class ObjectFrame : MonoBehaviour, ITriggerEvent
     {
-        private int _id;
+        protected int _id;
 
         public int ID
         {
@@ -19,7 +19,7 @@ namespace Work.ISC._0._Scripts.Objects.Frame
             }
         }
 
-        private void IDSetting(int id)
+        protected void IDSetting(int id)
         {
             _objSO = ObjectSOList[id - 1];
 
@@ -28,7 +28,7 @@ namespace Work.ISC._0._Scripts.Objects.Frame
 
         [field: SerializeField] public List<ObjectFrameSO> ObjectSOList { get; private set; }
 
-        [SerializeField] private ObjectFrameSO _objSO;
+        [SerializeField] protected ObjectFrameSO _objSO;
 
 
         public SpriteRenderer SpriteCompo { get; protected set; }
@@ -50,11 +50,11 @@ namespace Work.ISC._0._Scripts.Objects.Frame
             AfterInitObj();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
-            if (_objSO.GetType() == typeof(StartPointObjectNetworkSO))
+            if (_objSO.GetType() == typeof(StartPointObjectSO))
             {
-                StartPointObjectNetworkSO startPointSO = (StartPointObjectNetworkSO)_objSO;
+                StartPointObjectSO startPointSO = (StartPointObjectSO)_objSO;
                 startPointSO.TargetToPosition(transform);
             }
             else if (_objSO is ChainsawFramSO chainsawData)
