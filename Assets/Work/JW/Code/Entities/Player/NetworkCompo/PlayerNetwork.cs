@@ -36,5 +36,12 @@ namespace Work.JW.Code.Entities.Player
             if (!IsOwner) return;
             base.FixedUpdate();
         }
+
+        public override void ChangeState(string newStateName)
+        {
+            if (!IsOwner) return;
+            
+            base.ChangeState(newStateName);
+        }
     }
 }

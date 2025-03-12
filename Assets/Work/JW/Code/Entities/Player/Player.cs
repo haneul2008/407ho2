@@ -25,9 +25,9 @@ namespace Work.JW.Code.Entities.Player
         protected override void InitializeCompo()
         {
             base.InitializeCompo();
-
+            
             _stateMachine = new StateMachine(this, stateList);
-
+            
             InputReader.SetEnable(InputType.MapMaker, false);
             InputReader.SetEnable(InputType.Player, true);
 
@@ -81,10 +81,8 @@ namespace Work.JW.Code.Entities.Player
             }
         }
 
-        public void ChangeState(string newStateName)
+        public virtual void ChangeState(string newStateName)
         {
-            if (!IsOwner) return;
-            
             _stateMachine.ChangeState(newStateName);
         }
 
