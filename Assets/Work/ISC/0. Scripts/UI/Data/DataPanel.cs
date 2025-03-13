@@ -30,8 +30,7 @@ namespace Work.ISC._0._Scripts.UI.Data
             BroAudio.Play(clickSoundID);
             
             DataReceiver.Instance.SetPlayUserMapData(_mapName);
-
-
+            
             if (AuthenticationService.Instance.IsSignedIn)
             {
                 await CreateGameHost();

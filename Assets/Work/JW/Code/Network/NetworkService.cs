@@ -35,6 +35,7 @@ namespace Code.Network
         public void Shutdown()
         {
             NetworkManager.Singleton.Shutdown();
+            AuthenticationService.Instance.SignOut();
         }
 
         public async Task CreateRelay()
