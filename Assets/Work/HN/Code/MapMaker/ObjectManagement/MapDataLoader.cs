@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Work.HN.Code.EventSystems;
 using Work.HN.Code.MapMaker.Core;
 using Work.HN.Code.MapMaker.Objects;
@@ -13,9 +12,9 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
     {
         [SerializeField] private ObjectListSO objectList, triggerList;
         [SerializeField] private GameEventChannelSO mapMakerChannel;
-        
+
         private readonly Dictionary<EditorObject, ObjectData> _objectDataPairs = new Dictionary<EditorObject, ObjectData>();
-        
+
         public void HandleDataLoad(MapData mapData)
         {
             SpawnObjects(mapData);
@@ -24,15 +23,15 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
         private void SpawnObjects(MapData mapData)
         {
             foreach (ObjectData objectData in mapData.objectList)
-            {   
+            {
                 EditorObject obj = GetObject(objectData.objectId);
 
                 EditorObject spawnedObj = Instantiate(obj);
 
                 _objectDataPairs.Add(spawnedObj, objectData);
-                
+
                 spawnedObj.OnSpawned += HandleSpawnEvent;
-                
+
                 RaiseSpawnEvent(spawnedObj);
 
                 if (objectData.isTrigger)
@@ -54,7 +53,7 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
         {
             TriggerData triggerData = objectData.triggerData;
             int targetID = triggerData.targetID;
-            
+
             switch (triggerData.triggerType)
             {
                 case TriggerType.ObjectMove:
@@ -62,17 +61,17 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
                     MoveInfo moveInfo = GetInfo<MoveInfo>(triggerData.moveInfo, targetID);
                     trigger.SetData(moveInfo);
                     break;
-                
+
                 case TriggerType.Alpha:
                     AlphaInfo alphaInfo = GetInfo<AlphaInfo>(triggerData.alphaInfo, targetID);
                     trigger.SetData(alphaInfo);
                     break;
-                
+
                 case TriggerType.Shake:
                     ShakeInfo shakeInfo = GetInfo<ShakeInfo>(triggerData.shakeInfo, targetID);
                     trigger.SetData(shakeInfo);
                     break;
-                
+
                 case TriggerType.Spawn:
                 case TriggerType.Destroy:
                     SpawnOrDestroyInfo spawnOrDestroyInfo = GetInfo<SpawnOrDestroyInfo>(triggerData.spawnOrDestroyInfo, targetID);
@@ -83,7 +82,7 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
 
         private T GetInfo<T>(ITriggerInfo targetInfo, int targetID) where T : ITriggerInfo
         {
-            if(targetInfo is T info)
+            if (targetInfo is T info)
             {
                 T returnValue = info;
                 returnValue.ID = targetID;
@@ -108,7 +107,7 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
             {
                 triggerId = int.Parse(objectData.triggerID);
             }
-            
+
             spawnedObj.InfoManager.ChangeInfo(InfoType.Position, objectData.position);
             spawnedObj.InfoManager.ChangeInfo(InfoType.Size, objectData.scale);
             spawnedObj.InfoManager.ChangeInfo(InfoType.Angle, objectData.angle);
@@ -133,7 +132,7 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
                     return obj;
                 }
             }
-            
+
             foreach (EditorObject trigger in triggerList.objects)
             {
                 if (trigger.ID == id)
@@ -141,7 +140,7 @@ namespace Work.HN.Code.MapMaker.ObjectManagement
                     return trigger;
                 }
             }
-            
+
             return null;
         }
     }
