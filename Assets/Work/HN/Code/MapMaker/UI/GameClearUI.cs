@@ -3,6 +3,7 @@ using Ami.BroAudio;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Work.HN.Code.Save;
@@ -12,6 +13,8 @@ namespace Work.HN.Code.MapMaker.UI
 {
     public class GameClearUI : MonoBehaviour
     {
+        public UnityEvent OnClear;
+        
         [SerializeField] private TextMeshProUGUI mapNameText;
         [SerializeField] private float yPosInActive = 0, duration = 0.5f;
         [SerializeField] private ArrivalPointObjectSO endPointSO;
@@ -40,6 +43,8 @@ namespace Work.HN.Code.MapMaker.UI
             DataReceiver.Instance.TryVerify();
             
             Active(true);
+
+            OnClear?.Invoke();
         }
 
         public void Active(bool isActive)
