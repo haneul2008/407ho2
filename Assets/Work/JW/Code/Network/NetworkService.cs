@@ -30,6 +30,8 @@ namespace Code.Network
             if (AuthenticationService.Instance.IsSignedIn) return;
             
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            
+            NetworkManager.Singleton.NetworkConfig.TickRate = 60;
         }
 
         public void Shutdown()
@@ -83,6 +85,7 @@ namespace Code.Network
             }
             catch (RelayServiceException e)
             {
+                Debug.LogError(e);
                 OnErrorFromJoinCode?.Invoke();
                 return;
             }

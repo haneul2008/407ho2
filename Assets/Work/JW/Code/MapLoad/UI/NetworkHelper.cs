@@ -20,7 +20,6 @@ namespace Work.JW.Code.MapLoad.UI
 
         private void Awake()
         {
-            
             if (NetworkManager.Singleton.IsHost)
             {
                 readyBtn.onClick.AddListener(StartOnlineGame);

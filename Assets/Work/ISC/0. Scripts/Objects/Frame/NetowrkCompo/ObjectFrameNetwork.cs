@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using Work.JW.Code.Entities;
 using Work.JW.Code.TriggerSystem;

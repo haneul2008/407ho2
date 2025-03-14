@@ -25,6 +25,12 @@ namespace Work.JW.Code.Entities.Player
             FindAnyObjectByType<MapLoadManager>().OnMapLoaded.AddListener(() => GetCompo<EntityMover>().SetGravityScale(1.22f));
         }
 
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            if(!IsOwner) gameObject.layer = LayerMask.NameToLayer("Default");
+        }
+
         protected override void Update()
         {
             if (!IsOwner) return;
