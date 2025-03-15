@@ -50,6 +50,8 @@ namespace Code.Entities.Network
 
         private void HandleMoveDirChange(float prevValue, float newValue)
         {
+            if(!CanMove) return;
+            
             OnXInput?.Invoke(newValue);
         }
     }

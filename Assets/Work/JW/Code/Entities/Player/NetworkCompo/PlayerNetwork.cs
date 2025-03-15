@@ -1,14 +1,5 @@
-﻿using System;
-using Ami.BroAudio;
-using Unity.Netcode;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Rendering;
-using Work.HN.Code.Input;
-using Work.JW.Code.Entities.FSM;
+﻿using UnityEngine;
 using Work.JW.Code.MapLoad;
-using Work.JW.Code.MapLoad.UI;
-using Work.JW.Code.TriggerSystem;
 
 namespace Work.JW.Code.Entities.Player
 {

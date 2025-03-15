@@ -49,10 +49,6 @@ namespace Work.HN.Code.MapMaker.UI
 
         public void Active(bool isActive)
         {
-            int timescale = isActive ? 0 : 1;
-            
-            Time.timeScale = timescale;
-            
             if (isActive)
             {
                 _rectTrm.DOAnchorPosY(yPosInActive, duration).SetUpdate(true);
@@ -74,6 +70,12 @@ namespace Work.HN.Code.MapMaker.UI
             
             Time.timeScale = 1f;
             SceneManager.LoadScene("TitleHN");
+        }
+
+        public void SetTimeScale(bool isActive)
+        {
+            int timescale = isActive ? 1 : 0;
+            Time.timeScale = timescale;
         }
     }
 }

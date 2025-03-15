@@ -85,7 +85,7 @@ namespace Code.Network
             }
             catch (RelayServiceException e)
             {
-                Debug.LogError(e);
+                Debug.LogWarning(e);
                 OnErrorFromJoinCode?.Invoke();
                 return;
             }
