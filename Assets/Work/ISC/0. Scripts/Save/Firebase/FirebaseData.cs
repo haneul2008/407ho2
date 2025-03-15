@@ -40,7 +40,9 @@ namespace Work.ISC._0._Scripts.Save.Firebase
 
         public void SaveData(string mapName, string data, Action OnComplete = null)
         {
-            _databaseReference.Child(mapName).SetRawJsonValueAsync(data).ContinueWith(task =>
+            DatabaseReference newRef = _databaseReference.Child(mapName).Push();
+            string key  = newRef.Key;
+            _databaseReference.Child(key).SetRawJsonValueAsync(data).ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
@@ -48,6 +50,8 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                     Debug.Log("저장");
                 }
             });
+
+            _databaseReference.Child("{").Push();
         }
 
         public void LoadData(string data, Action<bool> OnIsNull = null, Action<MapData> OnSuccess = null)
