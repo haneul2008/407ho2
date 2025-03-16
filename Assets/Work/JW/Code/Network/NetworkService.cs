@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
-using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
@@ -16,11 +14,15 @@ namespace Code.Network
     {
         public UnityEvent OnErrorFromJoinCode;
         private string _joinCode;
+        public static NetworkService Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this; 
+        }
 
         private async void Start()
         {
-            // DontDestroyOnLoad(gameObject);
-            
             await UnityServices.InitializeAsync();
         }
 

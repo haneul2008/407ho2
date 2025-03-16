@@ -3133,6 +3133,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1581328744}
         m_TargetAssemblyTypeName: Work.HN.Code.MapMaker.UI.GameClearUI, Assembly-CSharp
+        m_MethodName: ShutDownNetwork
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1581328744}
+        m_TargetAssemblyTypeName: Work.HN.Code.MapMaker.UI.GameClearUI, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -3690,6 +3702,38 @@ PrefabInstance:
     - target: {fileID: 8736165653988050424, guid: 67b78ca17bc11e5408cfc6889c2485dc, type: 3}
       propertyPath: m_Name
       value: GameClearUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884966255993845234, guid: 67b78ca17bc11e5408cfc6889c2485dc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884966255993845234, guid: 67b78ca17bc11e5408cfc6889c2485dc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884966255993845234, guid: 67b78ca17bc11e5408cfc6889c2485dc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1581328744}
+    - target: {fileID: 8884966255993845234, guid: 67b78ca17bc11e5408cfc6889c2485dc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884966255993845234, guid: 67b78ca17bc11e5408cfc6889c2485dc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShutDownNetwork
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884966255993845234, guid: 67b78ca17bc11e5408cfc6889c2485dc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884966255993845234, guid: 67b78ca17bc11e5408cfc6889c2485dc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Work.HN.Code.MapMaker.UI.GameClearUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884966255993845234, guid: 67b78ca17bc11e5408cfc6889c2485dc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

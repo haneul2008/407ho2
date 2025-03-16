@@ -24,6 +24,7 @@ namespace Work.JW.Code.MapLoad.UI
             {
                 readyBtn.onClick.AddListener(StartOnlineGame);
                 NetworkManager.Singleton.OnClientConnectedCallback += HandleAddClient;
+                NetworkManager.Singleton.OnClientDisconnectCallback += HandleRemoveClient;
                 
                 HandleAddClient(NetworkManager.Singleton.LocalClientId);
             }
@@ -60,6 +61,26 @@ namespace Work.JW.Code.MapLoad.UI
             if (_currentClientCount > 1)
                 readyBtn.gameObject.SetActive(true);
         }
+        
+        private void HandleRemoveClient(ulong clientId)
+        {
+#if UNITY_EDITOR
+            Debug.Log($"클라이언트 {clientId}의 연결이 해제되었습니다.");
+#endif
+            CleanupClient(clientId);
+        }
+        
+        private void CleanupClient(ulong clientId)
+        {
+            if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
+            {
+                var clientObject = client.PlayerObject;
+                if (clientObject != null)
+                {
+                    Destroy(clientObject.gameObject);
+                }
+            }
+        }
 
         public void StartOnlineGame()
         {
@@ -72,5 +93,12 @@ namespace Work.JW.Code.MapLoad.UI
             networkCanvas.gameObject.SetActive(false);
             OnGameStart?.Invoke();
         }
+
+        /*public override void OnDestroy()
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback -= HandleAddClient;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= HandleRemoveClient;
+            base.OnDestroy();
+        }*/
     }
 }

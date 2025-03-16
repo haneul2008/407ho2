@@ -1,5 +1,6 @@
 ﻿using System;
 using Ami.BroAudio;
+using Code.Network;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -70,6 +71,11 @@ namespace Work.HN.Code.MapMaker.UI
             
             Time.timeScale = 1f;
             SceneManager.LoadScene("TitleHN");
+        }
+
+        public void ShutDownNetwork()
+        {
+            NetworkService.Instance.Shutdown();
         }
 
         public void SetTimeScale(bool isActive)
