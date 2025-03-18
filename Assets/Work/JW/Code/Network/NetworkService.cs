@@ -24,6 +24,9 @@ namespace Code.Network
         private async void Start()
         {
             await UnityServices.InitializeAsync();
+
+            if (AuthenticationService.Instance.IsSignedIn && NetworkManager.Singleton.IsHost)
+                AllShutdownClientRpc();
         }
 
         public async void StartOnline()
@@ -40,6 +43,12 @@ namespace Code.Network
         {
             NetworkManager.Singleton.Shutdown();
             AuthenticationService.Instance.SignOut();
+        }
+
+        [ClientRpc]
+        private void AllShutdownClientRpc()
+        {
+            Shutdown();
         }
 
         public async Task CreateRelay()

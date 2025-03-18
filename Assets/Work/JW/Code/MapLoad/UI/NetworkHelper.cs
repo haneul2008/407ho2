@@ -16,8 +16,11 @@ namespace Work.JW.Code.MapLoad.UI
         [SerializeField] private Button readyBtn;
         [SerializeField] private Canvas networkCanvas;
         [SerializeField] private int maxClientCount;
+        
         private int _currentClientCount = 0;
-
+        private bool isGameStarted;
+        
+        
         private void Awake()
         {
             if (NetworkManager.Singleton.IsHost)
@@ -25,12 +28,27 @@ namespace Work.JW.Code.MapLoad.UI
                 readyBtn.onClick.AddListener(StartOnlineGame);
                 NetworkManager.Singleton.OnClientConnectedCallback += HandleAddClient;
                 NetworkManager.Singleton.OnClientDisconnectCallback += HandleRemoveClient;
+                NetworkManager.Singleton.ConnectionApprovalCallback += HandleApprovalCheck;
                 
                 HandleAddClient(NetworkManager.Singleton.LocalClientId);
             }
             else
             {
                 currentClientText.text = "Waiting for clients...";
+            }
+        }
+
+        private void HandleApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
+        {
+            Debug.Log("in");
+            if (isGameStarted)
+            {
+                response.Approved = false;
+                response.Reason = "게임이 이미 시작되었습니다.";
+            }
+            else
+            {
+                response.Approved = true;
             }
         }
 
@@ -85,6 +103,7 @@ namespace Work.JW.Code.MapLoad.UI
         public void StartOnlineGame()
         {
             GameStartClientRpc();
+            isGameStarted = true;
         }
 
         [ClientRpc]
@@ -94,11 +113,11 @@ namespace Work.JW.Code.MapLoad.UI
             OnGameStart?.Invoke();
         }
 
-        /*public override void OnDestroy()
+        public override void OnNetworkDespawn()
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= HandleAddClient;
             NetworkManager.Singleton.OnClientDisconnectCallback -= HandleRemoveClient;
-            base.OnDestroy();
-        }*/
+            base.OnNetworkDespawn();
+        }
     }
 }

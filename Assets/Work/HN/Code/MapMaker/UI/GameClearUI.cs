@@ -3,6 +3,8 @@ using Ami.BroAudio;
 using Code.Network;
 using DG.Tweening;
 using TMPro;
+using Unity.Netcode;
+using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -70,7 +72,16 @@ namespace Work.HN.Code.MapMaker.UI
             BroAudio.Play(clickSoundID);
             
             Time.timeScale = 1f;
-            SceneManager.LoadScene("TitleHN");
+
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                Debug.Log("Titile");
+                NetworkManager.Singleton.SceneManager.LoadScene("TitleHN", LoadSceneMode.Single);
+            }
+            else
+            {
+                SceneManager.LoadScene("TitleHN");
+            }
         }
 
         public void ShutDownNetwork()
