@@ -30,6 +30,8 @@ namespace Code.Network
                 AllShutdownClientRpc();
                 Shutdown();
             }
+            
+            
         }
 
         public async void StartOnline()
@@ -110,6 +112,15 @@ namespace Code.Network
             if (string.IsNullOrEmpty(code)) return;
             
             _joinCode = code;
+        }
+        
+        private void OnClientDisconnectCallback(ulong obj)
+        {
+            if (!NetworkManager.Singleton.IsServer && NetworkManager.Singleton.DisconnectReason != string.Empty)
+            {
+                Debug.Log($"Approval Declined Reason: {NetworkManager.Singleton.DisconnectReason}");
+                OnErrorFromJoinCode?.Invoke();
+            }
         }
     }
 }
