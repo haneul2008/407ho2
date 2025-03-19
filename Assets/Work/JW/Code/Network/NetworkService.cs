@@ -26,7 +26,10 @@ namespace Code.Network
             await UnityServices.InitializeAsync();
 
             if (AuthenticationService.Instance.IsSignedIn && NetworkManager.Singleton.IsHost)
+            {
                 AllShutdownClientRpc();
+                Shutdown();
+            }
         }
 
         public async void StartOnline()

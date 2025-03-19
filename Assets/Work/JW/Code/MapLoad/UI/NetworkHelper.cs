@@ -69,6 +69,8 @@ namespace Work.JW.Code.MapLoad.UI
 
         private void HandleAddClient(ulong clientId)
         {
+            if (!NetworkManager.Singleton.IsHost) return;
+            
             NetworkObject client = Instantiate(playerPrefab);
             client.SpawnAsPlayerObject(clientId);
             
@@ -117,6 +119,8 @@ namespace Work.JW.Code.MapLoad.UI
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= HandleAddClient;
             NetworkManager.Singleton.OnClientDisconnectCallback -= HandleRemoveClient;
+            NetworkManager.Singleton.ConnectionApprovalCallback -= HandleApprovalCheck;
+            
             base.OnNetworkDespawn();
         }
     }
