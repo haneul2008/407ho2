@@ -3,6 +3,7 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Work.JW.Code.MapLoad.UI
@@ -34,8 +35,14 @@ namespace Work.JW.Code.MapLoad.UI
             }
             else
             {
+                NetworkManager.Singleton.OnClientDisconnectCallback += HandleDisconnect;
                 currentClientText.text = "Waiting for clients...";
             }
+        }
+
+        private void HandleDisconnect(ulong obj)
+        {
+            SceneManager.LoadScene("TitleHN");
         }
 
         private void HandleApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
@@ -117,9 +124,17 @@ namespace Work.JW.Code.MapLoad.UI
 
         public override void OnNetworkDespawn()
         {
-            NetworkManager.Singleton.OnClientConnectedCallback -= HandleAddClient;
-            NetworkManager.Singleton.OnClientDisconnectCallback -= HandleRemoveClient;
-            NetworkManager.Singleton.ConnectionApprovalCallback -= HandleApprovalCheck;
+            if (NetworkManager.Singleton.IsHost)
+            {
+                NetworkManager.Singleton.OnClientConnectedCallback -= HandleAddClient;
+                NetworkManager.Singleton.OnClientDisconnectCallback -= HandleRemoveClient;
+                NetworkManager.Singleton.ConnectionApprovalCallback -= HandleApprovalCheck;
+            }
+            else
+            {
+                NetworkManager.Singleton.OnClientDisconnectCallback -= HandleDisconnect;
+            }
+            
             
             base.OnNetworkDespawn();
         }
