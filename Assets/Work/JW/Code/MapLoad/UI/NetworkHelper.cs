@@ -29,7 +29,7 @@ namespace Work.JW.Code.MapLoad.UI
                 readyBtn.onClick.AddListener(StartOnlineGame);
                 NetworkManager.Singleton.OnClientConnectedCallback += HandleAddClient;
                 NetworkManager.Singleton.OnClientDisconnectCallback += HandleRemoveClient;
-                NetworkManager.Singleton.ConnectionApprovalCallback += HandleApprovalCheck;
+                NetworkManager.Singleton.ConnectionApprovalCallback = HandleApprovalCheck;
                 
                 HandleAddClient(NetworkManager.Singleton.LocalClientId);
             }
@@ -50,6 +50,7 @@ namespace Work.JW.Code.MapLoad.UI
             else
             {
                 response.Approved = true;
+                response.Pending = false;
             }
         }
 
@@ -116,17 +117,19 @@ namespace Work.JW.Code.MapLoad.UI
             OnGameStart?.Invoke();
         }
 
-        public override void OnNetworkDespawn()
+        public override void OnDestroy()
         {
-            if (NetworkManager.Singleton.IsHost)
+            if(NetworkManager.Singleton != null)
             {
-                NetworkManager.Singleton.OnClientConnectedCallback -= HandleAddClient;
-                NetworkManager.Singleton.OnClientDisconnectCallback -= HandleRemoveClient;
-                NetworkManager.Singleton.ConnectionApprovalCallback -= HandleApprovalCheck;
+                if (NetworkManager.Singleton.IsHost)
+                {
+                    NetworkManager.Singleton.OnClientConnectedCallback -= HandleAddClient;
+                    NetworkManager.Singleton.OnClientDisconnectCallback -= HandleRemoveClient;
+                    NetworkManager.Singleton.ConnectionApprovalCallback -= HandleApprovalCheck;
+                }
             }
             
-            
-            base.OnNetworkDespawn();
+            base.OnDestroy();
         }
     }
 }

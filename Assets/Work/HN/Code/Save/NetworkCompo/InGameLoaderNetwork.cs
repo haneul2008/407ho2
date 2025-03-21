@@ -36,10 +36,15 @@ namespace Work.HN.Code.Save
             }
         }
 
-        public override void OnNetworkDespawn()
+        public override void OnDestroy()
         {
-            NetworkManager.Singleton.OnClientConnectedCallback -= HandleSetMapDataToClient;
-            base.OnNetworkDespawn();
+            if(NetworkManager.Singleton != null)
+                NetworkManager.Singleton.OnClientConnectedCallback -= HandleSetMapDataToClient;
+            if (IsSpawned)
+            {
+                NetworkObject.Despawn();
+            }
+            base.OnDestroy();
         }
 
         private void HandleSetMapDataToClient(ulong obj)

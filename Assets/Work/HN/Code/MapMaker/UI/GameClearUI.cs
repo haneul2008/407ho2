@@ -1,5 +1,4 @@
-﻿using System;
-using Ami.BroAudio;
+﻿using Ami.BroAudio;
 using Code.Network;
 using DG.Tweening;
 using TMPro;
@@ -8,9 +7,9 @@ using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using Work.HN.Code.Save;
 using Work.ISC._0._Scripts.Objects;
+
 
 namespace Work.HN.Code.MapMaker.UI
 {
@@ -76,7 +75,12 @@ namespace Work.HN.Code.MapMaker.UI
             if (AuthenticationService.Instance.IsSignedIn)
             {
                 Debug.Log("Titile");
-                NetworkManager.Singleton.SceneManager.LoadScene("TitleHN", LoadSceneMode.Single);
+                if(NetworkManager.Singleton.IsHost)
+                    NetworkManager.Singleton.SceneManager.LoadScene("TitleHN", LoadSceneMode.Single);
+                else
+                {
+                    SceneManager.LoadScene("TitleHN");
+                }
             }
             else
             {
