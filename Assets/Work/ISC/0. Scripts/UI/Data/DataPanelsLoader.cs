@@ -1,55 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Work.HN.Code.Save;
-using Work.ISC._0._Scripts.Save.ExelData;
+using Work.ISC._0._Scripts.Save.Firebase;
 
 namespace Work.ISC._0._Scripts.UI.Data
 {
     public class DataPanelsLoader : MonoBehaviour
     {
-        [SerializeField] private SaveData saveData;
+        [SerializeField] private FirebaseData saveData;
         [SerializeField] private DataPanel dataPanel;
 
-        public static int Id = 1;
-
-        private List<DataPanel> panels;
+        private List<DataPanel> _panels;
+        private Dictionary<string, MapData> _mapDataPairs = new Dictionary<string, MapData>();
 
         private void Awake()
         {
-            panels = new List<DataPanel>();
+            _panels = new List<DataPanel>();
         }
 
         public void PanelLoad()
         {
-            saveData.DataLoad("B2:B1000", SplitData);
+            saveData.LoadAllData(HandleDataListLoaded);
         }
 
-        private void SplitData(string obj)
+        private void HandleDataListLoaded()
         {
-            if (string.IsNullOrEmpty(obj)) return;
-            
-            if (panels.Count > 0)
-            {
-                RemoveAllData();
-            }
-            Id = 1;
-            string[] datas = obj.Split("\n");
+            ClearPanels();
 
-            foreach (string data in datas)
+            _mapDataPairs.Clear();
+
+            foreach (MapData mapData in saveData.MapDataList)
             {
-                Id++;
-                DataPanel panel = Instantiate(dataPanel, transform);
-                panel.DataSetup(data, ConvertName(data), Id);
-                panels.Add(panel);
-                Debug.Log(Id);
+                SpawnPanel(mapData);
+                _mapDataPairs.Add(mapData.mapName, mapData);
             }
+        }
+
+        private void SpawnPanel(MapData mapData)
+        {
+            DataPanel panel = Instantiate(dataPanel, transform);
+            panel.DataSetup(mapData.mapName);
+            _panels.Add(panel);
         }
 
         private void RemoveAllData()
         {
-            panels.Clear();
+            _panels.Clear();
 
             foreach (Transform trm in transform)
             {
@@ -57,12 +53,35 @@ namespace Work.ISC._0._Scripts.UI.Data
             }
         }
 
-
-        private string ConvertName(string data)
+        public void Search(string text)
         {
-            MapData mapData = JsonUtility.FromJson<MapData>(data);
-            
-            return mapData.mapName;
+            if (string.IsNullOrEmpty(text))
+            {
+                ClearPanels();
+
+                foreach(MapData mapData in _mapDataPairs.Values)
+                {
+                    SpawnPanel(mapData);
+                }
+            }
+            else
+            {
+                if (_mapDataPairs.TryGetValue(text, out MapData mapData))
+                {
+                    ClearPanels();
+                    SpawnPanel(mapData);
+                }
+            }
+        }
+
+        private void ClearPanels()
+        {
+            foreach (DataPanel panel in _panels)
+            {
+                Destroy(panel.gameObject);
+            }
+
+            _panels.Clear();
         }
     }
 }

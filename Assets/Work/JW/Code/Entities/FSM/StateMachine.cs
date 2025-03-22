@@ -41,5 +41,10 @@ namespace Work.JW.Code.Entities.FSM
         {
             CurrentState.Update();
         }
+
+        public void StateMachineFixedUpdate()
+        {
+            CurrentState.FixedUpdate();
+        }
     }
 }

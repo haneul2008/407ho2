@@ -9,6 +9,7 @@ using Work.HN.Code.EventSystems;
 using Work.HN.Code.MapMaker.Objects;
 using Work.HN.Code.MapMaker.Objects.Triggers;
 using Work.ISC._0._Scripts.Save.ExelData;
+using Work.ISC._0._Scripts.Save.Firebase;
 
 namespace Work.HN.Code.Save
 {
@@ -24,6 +25,26 @@ namespace Work.HN.Code.Save
         public int sortingOrder;
         public bool isTrigger;
         public TriggerData triggerData;
+
+        public bool IsEqualsObject(ObjectData target)
+        {
+            bool isEqualsTriggerData;
+
+            if(triggerData == null || target.triggerData == null)
+            {
+                isEqualsTriggerData = true;
+            }
+            else
+            {
+                isEqualsTriggerData = triggerData.IsEquals(target.triggerData);
+            }
+
+            return objectId == target.objectId && position == target.position &&
+                triggerID == target.triggerID && scale == target.scale &&
+                angle == target.angle && color == target.color &&
+                sortingOrder == target.sortingOrder && isTrigger == target.isTrigger &&
+                isEqualsTriggerData;
+        }
     }
 
     [Serializable]
@@ -35,6 +56,16 @@ namespace Work.HN.Code.Save
         public AlphaInfo alphaInfo;
         public ShakeInfo shakeInfo;
         public SpawnOrDestroyInfo spawnOrDestroyInfo;
+
+        public bool IsEquals(TriggerData target)
+        {
+            return targetID == target.targetID &&
+                triggerType == target.triggerType &&
+                moveInfo.Equals(target.moveInfo) &&
+                alphaInfo.Equals(target.alphaInfo) &&
+                shakeInfo.Equals(target.shakeInfo) &&
+                spawnOrDestroyInfo.Equals(target.spawnOrDestroyInfo);
+        }
     }
     
     [Serializable]
@@ -42,7 +73,25 @@ namespace Work.HN.Code.Save
     {
         public List<ObjectData> objectList = new List<ObjectData>();
         public string mapName;
+        public bool isVerified = false;
         public bool isRegistered = false;
+
+        public bool IsEqualsMap(MapData target)
+        {
+            List<ObjectData> targetObjects = target.objectList;
+
+            if (targetObjects.Count != objectList.Count) return false;
+
+            for(int i = 0; i < objectList.Count; i++)
+            {
+                if (!objectList[i].IsEqualsObject(targetObjects[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 
     [Serializable]
@@ -57,9 +106,15 @@ namespace Work.HN.Code.Save
     public class SaveManager : MonoBehaviour
     {
         public UnityEvent<MapData> OnDataLoaded;
+        public UnityEvent<MapData> OnDataSaved;
+        public bool IsVerified
+        {
+            get => _mapData.isVerified;
+            set => _mapData.isVerified = value;
+        }
         
         [SerializeField] private GameEventChannelSO mapMakerChannel;
-        [SerializeField] private SaveData saveData;
+        [SerializeField] private FirebaseData saveData;
         
         private MapData _mapData;
         private UserBuiltInData _userData;
@@ -125,13 +180,18 @@ namespace Work.HN.Code.Save
         private void FinishData()
         {
              MapData mapData = GetUsersMap(_mapData.mapName);
-            
-            if(mapData != null) _userData.userMapList.Remove(mapData);
-            
+
+            if (mapData != null)
+            {
+                _userData.userMapList.Remove(mapData);
+            }
+
             _userData.userMapList.Add(_mapData);
             
             string json = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, json);
+
+            OnDataSaved?.Invoke(_mapData);
         }
 
         private MapData GetUsersMap(string mapName)
@@ -154,22 +214,13 @@ namespace Work.HN.Code.Save
             _mapData.isRegistered = true;
             
             string mapDataJson = JsonUtility.ToJson(_mapData);
-            saveData.DataSave(GetMinifiedJson(mapDataJson), HandleFailSave, () => SceneManager.LoadScene("TitleHN"));
+            saveData.SaveData(_mapData.mapName, GetMinifiedJson(mapDataJson), () => SceneManager.LoadScene("TitleHN"));
             
             string userDataJson = JsonUtility.ToJson(_userData);
             File.WriteAllText(_path, userDataJson);
         }
 
-        private void HandleFailSave(ErrorType type)
-        {
-            _mapData.isRegistered = false;
-            
-            SaveFailEvent evt = MapMakerEvent.SaveFailEvent;
-            evt.errorType = type;
-            mapMakerChannel.RaiseEvent(evt);
-        }
-
-        public bool CanSaveData(string mapName)
+        public bool IsDuplicatedName(string mapName)
         {
             MapData mapData = GetUsersMap(mapName);
             return mapData == null || mapData == _mapData;
@@ -280,14 +331,12 @@ namespace Work.HN.Code.Save
         {
             return Regex.Replace(json, @"\s+", "");
         }
-        
-        [ContextMenu("TestLoad")]
-        public void TestLoad()
+
+        public bool IsEqualsMap(MapData targetMap)
         {
-            saveData.DataLoad("B2:B1000", data =>
-            {
-                print(data);
-            });
+            if(_mapData == null) return false;
+
+            return _mapData.IsEqualsMap(targetMap);
         }
     }
 }

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2ec2c445e4958879cb1dfd5040856, type: 3}
+  m_Name: StartPointObjectNetworkSO
+  m_EditorClassIdentifier: 
+  OnCollideStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollideEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  ObjectName: StartPointObject
+  ObjectImage: {fileID: 21300000, guid: 9562a6bc594306545871eafc82e40cce, type: 3}
+  ObjectLayer: 0
+  colliderType: 0
+  ColliderSize: {x: 1, y: 1}
+  CircleColliderRadius: 0
+  ColliderOffset: {x: 0, y: 0}
+  isTrigger: 1
+  description: "network\uC6A9 \uD50C\uB808\uC774\uC5B4\uC758 \uC2DC\uC791 \uC9C0\uC810
+    \uC624\uBE0C\uC81D\uD2B8"

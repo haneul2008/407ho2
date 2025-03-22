@@ -1,9 +1,9 @@
-﻿using System;
-using Ami.BroAudio;
+﻿using Ami.BroAudio;
 using UnityEngine;
-using UnityEngine.Events;
 using Work.HN.Code.Input;
 using Work.JW.Code.Entities.FSM;
+using Work.JW.Code.MapLoad;
+using Work.JW.Code.MapLoad.UI;
 using Work.JW.Code.TriggerSystem;
 
 namespace Work.JW.Code.Entities.Player
@@ -25,11 +25,17 @@ namespace Work.JW.Code.Entities.Player
         protected override void InitializeCompo()
         {
             base.InitializeCompo();
-
+            
             _stateMachine = new StateMachine(this, stateList);
-
+            
             InputReader.SetEnable(InputType.MapMaker, false);
             InputReader.SetEnable(InputType.Player, true);
+
+            OnHit.AddListener(() => FindAnyObjectByType<FadeInOut>().Fade(true));
+            OnHit.AddListener(() => GetCompo<EntityMover>().StopImmediately(true));
+            OnHit.AddListener(() => GetCompo<EntityMover>().CanMove = false);
+            OnHit.AddListener(() => FindAnyObjectByType<MapLoadManager>().Clear());
+            OnHit.AddListener(() => FindAnyObjectByType<MapLoadManager>().SetMapObjSpawn());
         }
 
         private void Start()
@@ -37,14 +43,20 @@ namespace Work.JW.Code.Entities.Player
             ChangeState("IDLE");
         }
 
-        private void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
             InputReader.ClearPlayerAction();
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             _stateMachine.StateMachineUpdate();
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            _stateMachine.StateMachineFixedUpdate();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -61,22 +73,22 @@ namespace Work.JW.Code.Entities.Player
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        protected virtual void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
             {
-                BroAudio.Play(DieSoundID);
                 OnDead();
             }
         }
 
-        public EntityState ChangeState(string newStateName)
+        public virtual void ChangeState(string newStateName)
         {
-            return _stateMachine.ChangeState(newStateName);
+            _stateMachine.ChangeState(newStateName);
         }
 
         public override void OnDead()
         {
+            BroAudio.Play(DieSoundID);
             base.OnDead();
             ChangeState("IDLE");
         }

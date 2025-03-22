@@ -4,6 +4,12 @@ using Work.JW.Code.Entities;
 
 namespace Work.ISC._0._Scripts.Objects.Frame
 {
+    public enum ColliderEnum
+    {
+        Box,
+        Circle
+    }
+
     public abstract class ObjectFrameSO : ScriptableObject, IObjectable
     {
         public UnityEvent OnCollideStartEvent;
@@ -13,7 +19,9 @@ namespace Work.ISC._0._Scripts.Objects.Frame
         public Sprite ObjectImage;
         
         public int ObjectLayer;
-        public Vector2 ColliderSize;
+        public ColliderEnum colliderType;
+        public Vector2 ColliderSize; // if BoxCollider
+        public float CircleColliderRadius; // if CircleCollider
         public Vector2 ColliderOffset;
 
         public bool isTrigger;

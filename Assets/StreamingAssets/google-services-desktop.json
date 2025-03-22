@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1089029908791",
+    "firebase_url": "https://savedatas-62c53-default-rtdb.firebaseio.com",
+    "project_id": "savedatas-62c53",
+    "storage_bucket": "savedatas-62c53.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089029908791:android:d8ee5f1c3ca844694b12b2",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzQ05o2dbbpC0iMePg5Ix3_Oorf2SbA-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

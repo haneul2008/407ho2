@@ -1,44 +1,35 @@
 ﻿using System;
 using System.IO;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.ISC._0._Scripts.Save.ExelData;
+using Work.ISC._0._Scripts.Save.Firebase;
 
 namespace Work.HN.Code.Save
 {
-    public class InGameLoader : MonoBehaviour
+    public class InGameLoader : NetworkBehaviour
     {
         public UnityEvent<MapData> OnMapLoaded;
         
-        [SerializeField] private SaveData saveData;
+        [SerializeField] private FirebaseData saveData;
         
-        private void Start()
+        protected virtual void Start()
         {
-            int sequence = DataReceiver.Instance.UserMapDataSequence;
+            string userMapName = DataReceiver.Instance.UserMapName;
             string editedMapName = DataReceiver.Instance.PlayEditedMapName;
 
             if (string.IsNullOrEmpty(editedMapName))
             {
-                GetMapData(sequence);
+                GetUserMapData(userMapName);
             }
-            else if (sequence == 0)
+            else if (string.IsNullOrEmpty(userMapName))
             {
-                GetMapData(editedMapName);
+                GetEditedMapData(editedMapName);
             }
         }
 
-        private void GetMapData(int seq)
-        {
-            saveData.DataLoad($"B{seq}", data =>
-            {
-                string json = data;
-                MapData mapData = JsonUtility.FromJson<MapData>(json);
-                
-                OnMapLoaded?.Invoke(mapData);
-            });
-        }
-        
-        private void GetMapData(string mapName)
+        protected void GetEditedMapData(string mapName)
         {
             string json = File.ReadAllText(DataReceiver.Instance.Path);
             UserBuiltInData userData = JsonUtility.FromJson<UserBuiltInData>(json);
@@ -51,6 +42,11 @@ namespace Work.HN.Code.Save
                     return;
                 }
             }
+        }
+
+        protected void GetUserMapData(string mapName)
+        {
+            saveData.LoadData(mapName, null, mapData => OnMapLoaded?.Invoke(mapData));
         }
     }
 }

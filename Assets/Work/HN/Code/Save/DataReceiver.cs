@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ namespace Work.HN.Code.Save
         public bool IsCreatedNewMap { get; private set; }
         public string MapEditDataName { get; private set; }
         public string PlayEditedMapName { get; private set; }
-        public int UserMapDataSequence { get; private set; }
+        public string UserMapName { get; private set; }
 
         private void Awake()
         {
@@ -20,43 +19,74 @@ namespace Work.HN.Code.Save
                 Destroy(gameObject);
                 return;
             }
-            
+
             Path = $"{Application.persistentDataPath}/GameData.json";
 
             Instance = this;
-            
+
             DontDestroyOnLoad(this);
         }
 
         public void CreateNewMap()
         {
             ClearData();
-            
+
             IsCreatedNewMap = true;
         }
-        
+
         public void SetMapEditData(string mapName)
         {
             ClearData();
-            
+
             IsCreatedNewMap = false;
             MapEditDataName = mapName;
         }
-        
+
         public void SetPlayMapData(string mapName)
         {
             ClearData();
-            
+
             IsCreatedNewMap = false;
             PlayEditedMapName = mapName;
         }
 
-        public void SetPlayUserMapData(int sequence)
+        public void TryVerify()
+        {
+            if (string.IsNullOrEmpty(PlayEditedMapName)) return;
+
+            UserBuiltInData userData = GetUserMapData();
+
+            if (userData == null) return;
+
+            MapData mapData = GetMapData(userData, PlayEditedMapName);
+
+            if (mapData == null) return;
+
+            mapData.isVerified = true;
+
+            string json = JsonUtility.ToJson(userData);
+            File.WriteAllText(Path, json);
+        }
+
+        private MapData GetMapData(UserBuiltInData userData, string mapName)
+        {
+            foreach (MapData mapData in userData.userMapList)
+            {
+                if (mapData.mapName == mapName)
+                {
+                    return mapData;
+                }
+            }
+
+            return null;
+        }
+
+        public void SetPlayUserMapData(string mapName)
         {
             ClearData();
 
             IsCreatedNewMap = false;
-            UserMapDataSequence = sequence;
+            UserMapName = mapName;
         }
 
         public UserBuiltInData GetUserMapData()
@@ -76,7 +106,7 @@ namespace Work.HN.Code.Save
         {
             MapEditDataName = string.Empty;
             PlayEditedMapName = string.Empty;
-            UserMapDataSequence = 0;
+            UserMapName = string.Empty;
         }
     }
 }

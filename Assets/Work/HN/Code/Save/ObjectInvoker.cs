@@ -1,110 +1,129 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Work.HN.Code.EventSystems;
 using Work.HN.Code.MapMaker.Core;
 using Work.HN.Code.MapMaker.Objects;
+using Work.ISC._0._Scripts.Save.Firebase;
 
 namespace Work.HN.Code.Save
 {
     public enum ErrorType
     {
-        SameName,
+        EmptyObject,
+        DuplicatedMyMapName,
         EmptyName,
         NoneStartOrEnd,
         FailRequest,
         ExceededMaxCapacity,
+        DuplicatedUserMapName,
+        NotVerified
     }
-    
+
     public class ObjectInvoker : MonoBehaviour
     {
         [SerializeField] private MapMakerManager mapMaker;
         [SerializeField] private GameEventChannelSO mapMakerChannel;
         [SerializeField] private SaveManager saveManager;
+        [SerializeField] private DelegateModerator<Action<ErrorType>> saveModerator;
 
-        private string _mapName;
-
-        private void Awake()
-        {
-            mapMakerChannel.AddListener<MapNameChangeEvent>(HandleMapNameChanged);
-        }
+        private MapData _lastSavedMapData;
+        private MapNameContainer _mapNameContainer;
+        private bool _isRegister;
 
         private void OnDestroy()
         {
-            mapMakerChannel.RemoveListener<MapNameChangeEvent>(HandleMapNameChanged);
+            _mapNameContainer?.Dispose();
         }
 
-        private void Start()
+        public void HandleMapLoaded(MapData mapData)
         {
-            _mapName = saveManager.GetMapName();
+            _mapNameContainer = new MapNameContainer(mapData.mapName, mapMakerChannel);
         }
-
-        private void HandleMapNameChanged(MapNameChangeEvent evt)
-        {
-            _mapName = evt.mapName;
-        }
-
+        
         public bool SaveData(Action<ErrorType> onSaveFail = null)
         {
+            saveModerator.SetAction(onSaveFail);
+
+            if (!saveModerator.Execute()) return false;
+
             List<EditorObject> objects = mapMaker.GetAllObjects();
 
-            if (objects.Count == 0)
+            SaveObjects(objects);
+
+            return IsMapFixed(onSaveFail);
+        }
+
+        private bool IsMapFixed(Action<ErrorType> onSaveFail)
+        {
+            if (!saveManager.IsEqualsMap(_lastSavedMapData))
             {
-                Debug.LogWarning("No objects found!");
+                saveManager.IsVerified = false;
+                onSaveFail?.Invoke(ErrorType.NotVerified);
                 return false;
             }
 
-            if (string.IsNullOrEmpty(_mapName))
-            {
-                onSaveFail?.Invoke(ErrorType.EmptyName);
-                return false;
-            }
-            
-            if (!saveManager.CanSaveData(_mapName))
-            {
-                onSaveFail?.Invoke(ErrorType.SameName);
-                return false;
-            }
+            return true;
+        }
 
-            if (!mapMaker.HasStart() || !mapMaker.HasEnd())
-            {
-                onSaveFail?.Invoke(ErrorType.NoneStartOrEnd);
-                return false;
-            }
-
-            if (saveManager.GetMapCapacity(objects) >= ISC._0._Scripts.Save.ExelData.SaveData.maxCapacity)
-            {
-                onSaveFail?.Invoke(ErrorType.ExceededMaxCapacity);
-                return false;
-            }
-            
+        private void SaveObjects(List<EditorObject> objects)
+        {
             for (int i = 0; i < objects.Count; i++)
             {
                 if (i == 0)
                 {
-                    saveManager.SetMapName(_mapName);
+                    saveManager.SetMapName(_mapNameContainer.MapName);
                     saveManager.ClearObjects();
                 }
-                
+
                 ObjectSaveEvent evt = MapMakerEvent.ObjectSaveEvent;
                 evt.targetObject = objects[i];
                 evt.isFinish = i == objects.Count - 1;
                 mapMakerChannel.RaiseEvent(evt);
             }
-            
-            return true;
         }
 
-        public void RegisterData()
+        public bool RegisterData(Action<ErrorType> onFail = null)
         {
-            if(!SaveData()) return;
-            
+            _isRegister = true;
+
+            if (!SaveData(onFail) || !saveManager.IsVerified)
+            {
+                _isRegister = false;
+
+                return false;
+            }
+
             saveManager.RegisterMapData();
+
+            return true;
         }
 
         public int GetMapCapacity()
         {
             return saveManager.GetMapCapacity(mapMaker.GetAllObjects());
+        }
+
+
+        public void HandleMapDataChanged(MapData mapData)
+        {
+            if (_isRegister)
+            {
+                _isRegister = false;
+                return;
+            }
+
+            _lastSavedMapData = GetNewMapData(mapData);
+        }
+
+        private MapData GetNewMapData(MapData mapData)
+        {
+            return new MapData()
+            {
+                mapName = mapData.mapName,
+                objectList = new List<ObjectData>(mapData.objectList)
+            };
         }
     }
 }

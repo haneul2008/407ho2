@@ -18,8 +18,7 @@ namespace Work.JW.Code.Entities.Player.PlayerFSM
         {
             base.Enter();
             
-            _mover.StopImmediately(true);
-            _mover.SetMoveSpeedMultiplier(0.7f);
+            _mover.SetMoveSpeedMultiplier(0.78f);
         }
 
         public override void Update()

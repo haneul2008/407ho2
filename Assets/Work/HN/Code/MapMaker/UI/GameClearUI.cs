@@ -1,17 +1,22 @@
-﻿using System;
-using Ami.BroAudio;
+﻿using Ami.BroAudio;
+using Code.Network;
 using DG.Tweening;
 using TMPro;
+using Unity.Netcode;
+using Unity.Services.Authentication;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using Work.HN.Code.Save;
 using Work.ISC._0._Scripts.Objects;
+
 
 namespace Work.HN.Code.MapMaker.UI
 {
     public class GameClearUI : MonoBehaviour
     {
+        public UnityEvent OnClear;
+        
         [SerializeField] private TextMeshProUGUI mapNameText;
         [SerializeField] private float yPosInActive = 0, duration = 0.5f;
         [SerializeField] private ArrivalPointObjectSO endPointSO;
@@ -37,16 +42,15 @@ namespace Work.HN.Code.MapMaker.UI
         private void HandleOnClear()
         {
             BroAudio.Play(clearSoundID);
+            DataReceiver.Instance.TryVerify();
             
             Active(true);
+
+            OnClear?.Invoke();
         }
 
         public void Active(bool isActive)
         {
-            int timescale = isActive ? 0 : 1;
-            
-            Time.timeScale = timescale;
-            
             if (isActive)
             {
                 _rectTrm.DOAnchorPosY(yPosInActive, duration).SetUpdate(true);
@@ -67,7 +71,34 @@ namespace Work.HN.Code.MapMaker.UI
             BroAudio.Play(clickSoundID);
             
             Time.timeScale = 1f;
-            SceneManager.LoadScene("TitleHN");
+
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                if (NetworkManager.Singleton.IsHost)
+                {
+                    NetworkManager.Singleton.SceneManager.LoadScene("TitleHN", LoadSceneMode.Single);
+                }
+                else
+                {
+                    ShutDownNetwork();
+                    SceneManager.LoadScene("TitleHN");
+                }
+            }
+            else
+            {
+                SceneManager.LoadScene("TitleHN");
+            }
+        }
+
+        public void ShutDownNetwork()
+        {
+            NetworkService.Instance.Shutdown();
+        }
+
+        public void SetTimeScale(bool isActive)
+        {
+            int timescale = isActive ? 1 : 0;
+            Time.timeScale = timescale;
         }
     }
 }

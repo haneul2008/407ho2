@@ -14,6 +14,7 @@ namespace Work.HN.Code.MapMaker.UI
     {
         [SerializeField] private TextMeshProUGUI failText;
         [SerializeField] private ObjectInvoker objectInvoker;
+        [SerializeField] private SaveManager saveManager;
         [SerializeField] private GameEventChannelSO mapMakerChannel;
         
         [SerializeField] private SoundID clickSoundID;
@@ -68,18 +69,22 @@ namespace Work.HN.Code.MapMaker.UI
             BroAudio.Play(clickSoundID);
             
             if(_isRegistered) return;
-            
-            if (!objectInvoker.SaveData(type => print(type)))
+
+            if (!objectInvoker.RegisterData())
             {
-                failText.text = "내보내기 실패";
-                
-                DOVirtual.DelayedCall(1f, () => failText.text = _originText);
-                
+                TweenFailText("내보내기 실패");
+
                 return;
             }
-            
-            objectInvoker.RegisterData();
+
             _isRegistered = true;
+        }
+
+        private void TweenFailText(string desc)
+        {
+            failText.text = desc;
+
+            DOVirtual.DelayedCall(1f, () => failText.text = _originText);
         }
     }
 }
