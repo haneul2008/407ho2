@@ -1,6 +1,8 @@
 using System;
 using Ami.BroAudio;
+using Code.Network;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Work.HN.Code.EventSystems;
@@ -60,6 +62,11 @@ namespace Work.HN.Code.Test
             DeleteRequestEvent requestEvt = TitleEvent.DeleteRequestEvent;
             requestEvt.mapName = _mapName;
             titleChannel.RaiseEvent(requestEvt);
+        }
+
+        public void ShutdownNetwork()
+        {
+            NetworkService.Instance.Shutdown();
         }
     }
 }

@@ -1,14 +1,5 @@
-﻿using System;
-using Ami.BroAudio;
-using Unity.Netcode;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Rendering;
-using Work.HN.Code.Input;
-using Work.JW.Code.Entities.FSM;
+﻿using UnityEngine;
 using Work.JW.Code.MapLoad;
-using Work.JW.Code.MapLoad.UI;
-using Work.JW.Code.TriggerSystem;
 
 namespace Work.JW.Code.Entities.Player
 {
@@ -23,6 +14,12 @@ namespace Work.JW.Code.Entities.Player
             
             FindAnyObjectByType<MapLoadManager>().OnMapLoaded.AddListener(() => GetCompo<EntityMover>().CanMove = true);
             FindAnyObjectByType<MapLoadManager>().OnMapLoaded.AddListener(() => GetCompo<EntityMover>().SetGravityScale(1.22f));
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            if(!IsOwner) gameObject.layer = LayerMask.NameToLayer("Default");
         }
 
         protected override void Update()

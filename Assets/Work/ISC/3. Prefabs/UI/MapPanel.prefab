@@ -433,6 +433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5203e32b5a5e4e4db6e3cb130a4ba531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  networkChannel: {fileID: 11400000, guid: 70e98aac22629c8448fb18c0dc2a9a3b, type: 2}
   mapNameText: {fileID: 8897609706435005209}
   clickSoundID:
     ID: 536870912

@@ -32,7 +32,6 @@ namespace Work.HN.Code.Input
 
         public Vector2 MouseScreenPos { get; private set; }
         public Vector2 MouseWorldPos { get; private set; }
-        public event Action OnPressEvent;
         
         public Vector2 MoveDir { get; private set; }
         public event Action OnJumpPressEvent;

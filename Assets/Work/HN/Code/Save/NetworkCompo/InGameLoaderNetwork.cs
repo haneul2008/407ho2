@@ -35,7 +35,18 @@ namespace Work.HN.Code.Save
                 GetEditedMapData(editedMapName);
             }
         }
-        
+
+        public override void OnDestroy()
+        {
+            if(NetworkManager.Singleton != null)
+                NetworkManager.Singleton.OnClientConnectedCallback -= HandleSetMapDataToClient;
+            if (IsSpawned && NetworkManager.Singleton.IsHost)
+            {
+                NetworkObject.Despawn();
+            }
+            base.OnDestroy();
+        }
+
         private void HandleSetMapDataToClient(ulong obj)
         {
             if (NetworkManager.Singleton.IsHost)

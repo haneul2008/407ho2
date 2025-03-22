@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
-using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
@@ -12,16 +11,43 @@ using UnityEngine.Events;
 
 namespace Code.Network
 {
-    public class NetworkService : MonoBehaviour
+    public class NetworkService : NetworkBehaviour
     {
         public UnityEvent OnErrorFromJoinCode;
         private string _joinCode;
+        public static NetworkService Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private async void Start()
         {
-            // DontDestroyOnLoad(gameObject);
-            
             await UnityServices.InitializeAsync();
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            if (NetworkManager.Singleton.IsClient)
+            {
+                Shutdown();
+                
+                if (!NetworkManager.Singleton.IsConnectedClient)
+                {
+                    Debug.LogWarning("연결이 해제된 상태에서는 메시지를 보낼 수 없습니다.");
+                }
+            }
+            
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectCallback;
+            base.OnNetworkSpawn();
+        }
+
+        public override void OnDestroy()
+        {
+            if(NetworkManager.Singleton != null && NetworkManager.Singleton.IsClient)
+                NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnectCallback;
+            base.OnDestroy();
         }
 
         public async void StartOnline()
@@ -30,11 +56,21 @@ namespace Code.Network
             if (AuthenticationService.Instance.IsSignedIn) return;
             
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            
+            NetworkManager.Singleton.NetworkConfig.TickRate = 60;
         }
 
         public void Shutdown()
         {
             NetworkManager.Singleton.Shutdown();
+            AuthenticationService.Instance.SignOut();
+        }
+
+        [ClientRpc]
+        private void AllShutdownClientRpc()
+        {
+            if(!NetworkManager.Singleton.IsHost)
+                Shutdown();
         }
 
         public async Task CreateRelay()
@@ -82,6 +118,7 @@ namespace Code.Network
             }
             catch (RelayServiceException e)
             {
+                Debug.LogWarning(e);
                 OnErrorFromJoinCode?.Invoke();
                 return;
             }
@@ -92,6 +129,15 @@ namespace Code.Network
             if (string.IsNullOrEmpty(code)) return;
             
             _joinCode = code;
+        }
+        
+        private void OnClientDisconnectCallback(ulong obj)
+        {
+            if (!NetworkManager.Singleton.IsServer && NetworkManager.Singleton.DisconnectReason != string.Empty)
+            {
+                Debug.Log($"Approval Declined Reason: {NetworkManager.Singleton.DisconnectReason}");
+                OnErrorFromJoinCode?.Invoke();
+            }
         }
     }
 }

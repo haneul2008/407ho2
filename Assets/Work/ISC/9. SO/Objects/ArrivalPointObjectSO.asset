@@ -27,3 +27,4 @@ MonoBehaviour:
   ColliderOffset: {x: 0, y: 0}
   isTrigger: 1
   description: "\uAC8C\uC784\uD074\uB9AC\uC5B4\uC624\uBE0C\uC81D\uD2B8"
+  inputReader: {fileID: 11400000, guid: e78818ae570efcf44af0a5bcb93951d9, type: 2}
