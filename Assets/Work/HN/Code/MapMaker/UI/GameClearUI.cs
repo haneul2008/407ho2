@@ -74,11 +74,13 @@ namespace Work.HN.Code.MapMaker.UI
 
             if (AuthenticationService.Instance.IsSignedIn)
             {
-                Debug.Log("Titile");
-                if(NetworkManager.Singleton.IsHost)
+                if (NetworkManager.Singleton.IsHost)
+                {
                     NetworkManager.Singleton.SceneManager.LoadScene("TitleHN", LoadSceneMode.Single);
+                }
                 else
                 {
+                    ShutDownNetwork();
                     SceneManager.LoadScene("TitleHN");
                 }
             }

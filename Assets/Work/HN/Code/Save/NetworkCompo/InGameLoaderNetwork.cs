@@ -40,7 +40,7 @@ namespace Work.HN.Code.Save
         {
             if(NetworkManager.Singleton != null)
                 NetworkManager.Singleton.OnClientConnectedCallback -= HandleSetMapDataToClient;
-            if (IsSpawned)
+            if (IsSpawned && NetworkManager.Singleton.IsHost)
             {
                 NetworkObject.Despawn();
             }

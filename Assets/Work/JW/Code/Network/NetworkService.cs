@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
@@ -10,7 +11,7 @@ using UnityEngine.Events;
 
 namespace Code.Network
 {
-    public class NetworkService : MonoBehaviour
+    public class NetworkService : NetworkBehaviour
     {
         public UnityEvent OnErrorFromJoinCode;
         private string _joinCode;
@@ -18,20 +19,35 @@ namespace Code.Network
 
         private void Awake()
         {
-            Instance = this; 
+            Instance = this;
         }
 
         private async void Start()
         {
             await UnityServices.InitializeAsync();
+        }
 
-            if (AuthenticationService.Instance.IsSignedIn && NetworkManager.Singleton.IsHost)
+        public override void OnNetworkSpawn()
+        {
+            if (NetworkManager.Singleton.IsClient)
             {
-                AllShutdownClientRpc();
                 Shutdown();
+                
+                if (!NetworkManager.Singleton.IsConnectedClient)
+                {
+                    Debug.LogWarning("연결이 해제된 상태에서는 메시지를 보낼 수 없습니다.");
+                }
             }
             
-            
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectCallback;
+            base.OnNetworkSpawn();
+        }
+
+        public override void OnDestroy()
+        {
+            if(NetworkManager.Singleton != null && NetworkManager.Singleton.IsClient)
+                NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnectCallback;
+            base.OnDestroy();
         }
 
         public async void StartOnline()
@@ -53,7 +69,8 @@ namespace Code.Network
         [ClientRpc]
         private void AllShutdownClientRpc()
         {
-            Shutdown();
+            if(!NetworkManager.Singleton.IsHost)
+                Shutdown();
         }
 
         public async Task CreateRelay()

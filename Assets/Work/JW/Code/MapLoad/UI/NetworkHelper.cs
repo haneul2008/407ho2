@@ -90,11 +90,15 @@ namespace Work.JW.Code.MapLoad.UI
             Debug.Log($"클라이언트 {clientId}의 연결이 해제되었습니다.");
 #endif
             CleanupClient(clientId);
+
+            _currentClientCount--;
+            if (_currentClientCount < 2)
+                readyBtn.gameObject.SetActive(false);
         }
         
         private void CleanupClient(ulong clientId)
         {
-            if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
+            if (NetworkManager.Singleton.IsHost && NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
             {
                 var clientObject = client.PlayerObject;
                 if (clientObject != null)
