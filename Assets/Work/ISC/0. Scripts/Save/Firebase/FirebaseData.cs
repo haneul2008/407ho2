@@ -129,6 +129,8 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                 DataSnapshot snapshot = task.Result;
                 IDictionary dataPairs = (IDictionary)snapshot.Value;
 
+                if (dataPairs == null) yield break;
+
                 MapDataList.Clear();
 
                 if (dataPairs != null)

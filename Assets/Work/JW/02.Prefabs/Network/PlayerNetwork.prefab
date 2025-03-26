@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 377983179148548308}
   - component: {fileID: 6401599432728831373}
   - component: {fileID: 2672229938767786835}
+  - component: {fileID: 6610347536189728573}
   - component: {fileID: 926312338416984080}
   m_Layer: 7
   m_Name: PlayerNetwork
@@ -303,6 +304,20 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 0
   SlerpPosition: 0
+--- !u!114 &6610347536189728573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079060841125567144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f43037a0ef441858d5d8c1f3c8b8715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  predictionFactor: 0.1
 --- !u!114 &926312338416984080
 MonoBehaviour:
   m_ObjectHideFlags: 0
