@@ -14,7 +14,6 @@ namespace Work.HN.Code.MapMaker.UI.TriggerPanel
         [SerializeField] private List<TriggerDataSO> triggerDataList = new List<TriggerDataSO>();
         [SerializeField] private ObjectListSO triggerListSO;
         [SerializeField] private TriggerSpawnUI spawnUIPrefab;
-        [SerializeField] private Transform contentTrm;
         
         private readonly Dictionary<TriggerDataSO, TriggerEditUI> _triggerUIPairs = new Dictionary<TriggerDataSO, TriggerEditUI>();
         private TriggerEditUI _currentEditUI;
@@ -33,7 +32,7 @@ namespace Work.HN.Code.MapMaker.UI.TriggerPanel
         {
             foreach (EditorObject trigger in triggerListSO.objects)
             {
-                TriggerSpawnUI spawnUI = Instantiate(spawnUIPrefab, contentTrm);
+                TriggerSpawnUI spawnUI = Instantiate(spawnUIPrefab, transform);
                 spawnUI.Initialize(trigger);
             }
         }

@@ -133,15 +133,12 @@ namespace Work.ISC._0._Scripts.Save.Firebase
 
                 MapDataList.Clear();
 
-                if (dataPairs != null)
+                foreach (var value in dataPairs.Values)
                 {
-                    foreach (var value in dataPairs.Values)
-                    {
-                        string json = JsonConvert.SerializeObject(value);
-                        MapData mapData = JsonConvert.DeserializeObject<MapData>(json, _settings);
+                    string json = JsonConvert.SerializeObject(value);
+                    MapData mapData = JsonConvert.DeserializeObject<MapData>(json, _settings);
 
-                        MapDataList.Add(mapData);
-                    }
+                    MapDataList.Add(mapData);
                 }
 
                 loadComplete?.Invoke();

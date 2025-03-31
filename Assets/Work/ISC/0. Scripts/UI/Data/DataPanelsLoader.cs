@@ -32,7 +32,6 @@ namespace Work.ISC._0._Scripts.UI.Data
             foreach (MapData mapData in saveData.MapDataList)
             {
                 SpawnPanel(mapData);
-                print(mapData.mapName);
                 _mapDataPairs.Add(mapData.mapName, mapData);
             }
         }
