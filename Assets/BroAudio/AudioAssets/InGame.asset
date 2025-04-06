@@ -18,7 +18,7 @@ MonoBehaviour:
     MulticlipsPlayMode: 0
     _group: {fileID: 0}
     Clips:
-    - AudioClip: {fileID: 8300000, guid: 10c0ccc1fae78f4429164211933d89c6, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 76c1765de14cefa4495b77e18c36b2e9, type: 3}
       Volume: 1
       Delay: 0
       StartPosition: 0
@@ -242,8 +242,8 @@ MonoBehaviour:
     MulticlipsPlayMode: 0
     _group: {fileID: 0}
     Clips:
-    - AudioClip: {fileID: 8300000, guid: 47f45ef7b5767674393cc401fc325705, type: 3}
-      Volume: 0.07138684
+    - AudioClip: {fileID: 8300000, guid: b114e4f6985f41146b870ef161381942, type: 3}
+      Volume: 1
       Delay: 0
       StartPosition: 0
       EndPosition: 0
@@ -270,8 +270,8 @@ MonoBehaviour:
     MulticlipsPlayMode: 0
     _group: {fileID: 0}
     Clips:
-    - AudioClip: {fileID: 8300000, guid: 89f935015cc98724a862a586326fdf21, type: 3}
-      Volume: 0.06810693
+    - AudioClip: {fileID: 8300000, guid: f273e0b9e4ad34743b889ec23f0d010e, type: 3}
+      Volume: 1
       Delay: 0
       StartPosition: 0
       EndPosition: 0
