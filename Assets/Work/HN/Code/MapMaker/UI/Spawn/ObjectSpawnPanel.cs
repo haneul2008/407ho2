@@ -10,7 +10,6 @@ namespace Work.HN.Code.MapMaker.UI.Spawn
     {
         [SerializeField] private ObjectListSO objectList;
         [SerializeField] private ObjectSpawnUI spawnUIPrefab;
-        [SerializeField] private Transform contentTrm;
 
         private readonly Dictionary<int, ObjectSpawnUI> _objectUIPairs = new Dictionary<int, ObjectSpawnUI>();
         
@@ -28,7 +27,7 @@ namespace Work.HN.Code.MapMaker.UI.Spawn
                     continue;
                 }
                 
-                ObjectSpawnUI objectSpawnUI = Instantiate(spawnUIPrefab, contentTrm);
+                ObjectSpawnUI objectSpawnUI = Instantiate(spawnUIPrefab, transform);
                 objectSpawnUI.Initialize(targetObj);
                 _objectUIPairs.Add(targetObj.ID, objectSpawnUI);
             }
