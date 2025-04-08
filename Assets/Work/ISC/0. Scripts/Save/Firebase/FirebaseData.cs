@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,19 +13,16 @@ namespace Work.ISC._0._Scripts.Save.Firebase
 {
     public class FirebaseData : MonoBehaviour
     {
-        [SerializeField] private string _data;
-
-        private DatabaseReference _databaseReference;
-
-        private Action<bool> DeleteCallback;
-
-        private Dictionary<string, IDictionary> _mapData;
-
         public UnityEvent<MapData> OnMapDataLoaded;
 
         public List<MapData> MapDataList { get; private set; }
 
-        public const int maxCapacity = 200000;
+        public const int MaxCapacity = 200000;
+
+        private DatabaseReference _databaseReference;
+        private Dictionary<string, IDictionary> _mapData;
+        private Action<bool> DeleteCallback;
+        private Dictionary<MapData, string> _keyPairs = new Dictionary<MapData, string>();
 
         private JsonSerializerSettings _settings = new JsonSerializerSettings()
         {
@@ -38,7 +36,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         }
 
-        public void SaveData(string mapName, string data, Action OnComplete = null)
+        public void SaveData(string mapName, string data, Action onComplete = null)
         {
             DatabaseReference newRef = _databaseReference.Child(mapName).Push();
             string key  = newRef.Key;
@@ -46,7 +44,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             {
                 if (task.IsCompleted)
                 {
-                    OnComplete?.Invoke();
+                    onComplete?.Invoke();
                     Debug.Log("저장");
                 }
             });
@@ -54,16 +52,14 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             _databaseReference.Child("{").Push();
         }
 
-        public void LoadData(string data, Action<bool> OnIsNull = null, Action<MapData> OnSuccess = null)
+        public void LoadData(string path, Action<bool> onIsNull = null, Action<MapData> onSuccess = null)
         {
-            StartCoroutine(LoadDataCoroutine(data, OnIsNull, OnSuccess));
+            StartCoroutine(LoadDataCoroutine(path, onIsNull, onSuccess));
         }
 
-        private IEnumerator LoadDataCoroutine(string data, Action<bool> OnIsNull = null, Action<MapData> OnSuccess = null)
+        private IEnumerator LoadDataCoroutine(string path, Action<bool> onIsNull = null, Action<MapData> onSuccess = null)
         {
-            _data = data;
-
-            var task = _databaseReference.Child(data).GetValueAsync();
+            var task = _databaseReference.Child(path).GetValueAsync();
 
             yield return new WaitUntil(() => task.IsCompleted);
 
@@ -86,14 +82,14 @@ namespace Work.ISC._0._Scripts.Save.Firebase
                 MapData mapData = JsonConvert.DeserializeObject<MapData>(json, _settings);
                 bool isNullOrEmpty = string.IsNullOrEmpty(json);
 
-                if (isNullOrEmpty || string.IsNullOrEmpty(data))
+                if (isNullOrEmpty || string.IsNullOrEmpty(path))
                     Debug.Log("로드 실패. 데이터값이 잘못되었거나 항목이 비어있습니다.");
                 else
                 {
-                    OnSuccess?.Invoke(mapData);
+                    onSuccess?.Invoke(mapData);
                 }
 
-                OnIsNull?.Invoke(isNullOrEmpty);
+                onIsNull?.Invoke(isNullOrEmpty);
             }
         }
 
@@ -133,22 +129,34 @@ namespace Work.ISC._0._Scripts.Save.Firebase
 
                 MapDataList.Clear();
 
-                if (dataPairs != null)
-                {
-                    foreach (var value in dataPairs.Values)
-                    {
-                        string json = JsonConvert.SerializeObject(value);
-                        MapData mapData = JsonConvert.DeserializeObject<MapData>(json, _settings);
+                List<object> keyList = dataPairs.Keys.Cast<object>().ToList();
+                int keyCnt = 0;
 
-                        MapDataList.Add(mapData);
-                    }
+                foreach (var value in dataPairs.Values)
+                {
+                    string json = JsonConvert.SerializeObject(value);
+                    MapData mapData = JsonConvert.DeserializeObject<MapData>(json, _settings);
+
+                    MapDataList.Add(mapData);
+                    
+                    string keyString = JsonConvert.SerializeObject(keyList[keyCnt]).Trim('"');
+                    _keyPairs.TryAdd(mapData, keyString);
+                    keyCnt++;
                 }
 
                 loadComplete?.Invoke();
             }
+            else if(task.IsFaulted)
+                print("is faulted");
+            else if(task.IsCanceled)
+                print("is canceled");
+            else
+                print("not completed");
         }
 
-        public void DeleteData()
+        public string GetKey(MapData mapData) => _keyPairs.GetValueOrDefault(mapData);
+
+        /*public void DeleteData()
         {
             bool isNull = true;
 
@@ -175,7 +183,7 @@ namespace Work.ISC._0._Scripts.Save.Firebase
             }
 
             DeleteCallback -= Delete;
-        }
+        }*/
 
         private void DataChange(out bool from, bool to)
         {

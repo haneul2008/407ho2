@@ -6,6 +6,7 @@ using Unity.Netcode;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Work.HN.Code.EventSystems;
 using Work.HN.Code.Save;
 using Work.ISC._0._Scripts.Save.ExelData;
@@ -20,19 +21,19 @@ namespace Work.ISC._0._Scripts.UI.Data
         [SerializeField] private TextMeshProUGUI mapNameText;
         [SerializeField] private SoundID clickSoundID;
 
-        public string _mapName;
+        private string _key;
         
-        public void DataSetup(string name)
+        public void DataSetup(string key, string mapName)
         {
-            _mapName = name;
-            mapNameText.text = name;
+            _key = key;
+            mapNameText.text = mapName;
         }
 
         public async void Click()
         {
             BroAudio.Play(clickSoundID);
             
-            DataReceiver.Instance.SetPlayUserMapData(_mapName);
+            DataReceiver.Instance.SetPlayUserMapData(_key);
             
             if (AuthenticationService.Instance.IsSignedIn)
             {

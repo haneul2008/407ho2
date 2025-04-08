@@ -19,7 +19,7 @@ namespace Work.HN.Code.Save
 
         protected override void Start()
         {
-            string userMapName = DataReceiver.Instance.UserMapName;
+            string userMapName = DataReceiver.Instance.UserMapKey;
             string editedMapName = DataReceiver.Instance.PlayEditedMapName;
 
             if (string.IsNullOrEmpty(editedMapName))

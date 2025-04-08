@@ -61,7 +61,7 @@ namespace Work.HN.Code.MapMaker.UI
             {
                 nameField.text = _mapName;
 
-                capacityText.text = $"맵 크기 : {objectInvoker.GetMapCapacity()} / {FirebaseData.maxCapacity}";
+                capacityText.text = $"맵 크기 : {objectInvoker.GetMapCapacity()} / {FirebaseData.MaxCapacity}";
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Work.HN.Code.Save
 
         private Func<bool> IsExceededMaxCapacity()
         {
-            return () => saveManager.GetMapCapacity(mapMaker.GetAllObjects()) >= FirebaseData.maxCapacity;
+            return () => saveManager.GetMapCapacity(mapMaker.GetAllObjects()) >= FirebaseData.MaxCapacity;
         }
 
         private Func<bool> IsNoneStartOrEnd()

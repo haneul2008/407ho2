@@ -10,7 +10,7 @@ namespace Work.HN.Code.Save
         public bool IsCreatedNewMap { get; private set; }
         public string MapEditDataName { get; private set; }
         public string PlayEditedMapName { get; private set; }
-        public string UserMapName { get; private set; }
+        public string UserMapKey { get; private set; }
 
         private void Awake()
         {
@@ -86,7 +86,7 @@ namespace Work.HN.Code.Save
             ClearData();
 
             IsCreatedNewMap = false;
-            UserMapName = mapName;
+            UserMapKey = mapName;
         }
 
         public UserBuiltInData GetUserMapData()
@@ -106,7 +106,7 @@ namespace Work.HN.Code.Save
         {
             MapEditDataName = string.Empty;
             PlayEditedMapName = string.Empty;
-            UserMapName = string.Empty;
+            UserMapKey = string.Empty;
         }
     }
 }

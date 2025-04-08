@@ -26,13 +26,11 @@ namespace Work.ISC._0._Scripts.UI.Data
         private void HandleDataListLoaded()
         {
             ClearPanels();
-
             _mapDataPairs.Clear();
 
             foreach (MapData mapData in saveData.MapDataList)
             {
                 SpawnPanel(mapData);
-                print(mapData.mapName);
                 _mapDataPairs.Add(mapData.mapName, mapData);
             }
         }
@@ -40,7 +38,7 @@ namespace Work.ISC._0._Scripts.UI.Data
         private void SpawnPanel(MapData mapData)
         {
             DataPanel panel = Instantiate(dataPanel, transform);
-            panel.DataSetup(mapData.mapName);
+            panel.DataSetup(saveData.GetKey(mapData), mapData.mapName);
             _panels.Add(panel);
         }
 
