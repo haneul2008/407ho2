@@ -40,16 +40,18 @@ namespace Work.ISC._0._Scripts.Save.Firebase
         {
             DatabaseReference newRef = _databaseReference.Child(mapName).Push();
             string key  = newRef.Key;
-            _databaseReference.Child(key).SetRawJsonValueAsync(data).ContinueWith(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    onComplete?.Invoke();
-                    Debug.Log("저장");
-                }
-            });
 
-            _databaseReference.Child("{").Push();
+            StartCoroutine(SaveDataCoroutine(key, data, onComplete));
+        }
+
+        private IEnumerator SaveDataCoroutine(string key, string data, Action onComplete = null)
+        {
+            var task = _databaseReference.Child(key).SetRawJsonValueAsync(data);
+            
+            yield return new WaitUntil(() => task.IsCompleted);
+            
+            onComplete?.Invoke();
+            Debug.Log("저장");
         }
 
         public void LoadData(string path, Action<bool> onIsNull = null, Action<MapData> onSuccess = null)

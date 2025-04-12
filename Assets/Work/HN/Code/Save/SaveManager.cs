@@ -210,7 +210,7 @@ namespace Work.HN.Code.Save
         }
 
         public void RegisterMapData()
-        {   
+        {
             _mapData.isRegistered = true;
             
             string mapDataJson = JsonUtility.ToJson(_mapData);
